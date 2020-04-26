@@ -1,0 +1,8 @@
+name: Grakkit
+version: 1.0
+main: xyz.grakkit.Grakkit
+api-version: 1.15
+commands:
+   js:
+      description: Execute JavaScript Code!
+      usage: /js <code>
