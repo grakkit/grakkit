@@ -18,10 +18,11 @@ public final class Grakkit extends JavaPlugin {
    // initialize variables
    JS command;
    Value binding;
+   String root;
    Context context;
 
    // critial error script
-   private void exit(String error) {
+   public void exit(String error) {
       System.err.println(error);
       this.getServer().getPluginManager().disablePlugin(this);
    }
@@ -29,6 +30,11 @@ public final class Grakkit extends JavaPlugin {
    // code evaluator
    public Object eval(String code) {
       return context.eval("js", code);
+   }
+
+   // root folder retriever
+   public String root() {
+      return this.root;
    }
 
    // command creator
@@ -51,10 +57,10 @@ public final class Grakkit extends JavaPlugin {
       this.binding = this.context.getBindings("js");
 
       // find root folder
-      String root = System.getProperty("user.dir");
+      this.root = System.getProperty("user.dir");
 
       // find config folder
-      File config = Paths.get(root + "/plugins/grakkit").toAbsolutePath().toFile();
+      File config = Paths.get(this.root + "/plugins/grakkit").toAbsolutePath().toFile();
 
       // create config folder (if applicable)
       if (!config.exists() && !config.mkdir()) {
@@ -63,7 +69,7 @@ public final class Grakkit extends JavaPlugin {
       }
 
       // find index file
-      File index = Paths.get(root + "/plugins/grakkit/index.mjs").toAbsolutePath().toFile();
+      File index = Paths.get(this.root + "/plugins/grakkit/index.mjs").toAbsolutePath().toFile();
 
       // export index file (if applicable)
       if (!index.exists()) {
@@ -71,7 +77,7 @@ public final class Grakkit extends JavaPlugin {
          // initialize variables
          int bytes = 0;
          byte[] buffer = new byte[4096];
-         InputStream input = JS.class.getResourceAsStream("/xyz/grakkit/basic.mjs");
+         InputStream input = JS.class.getResourceAsStream("/xyz/grakkit/index.mjs");
 
          // catch verbose errors
          try {
