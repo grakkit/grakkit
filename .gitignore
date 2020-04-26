@@ -1,5 +1,6 @@
 server/
 grakkit.png
+maven.cmd
 
 #
 # Standard Maven .gitignore
