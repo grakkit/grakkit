@@ -18,6 +18,8 @@ The `module` command is the secret sauce of grakkit.
 
 To add a module to your server, use `/module add <repo>`. To remove a module, use `/module remove <repo>`. And, to update a module, use `/module update <repo>`.
 
+Once you've added a module to your server, use `module.require(<repo>)` to execute the code within.
+
 In any case, `<repo>` can refer to one of the following:
 
 -   A speed-dial keyword from the official module list.
