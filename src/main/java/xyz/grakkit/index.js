@@ -538,71 +538,71 @@
    core.command({
       name: 'module',
       execute: (player, action, repo) => {
-         if (action) {
-            let prefix = `&7${core.lc(action)} $`;
+         if ([ 'add', 'remove', 'update' ].includes(action)) {
             if (repo) {
                repo = core.lc(repo);
                const source = module.trusted[repo] || repo.split('/').slice(-2).join('/');
-               prefix += ` &e${source} &f-`;
                const installed = core.keys(module.list).includes(source);
                switch (core.lc(action)) {
                   case 'add':
                      if (installed) {
-                        core.text(player, `${prefix}&c repository already installed.`);
+                        core.text(player, `&7module $ &e${repo}&c repository already installed.`);
                      } else {
-                        core.text(player, `${prefix}&f installing...`);
+                        core.text(player, `&7module $ &e${repo}&f installing...`);
                         module
                            .apply(source)
                            .then((data) => {
                               module.list[source] = data;
-                              core.text(player, `${prefix}&f installed.`);
+                              core.text(player, `&7module $ &e${repo}&f installed.`);
                            })
                            .catch((error) => {
-                              core.text(player, `${prefix}&c ${error}`);
+                              core.text(player, `&7module $ &e${repo}&c ${error}`);
                            });
                      }
                      break;
                   case 'remove':
                      if (installed) {
-                        core.text(player, `${prefix}&f deleting...`);
+                        core.text(player, `&7module $ &e${repo}&f deleting...`);
                         try {
                            core.folder(core.root, 'modules', source).remove(true);
                            delete module.list[source];
-                           core.text(player, `${prefix}&f deleted.`);
+                           core.text(player, `&7module $ &e${repo}&f deleted.`);
                         } catch (error) {
-                           core.text(player, `${prefix}&c ${error}`);
+                           core.text(player, `&7module $ &e${repo}&c ${error}`);
                         }
                      } else {
-                        core.text(player, `${prefix}&c repository not already installed.`);
+                        core.text(player, `&7module $ &e${repo}&c repository not already installed.`);
                      }
                      break;
                   case 'update':
                      if (installed) {
-                        core.text(player, `${prefix}&f updating...`);
+                        core.text(player, `&7module $ &e${repo}&f updating...`);
                         try {
                            core.folder(core.root, 'modules', source).remove(true);
                            module
                               .apply(source, module.list[source])
                               .then((data) => {
                                  module.list[source] = data;
-                                 core.text(player, `${prefix}&f updated.`);
+                                 core.text(player, `&7module $ &e${repo}&f updated.`);
                               })
                               .catch((reason) => {
-                                 core.text(player, `${prefix}&c ${reason}`);
+                                 core.text(player, `&7module $ &e${repo}&c ${reason}`);
                               });
                         } catch (error) {
-                           core.text(player, `${prefix}&c ${reason}`);
+                           core.text(player, `&7module $ &e${repo}&c ${reason}`);
                         }
                      } else {
-                        core.text(player, `${prefix}&c repository not installed.`);
+                        core.text(player, `&7module $ &e${repo}&c repository not installed.`);
                      }
                      break;
                }
             } else {
-               core.text(player, `${prefix}&c no repository provided.`);
+               core.text(player, `&7module $&c no repository provided.`);
             }
+         } else if (action) {
+            core.text(player, '&7module $&c invalid action.');
          } else {
-            core.text(player, '&7module $&f no action specified.');
+            core.text(player, '&7module $&c no action specified.');
          }
       },
       tabComplete: (player, action, repo, extra) => {
