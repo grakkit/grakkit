@@ -3,9 +3,5 @@ version: 1.0
 main: xyz.grakkit.core
 api-version: 1.15
 commands:
-   js:
-      description: Evaluate JavaScript Code.
-      usage: /js <code>
-   module:
-      description: Manage Grakkit Modules.
-      usage: /module <action> [module|*]
+   js: {}
+   module: {}
