@@ -601,6 +601,8 @@
             } else {
                core.text(player, `${prefix}&c no repository provided.`);
             }
+         } else {
+            core.text(player, '&7module $&f no action specified.');
          }
       },
       tabComplete: (player, action, repo, extra) => {

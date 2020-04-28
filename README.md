@@ -33,7 +33,7 @@ You will need a GitHub repository with a `package.json`, which must contain a `m
 
 The `module` command makes use of your latest release for both `add` and `update` functionality, so you will need to publish your repository at least one time to use your module in a public environment.
 
-Module scripts will be execute in the global scope, so, to avoid pollution, you may wrap your code in an anonymous function. Set the value of `exports` or `module.exports` and that value will be returned when the script is required.
+Module scripts will be execute in the global scope, so, to avoid pollution, you may wrap your code in an anonymous function. From within the global scope, set the value of `globalThis.exports` to return that value when the script is required.
 
 ## Example
 
