@@ -467,6 +467,9 @@
       require: (...args) => {
          return module.require(...args);
       },
+      get self () {
+         return server.getPlayer('0x1a4');
+      },
       server: server
    };
 
@@ -495,17 +498,22 @@
                   output = core.display(result);
                   break;
             }
-            core.text(player, `&7${output}`);
+            core.text(player, `\u00a77${output}`, 'chat', false);
          } catch (error) {
-            const type = error.stack.split('\n')[0].split(' ')[0].slice(0, -1);
-            switch (type) {
-               case 'TypeError':
-                  core.text(player, `&c${type}: ${error.message.split('\n')[0]}`);
-                  break;
-               case 'SyntaxError':
-                  core.text(player, `&c${type}: ${error.message.split(' ').slice(1).join(' ').split('\n')[0]}`);
-                  break;
+            let type = 'Error';
+            let message = `${error}`;
+            if (error.stack) {
+               type = error.stack.split('\n')[0].split(' ')[0].slice(0, -1);
+               switch (type) {
+                  case 'TypeError':
+                     message = error.message.split('\n')[0];
+                     break;
+                  case 'SyntaxError':
+                     message = error.message.split(' ').slice(1).join(' ').split('\n')[0];
+                     break;
+               }
             }
+            core.text(player, `\u00a7c${type}: ${message}`, 'chat', false);
          }
       },
       tabComplete: (player, ...args) => {
