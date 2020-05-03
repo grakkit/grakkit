@@ -476,7 +476,7 @@
       execute: (player, ...args) => {
          try {
             let output = null;
-            const result = core.eval(args.join(' '), self);
+            const result = core.eval(args.join(' '), player);
             switch (toString.apply(result)) {
                case '[object Object]':
                   const names = core.keys(result);
