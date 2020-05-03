@@ -34,21 +34,18 @@
       </dependency>
    </dependencies>
    <build>
-    <plugins>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>3.2.0</version>
-        <configuration>
-          <includes>
-            <include>*.*</include>
-            <include>**</include>
-            <!-- <include>plugin.yml</include> -->
-          </includes>
-        </configuration>
-      </plugin>
-      
-    </plugins>
+      <plugins>
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.2.0</version>
+            <configuration>
+               <includes>
+                  <include>*.*</include>
+                  <include>**</include>
+               </includes>
+            </configuration>
+         </plugin>
+      </plugins>
   </build>
 </project>
