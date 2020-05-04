@@ -2,9 +2,11 @@
 
 It's the fusion of GraalVM and Bukkit.
 
+**IMPORTANT: SINGLE-LINE COMMENTS ARE NOT SUPPORTED!**
+
 ## Installation
 
-You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `bin/java` as your java path when launching a server.
+You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `<graalvm>/bin/java` as your java path when launching a server, with `<graalvm>` referring to the directory to which you extracted GraalVM.
 
 **GraalVM Download:** [Windows](https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-windows-amd64-20.0.0.zip) | [Mac](https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-darwin-amd64-20.0.0.tar.gz) | [Linux](https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-linux-amd64-20.0.0.tar.gz)
 
@@ -24,6 +26,10 @@ In any case, `<repo>` can refer to one of the following:
 
 -   A speed-dial keyword from the [official module list](https://github.com/hb432/grakkit/blob/master/modules.json).
 -   A GitHub repository, in `username/repository` format.
+
+## Scripts
+
+Any files within the `scripts` folder will be executed on plugin load. This includes sub-directories as well. You can also use `require(<repo>)` to load modules.
 
 ## Modules
 
@@ -51,8 +57,8 @@ This module will return a random number from 1 to 10. Notice how auxillary files
 **./index.js**
 
 ```js
-const rand = require('./lib/rand.js')
-module.exports = rand.range(1, 10)
+const rand = require('./lib/rand.js');
+module.exports = rand.range(1, 10);
 ```
 
 **./lib/rand.js**
@@ -68,5 +74,5 @@ module.exports = {
     chance: function (chance) {
         return Math.random() < chance
     }
-}
+};
 ```
