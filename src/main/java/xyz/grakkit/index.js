@@ -313,10 +313,6 @@
          });
       },
       context: [ core.root ],
-      default: {
-         main: 'module.exports = (function (global) {\n   return {\n      /* export */\n   };\n})(globalThis);\n',
-         package: '{\n   "main": "./main.js"\n}\n'
-      },
       download: (location) => {
          return new Promise((resolve, reject) => {
             core

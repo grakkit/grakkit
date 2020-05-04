@@ -50,29 +50,34 @@ This module will return a random number from 1 to 10. Notice how auxillary files
 ```json
 {
     "name": "rand",
-    "main": "./index.js"
+    "main": "./main.js"
 }
 ```
 
-**./index.js**
+**./main.js**
 
 ```js
-const rand = require('./lib/rand.js');
-module.exports = rand.range(1, 10);
+module.exports = (function (global) {
+    const rand = require('./lib/rand.js');
+    return rand.range(1, 10);
+})(globalThis);
 ```
 
 **./lib/rand.js**
 
 ```js
-module.exports = {
-    int: function (limit) {
-        return Math.floor(Math.random() * Math.abs(limit + 1))
-    },
-    range: function (min, max) {
-        return jx.rand.int(max - min) + min
-    },
-    chance: function (chance) {
-        return Math.random() < chance
-    }
-};
+module.exports = (function (global) {
+    const rand = {
+        int: function (limit) {
+            return Math.floor(Math.random() * Math.abs(limit + 1))
+        },
+        range: function (min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        chance: function (chance) {
+            return Math.random() < chance
+        }
+    };
+    return rand;
+})(globalThis);
 ```
