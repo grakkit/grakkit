@@ -58,6 +58,7 @@ This module will return a random number from 1 to 10. Notice how auxillary files
 
 ```js
 module.exports = (function (global) {
+    'use strict';
     const rand = require('./lib/rand.js');
     return rand.range(1, 10);
 })(globalThis);
@@ -67,6 +68,7 @@ module.exports = (function (global) {
 
 ```js
 module.exports = (function (global) {
+    'use strict';
     const rand = {
         int: function (limit) {
             return Math.floor(Math.random() * Math.abs(limit + 1))
