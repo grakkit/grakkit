@@ -29,7 +29,7 @@ In any case, `<repo>` can refer to one of the following:
 
 ## Scripts
 
-Any files within the `scripts` folder will be executed on plugin load. This includes sub-directories as well. You can also use `require(<repo>)` to load modules.
+Any files within the `scripts` folder will be executed on plugin load. This includes sub-directories as well.
 
 ## Modules
 
