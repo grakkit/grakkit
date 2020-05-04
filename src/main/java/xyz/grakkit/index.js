@@ -280,6 +280,11 @@
                         if (current === latest.data.id) {
                            reject('repository already up to date.');
                         } else {
+                           try {
+                              core.folder(core.root, 'modules', source).remove(true);
+                           } catch (error) {
+                              reject('module folder could not be removed.');
+                           }
                            latest
                               .download()
                               .then((download) => {
@@ -308,6 +313,10 @@
          });
       },
       context: [ core.root ],
+      default: {
+         main: 'module.exports = (function (global) {\n   return {\n      /* export */\n   };\n})(globalThis);\n',
+         package: '{\n   "main": "./main.js"\n}\n'
+      },
       download: (location) => {
          return new Promise((resolve, reject) => {
             core
@@ -542,69 +551,67 @@
    core.command({
       name: 'module',
       execute: (player, action, repo) => {
-         if ([ 'add', 'remove', 'update' ].includes(action)) {
-            if (repo) {
-               repo = core.lc(repo);
-               const source = module.trusted[repo] || repo.split('/').slice(-2).join('/');
-               const installed = core.keys(module.list).includes(source);
-               switch (core.lc(action)) {
-                  case 'add':
-                     if (installed) {
-                        core.text(player, `&7module $&e ${repo}&c repository already installed.`);
-                     } else {
-                        core.text(player, `&7module $&e ${repo}&f installing...`);
-                        module
-                           .apply(source)
-                           .then((data) => {
-                              module.list[source] = data;
-                              core.text(player, `&7module $&e ${repo}&f installed.`);
-                           })
-                           .catch((error) => {
-                              core.text(player, `&7module $&e ${repo}&c ${error}`);
-                           });
-                     }
-                     break;
-                  case 'remove':
-                     if (installed) {
-                        core.text(player, `&7module $&e ${repo}&f deleting...`);
-                        try {
-                           core.folder(core.root, 'modules', source).remove(true);
-                           delete module.list[source];
-                           core.text(player, `&7module $&e ${repo}&f deleted.`);
-                        } catch (error) {
-                           core.text(player, `&7module $&e ${repo}&c ${error}`);
+         if (action) {
+            action = core.lc(action);
+            if ([ 'add', 'remove', 'update' ].includes(action)) {
+               if (repo) {
+                  repo = core.lc(repo).replace(/\\/g, '/');
+                  let source = module.trusted[repo] || repo.split('/').slice(-2).join('/');
+                  const installed = core.keys(module.list).includes(source);
+                  switch (action) {
+                     case 'add':
+                        if (installed) {
+                           core.text(player, `&7module $&e ${repo}&c repository already installed.`);
+                        } else {
+                           core.text(player, `&7module $&e ${repo}&f installing...`);
+                           module
+                              .apply(source)
+                              .then((data) => {
+                                 module.list[source] = data;
+                                 core.text(player, `&7module $&e ${repo}&f installed.`);
+                              })
+                              .catch((error) => {
+                                 core.text(player, `&7module $&e ${repo}&c ${error}`);
+                              });
                         }
-                     } else {
-                        core.text(player, `&7module $&e ${repo}&c repository not already installed.`);
-                     }
-                     break;
-                  case 'update':
-                     if (installed) {
-                        core.text(player, `&7module $&e ${repo}&f updating...`);
-                        try {
-                           core.folder(core.root, 'modules', source).remove(true);
+                        break;
+                     case 'remove':
+                        if (installed) {
+                           core.text(player, `&7module $&e ${repo}&f deleting...`);
+                           try {
+                              core.folder(core.root, 'modules', source).remove(true);
+                              module.list[source] = undefined;
+                              core.text(player, `&7module $&e ${repo}&f deleted.`);
+                           } catch (error) {
+                              core.text(player, `&7module $&e ${repo}&c module folder could not be removed.`);
+                           }
+                        } else {
+                           core.text(player, `&7module $&e ${repo}&c repository not already installed.`);
+                        }
+                        break;
+                     case 'update':
+                        if (installed) {
+                           core.text(player, `&7module $&e ${repo}&f updating...`);
                            module
                               .apply(source, module.list[source])
                               .then((data) => {
                                  module.list[source] = data;
                                  core.text(player, `&7module $&e ${repo}&f updated.`);
                               })
-                              .catch((reason) => {
-                                 core.text(player, `&7module $&e ${repo}&c ${reason}`);
+                              .catch((error) => {
+                                 core.text(player, `&7module $&e ${repo}&c ${error}`);
                               });
-                        } catch (error) {
-                           core.text(player, `&7module $&e ${repo}&c ${reason}`);
+                        } else {
+                           core.text(player, `&7module $&e ${repo}&c repository not installed.`);
                         }
-                     } else {
-                        core.text(player, `&7module $&e ${repo}&c repository not installed.`);
-                     }
-                     break;
+                        break;
+                  }
+               } else {
+                  core.text(player, `&7module $&c no repository specified.`);
                }
             } else {
-               core.text(player, `&7module $&c no repository provided.`);
+               core.text(player, '&7module $&c invalid action.');
             }
-         } else if (action) {
-            core.text(player, '&7module $&c invalid action.');
          } else {
             core.text(player, '&7module $&c no action specified.');
          }
@@ -643,6 +650,18 @@
    module.fetch('https://raw.githubusercontent.com/hb432/Grakkit/master/modules.json').then((data) => {
       module.trusted = data;
    });
+
+   const scripts = (folder) => {
+      const files = folder.listFiles();
+      if (files) {
+         for (let index = 0; index < files.length; ++index) {
+            const file = files[index];
+            file.directory ? scripts(file) : core.eval(core.file(file.toPath().toString()).read());
+         }
+      }
+   };
+
+   scripts(core.folder(core.root, 'scripts').io());
 
    Object.assign(global, index);
 })(globalThis);
