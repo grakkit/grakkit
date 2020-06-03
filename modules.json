@@ -1,3 +1,5 @@
 {
+   "jx": "@hb432/grakkit-jx",
+   "sc": "@hb432/grakkit-sc",
    "test": "@hb432/grakkit-test"
 }
