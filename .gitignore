@@ -1,6 +1,7 @@
 server/
 index.js
 maven.cmd
+wiki/
 
 #
 # Standard Maven .gitignore
