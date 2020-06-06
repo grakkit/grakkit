@@ -25,7 +25,9 @@ Once you've added a module to your server, use `require(<repo>)` to execute the 
 In any case, `<repo>` can refer to one of the following:
 
 -   A speed-dial keyword from the [official module list](https://github.com/hb432/grakkit/blob/master/modules.json).
--   A GitHub repository, in `username/repository` format.
+-   A GitHub repository, in `@username/repository` format. For example, `@hb432/grakkit`.
+
+You can also use `/module create <name>` to add local modules to your server. To require them, simply use the `<name>` string used to create it. Local module names take priority over speed-dial keywords when required.
 
 ## Scripts
 
@@ -39,7 +41,7 @@ You will need a GitHub repository with a `package.json`, which must contain a `m
 
 The `module` command makes use of your latest release for both `add` and `update` functionality, so you will need to publish your repository at least one time to use your module in a public environment.
 
-Module scripts will be execute in the global scope, so, to avoid pollution, you may wrap your code in an anonymous function. From within the global scope, set the value of `globalThis.exports` to return that value when the script is required.
+Module scripts will be execute in the global scope, so, to avoid pollution, you may wrap your code in an anonymous function. From within the global scope, set the value of `moduled.exports` to return that value when the script is required.
 
 ## Example
 
