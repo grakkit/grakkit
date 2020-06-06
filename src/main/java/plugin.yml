@@ -2,10 +2,4 @@ name: grakkit
 version: 1.0
 main: xyz.grakkit.core
 api-version: 1.15
-commands:
-   js:
-      usage: /js <code>
-      permission: grakkit.js
-   module:
-      usage: /module <action> <target>
-      permission: grakkit.module
+commands: {}

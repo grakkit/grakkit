@@ -9,9 +9,20 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 
+import command.AbstractCommand;
+
 public final class core extends JavaPlugin {
 
-   // plugin code
+   // initialize variables
+   public static Context context;
+
+   // expose command registry
+   public boolean register(String prefix, String command, String usage, String description, String execute,
+         String tabComplete) {
+      AbstractCommand custom = new command(command, usage, description, execute, tabComplete);
+      return custom.register(prefix);
+   }
+
    @Override
    public void onEnable() {
 
@@ -24,6 +35,9 @@ public final class core extends JavaPlugin {
          builder.allowExperimentalOptions(true);
          builder.option("js.nashorn-compat", "true");
          Context context = builder.build();
+
+         // expose context
+         core.context = context;
 
          // find config folder
          File config = Paths.get("plugins/grakkit").toAbsolutePath().toFile();
