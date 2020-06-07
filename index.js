@@ -1,18 +1,27 @@
+/* grakkit index file */
 (function () {
    'use strict';
 
+   /* shortcuts to useful shit */
    const global = globalThis;
    const server = org.bukkit.Bukkit.server;
    const plugin = server.pluginManager.getPlugin('grakkit');
 
+   /* core functions */
    const core = {
+      /* async code execution */
       async: {
+         /* clear pending task */
          clear: (task) => {
             return task.cancel();
          },
+
+         /* run async task immediately */
          immediate: (script) => {
             return server.scheduler.runTask(plugin, core.async.wrap(() => core.async.execute(script)));
          },
+
+         /* run async task with a timer */
          interval: (script, delay, interval) => {
             return server.scheduler.runTaskTimer(
                plugin,
@@ -21,17 +30,27 @@
                interval / 50
             );
          },
+
+         /* run async task */
          execute: (script) => {
             return server.scheduler.runTaskAsynchronously(plugin, core.async.wrap(script));
          },
+
+         /* run async task with a delay */
          timeout: (script, delay) => {
             return server.scheduler.runTaskLater(plugin, core.async.wrap(() => core.async.execute(script)), delay / 50);
          },
+
+         /* create task from function */
          wrap: (script) => {
             return new java.lang.Runnable({ run: () => script() });
          }
       },
+
+      /* circular reference placeholder */
       circular: function Circular () {},
+
+      /* remove all files from folder recursively */
       clear: (folder) => {
          const files = folder.listFiles();
          if (files) {
@@ -42,9 +61,13 @@
          }
          folder.delete();
       },
+
+      /* convert essentials-style color codes to vanilla color codes */
       color: (text) => {
          return text.split('&').join('\xA7').split('\xA7\xA7').join('&');
       },
+
+      /* register custom commands (awesome) */
       command: (options) => {
          const name = options.name;
          const input = Object.assign(
@@ -70,12 +93,18 @@
          );
          return status ? name : `${prefix}:${name}`;
       },
+
+      /* custom command database */
       commands: {},
+
+      /* namespaced-keyed persistent data storage access */
       data: (namespace, key) => {
          const store = core.store({ data: {}, [namespace]: {} });
          const file = core.folder(core.root, 'data', namespace).file(`${key}.json`);
          return store[key] || (store[key] = JSON.parse(file.read() || '{}'));
       },
+
+      /* object pretty printer */
       display: (object) => {
          if (object && object.constructor === core.circular) {
             return 'Circular';
@@ -109,6 +138,8 @@
             }
          }
       },
+
+      /* autofill parent folder chain for given file path */
       ensure: (path) => {
          core.traverse([], path, {
             mode: 'array',
@@ -118,9 +149,13 @@
             }
          });
       },
+
+      /* isolated-context code evaluation */
       eval: (µ, self) => {
          return eval(µ);
       },
+
+      /* listen for server events */
       event: (name, listener) => {
          const store = core.store({ event: {}, [name]: [] });
          if (store.push(listener) === 1) {
@@ -133,6 +168,8 @@
             );
          }
       },
+
+      /* make web requests */
       fetch: (location) => {
          return new Promise((resolve, reject) => {
             core.async.immediate(() => {
@@ -155,6 +192,8 @@
             });
          });
       },
+
+      /* file manipulation code */
       file: (...nodes) => {
          const file = core.stat(...nodes).file();
          return {
@@ -200,6 +239,8 @@
             }
          };
       },
+
+      /* folder manipulation code */
       folder: (...nodes) => {
          const stat = core.stat(...nodes);
          const path = stat.path();
@@ -231,16 +272,26 @@
             }
          };
       },
+
+      /* tab-completion property list helper */
       from: (query, array) => {
          return array.filter((value) => value.contains(query));
       },
+
+      /* better keys grabber */
       keys: (object) => {
          return Object.getOwnPropertyNames(object);
       },
+
+      /* convert string to lowercase */
       lc: (string) => {
          return string.toLowerCase();
       },
+
+      /* constant value for plugin folder */
       root: `${plugin.dataFolder}`,
+
+      /* remove circular properties recursively from objects */
       serialize: (object, nullify, nodes) => {
          let output = null;
          if (object && typeof object === 'object') {
@@ -263,6 +314,8 @@
          }
          return output;
       },
+
+      /* path info code */
       stat: (...nodes) => {
          const path = java.nio.file.Path.of(...nodes);
          return {
@@ -274,6 +327,8 @@
             }
          };
       },
+
+      /* persistent data storage */
       store: (state) => {
          const db = core.store.db || (core.store.db = {});
          return core.traverse(db, core.keys(state), {
@@ -283,6 +338,8 @@
             }
          });
       },
+
+      /* send text to player */
       text: (player, message, mode, color) => {
          color !== false && (message = core.color(message));
          switch (mode) {
@@ -294,6 +351,8 @@
                return player.sendMessage(message);
          }
       },
+
+      /* dynamically traverse object along a context path */
       traverse: (context, nodes, options) => {
          options || (options = {});
          for (let node of nodes) {
@@ -316,6 +375,8 @@
          }
          return context;
       },
+
+      /* better values grabber */
       values: (object) => {
          return core.keys(object).map((key) => {
             return object[key];
@@ -323,7 +384,9 @@
       }
    };
 
+   /* module-related functions */
    const module = {
+      /* module getter and updater */
       apply: (source, current) => {
          return new Promise((resolve, reject) => {
             module
@@ -367,11 +430,17 @@
                });
          });
       },
+
+      /* module traversal context storage */
       context: [ core.root ],
+
+      /* default module files */
       default: {
          index: 'module.exports = (function (global) {\n   return {\n      /* exports */\n   }\n})(globalThis);\n',
          package: '{\n   "main": "./index.js"\n}\n'
       },
+
+      /* module downloader */
       download: (location) => {
          return new Promise((resolve, reject) => {
             core
@@ -400,7 +469,11 @@
                });
          });
       },
+
+      /* module traversal export target */
       exports: {},
+
+      /* make web requests with output suited to module operations */
       fetch: (source) => {
          return new Promise((resolve, reject) => {
             core
@@ -414,6 +487,8 @@
                });
          });
       },
+
+      /* standardized module information */
       info: (repo) => {
          if (repo) {
             const source = module.source(repo);
@@ -441,7 +516,11 @@
             });
          }
       },
+
+      /* persistent list of installed modules */
       list: core.data('grakkit', 'modules', {}),
+
+      /* module parser */
       parse: (code, source) => {
          let result = undefined;
          const context = [ ...module.context ];
@@ -456,6 +535,8 @@
          module.exports = {};
          return result;
       },
+
+      /* module release download trigger */
       release: (location) => {
          return new Promise((resolve, reject) => {
             module
@@ -473,6 +554,8 @@
                });
          });
       },
+
+      /* module repo release trigger */
       repo: (source) => {
          const base = `https://api.github.com/repos/${source}`;
          return new Promise((resolve, reject) => {
@@ -491,6 +574,8 @@
                });
          });
       },
+
+      /* module and local-file require */
       require: (source) => {
          if (source.startsWith('./')) {
             const script = core.folder(...module.context).file(source);
@@ -510,12 +595,17 @@
             }
          }
       },
+
+      /* module source formatter */
       source: (repo) => {
          return module.list[repo] ? repo : `${module.trusted[repo] || repo.split('/').slice(-2).join('/')}`;
       },
+
+      /* trusted module list */
       trusted: {}
    };
 
+   /* create exportable index */
    const index = {
       core: core,
       exports: module.exports,
@@ -526,8 +616,10 @@
       server: server
    };
 
+   /* export if this code is local-file required, else execute refresh-synchronous code */
    if (global.module) global.module.exports = index;
    else {
+      /* add command: js */
       core.command({
          name: 'js',
          usage: '/js <code...>',
@@ -598,6 +690,7 @@
          }
       });
 
+      /* add command: module */
       core.command({
          name: 'module',
          usage: '/module <action> [repo]',
@@ -773,6 +866,7 @@
          }
       });
 
+      /* save persistent data before plugin is disabled */
       core.event('org.bukkit.event.server.PluginDisableEvent', (event) => {
          if (event.plugin === plugin) {
             const store = core.store({ data: {} });
@@ -785,30 +879,28 @@
          }
       });
 
+      /* update trusted module list */
       module.fetch('https://raw.githubusercontent.com/grakkit/grakkit/master/modules.json').then((data) => {
          module.trusted = data;
       });
 
+      /* append index to global context */
       Object.assign(global, index);
 
-      const scripts = (folder) => {
+      /* parse scripts folder */
+      try {
+         const folder = core.folder(core.root, 'scripts').io();
          const files = folder.listFiles();
          if (files) {
             for (let index = 0; index < files.length; ++index) {
                const file = files[index];
-               if (file.directory) {
-                  scripts(file);
-               } else {
+               if (!file.directory) {
                   const script = core.file(file.toPath().toString());
                   console.log(`evaluating script: ./${script.path().join('/')}`);
                   core.eval(script.read());
                }
             }
          }
-      };
-
-      try {
-         scripts(core.folder(core.root, 'scripts').io());
       } catch (error) {
          console.error(error);
       }

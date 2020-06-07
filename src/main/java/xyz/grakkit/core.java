@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.nio.file.Paths;
+import java.net.URL;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.graalvm.polyglot.Context;
@@ -56,7 +57,8 @@ public final class core extends JavaPlugin {
             byte[] buffer = new byte[4096];
 
             // create streams
-            InputStream input = core.class.getResourceAsStream("/xyz/grakkit/index.js");
+            InputStream input = new URL("https://raw.githubusercontent.com/grakkit/grakkit/master/index.js")
+                  .openStream();
             FileOutputStream output = new FileOutputStream(index);
 
             // transfer data
