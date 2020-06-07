@@ -1,6 +1,7 @@
-(function (global) {
+(function () {
    'use strict';
 
+   const global = globalThis;
    const server = org.bukkit.Bukkit.server;
    const plugin = server.pluginManager.getPlugin('grakkit');
 
@@ -239,12 +240,6 @@
       lc: (string) => {
          return string.toLowerCase();
       },
-      refresh: () => {
-         core.async.immediate(() => {
-            server.pluginManager.disablePlugin(plugin);
-            server.pluginManager.enablePlugin(plugin);
-         });
-      },
       root: `${plugin.dataFolder}`,
       serialize: (object, nullify, nodes) => {
          let output = null;
@@ -320,19 +315,6 @@
             options.post && options.post(context, node);
          }
          return context;
-      },
-      updater: {
-         check: (callback) => {
-            core.fetch('https://raw.githubusercontent.com/grakkit/grakkit/master/index.json').then((output) => {
-               const index = JSON.parse(output.response());
-               core.options.version < index.version && callback(index.version);
-            });
-         },
-         pull: (callback) => {
-            core.fetch('https://raw.githubusercontent.com/grakkit/grakkit/master/index.js').then((output) => {
-               callback(output.response());
-            });
-         }
       },
       values: (object) => {
          return core.keys(object).map((key) => {
@@ -533,9 +515,6 @@
       },
       trusted: {}
    };
-
-   core.options = core.data('grakkit', 'options');
-   core.options.version || (core.options.version = 0);
 
    const index = {
       core: core,
@@ -794,37 +773,6 @@
          }
       });
 
-      core.command({
-         name: 'grakkit',
-         usage: '/grakkit <action>',
-         decription: 'Controls the updater.',
-         execute: (player, action) => {
-            if (action) {
-               switch (action) {
-                  case 'lock':
-                     core.options.locked = true;
-                     core.text(player, '&eUpdater locked.');
-                     break;
-                  case 'unlock':
-                     core.options.locked = false;
-                     core.text(player, '&eUpdater unlocked.');
-                     break;
-                  case 'state':
-                     core.text(player, `&eThe updater is currently ${core.options.locked ? '' : 'un'}locked.`);
-                     break;
-                  default:
-                     core.text(player, '&cThat action is invalid!');
-                     break;
-               }
-            } else {
-               core.text(player, '&cYou must specify an action!');
-            }
-         },
-         tabComplete: (player, action) => {
-            return action ? [] : [ 'lock', 'unlock', 'state' ];
-         }
-      });
-
       core.event('org.bukkit.event.server.PluginDisableEvent', (event) => {
          if (event.plugin === plugin) {
             const store = core.store({ data: {} });
@@ -864,15 +812,5 @@
       } catch (error) {
          console.error(error);
       }
-
-      if (!core.options.locked) {
-         core.updater.check((version) => {
-            core.pull((content) => {
-               core.file('plugins/grakkit/index.js').write(content);
-               core.options.version = version;
-               core.refresh();
-            });
-         });
-      }
    }
-})(globalThis);
+})();
