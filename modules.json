@@ -1,3 +1,4 @@
 {
-   "test": "@hb432/grakkit-test"
+   "example": "@grakkit/example",
+   "framework": "@grakkit/framework"
 }
