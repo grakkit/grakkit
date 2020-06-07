@@ -622,8 +622,6 @@
       /* add command: js */
       core.command({
          name: 'js',
-         usage: '/js <code...>',
-         decription: 'Evaluates input as JavaScript code.',
          execute: (player, ...args) => {
             try {
                let output = null;
@@ -693,8 +691,6 @@
       /* add command: module */
       core.command({
          name: 'module',
-         usage: '/module <action> [repo]',
-         decription: 'Manages local and remote grakkit modules.',
          execute: (player, action, repo) => {
             if (action) {
                action = core.lc(action);
@@ -863,6 +859,30 @@
             } else {
                return [];
             }
+         }
+      });
+
+      /* add command: grakkit */
+      core.command({
+         name: 'grakkit',
+         execute: (player, action) => {
+            if (action) {
+               switch (action) {
+                  case 'update':
+                     core.file('plugins/grakkit/index.js').remove();
+                     server.reload();
+                     core.text(player, '&eGrakkit Updated.');
+                     break;
+                  default:
+                     core.text(player, '&cThat action is invalid!');
+                     break;
+               }
+            } else {
+               core.text(player, '&cYou must specify an action!');
+            }
+         },
+         tabComplete: (player, action) => {
+            return action ? [] : [ 'update' ];
          }
       });
 
