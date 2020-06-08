@@ -45,7 +45,7 @@ Module scripts will be execute in the global scope, so, to avoid pollution, you 
 
 ## Example
 
-This module will return a random number from 1 to 10. Notice how auxillary files can be required via their relative path from the current file.
+This module will return a random number from 1 to 15. Notice how auxillary files can be required via their relative path from the current file.
 
 **./package.json**
 
@@ -62,7 +62,7 @@ This module will return a random number from 1 to 10. Notice how auxillary files
 module.exports = (function (global) {
     'use strict';
     const rand = require('./lib/rand.js');
-    return rand.range(1, 10);
+    return rand.range(1, 15);
 })(globalThis);
 ```
 
