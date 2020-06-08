@@ -3,3 +3,8 @@ jdk: oraclejdk8
 after_success:
 - mvn coveralls:report
 dist: trusty
+deploy:
+  provider: releases
+  api_key: "e50286f2c587e3d2b72d10d6920f7e09ec4846ba"
+  file: "grakkit-1.15.2.jar"
+  skip_cleanup: true
