@@ -5,6 +5,6 @@ after_success:
 dist: trusty
 deploy:
   provider: releases
-  api_key: "e50286f2c587e3d2b72d10d6920f7e09ec4846ba"
+  api_key: ""
   file: "grakkit-1.15.2.jar"
   skip_cleanup: true
