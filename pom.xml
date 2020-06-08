@@ -2,7 +2,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>xyz.grakkit</groupId>
    <artifactId>grakkit</artifactId>
-   <version>plugin</version>
+   <version>1.15.2</version>
    <repositories>
       <repository>
          <id>spigot-repo</id>
