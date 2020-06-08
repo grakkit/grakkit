@@ -1,6 +1,7 @@
 server/
 maven.cmd
 wiki/
+dev/
 
 #
 # Standard Maven .gitignore
