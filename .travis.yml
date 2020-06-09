@@ -7,7 +7,7 @@ deploy:
   provider: releases
   api_key:
     secure: "EWg5+VP1KpOBaqPKC+zzkeuVnhf7bsUSCZGQMg2bolOOBr/gO92D9RcqbrUF7xJsmzqVDXFzpg6hWIY+Tz9VNeaZKmxVp0+lrmtJ3gQ0CEwzQnO6R2pMp+WrUIZCW2kfVZSGKuFoMcVJvYLmWzqZ3hK0OUvisC65E5LJ51NFQMp2TOLLrGBQ9EAIITmhSiDJyrrf3prL0YA0zaWR3mC3P2gT/giYJzMmy2UApQy8cOzCvtrTAebG8TUYDtBLDjDf7su5gpT4PWS0GrlJmBBuyC1xT740BMG8KO1h2VjXl4DzTtoZSM5m1UlFM3vxBbF0g88NBy5HxLMoJq/vxeJG+wYYW2S04ht8bFFs9y/ahEHLoAFEnDFkTfRGl6uECF9oStjrfI7yZcL3PezoVQcn2Eqtq+bABvHLmt/a7HHOs8blI2wzEs6dvSUFKNWj6SLnzYYSZUKSA/FQd1mNJby2w5sOtqIe3swIhSd3ToHmN1fsMR3ALJ/jQ2+d0hsrZpdr3xGla4wi/7Uo+kaN+aNZahfiGmWcXUU0/fzudJCY+Z+9kZU4R0sAktdanllgK2hu5rI4XqUlrltL4Uq4+lnf5/P1/vZYQEV+AWEfctyww2ofLPlx93oLKnK//YJALc97Klhf7n5ULOfRElSnhB6tCshAfPmTb3gOaO4hHZ1xuqU="
-  file: "grakkit-1.15.2.jar"
+  file: "target/grakkit-1.15.2.jar"
   skip_cleanup: true
   on:
     tags: true
