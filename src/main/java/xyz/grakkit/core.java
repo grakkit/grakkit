@@ -33,6 +33,8 @@ public final class core extends JavaPlugin {
          // build engine
          Context.Builder builder = Context.newBuilder("js");
          builder.allowAllAccess(true);
+         builder.allowExperimentalOptions(true);
+         builder.option("js.nashorn-compat", "true");
          Context context = builder.build();
 
          // expose context
