@@ -2,8 +2,6 @@
 
 It's the fusion of GraalVM and Bukkit.
 
-[![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
-
 **IMPORTANT: SINGLE-LINE COMMENTS IN JAVASCRIPT FILES ARE NOT SUPPORTED!**
 
 ## Installation
