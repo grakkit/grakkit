@@ -33,8 +33,6 @@ public final class core extends JavaPlugin {
          // build engine
          Context.Builder builder = Context.newBuilder("js");
          builder.allowAllAccess(true);
-         builder.allowExperimentalOptions(true);
-         builder.option("js.nashorn-compat", "true");
          Context context = builder.build();
 
          // expose context
@@ -57,7 +55,7 @@ public final class core extends JavaPlugin {
             byte[] buffer = new byte[4096];
 
             // create streams
-            InputStream input = new URL("https://raw.githubusercontent.com/grakkit/grakkit/master/index.js")
+            InputStream input = new URL("https://raw.githubusercontent.com/grakkit/core/master/index.min.js")
                   .openStream();
             FileOutputStream output = new FileOutputStream(index);
 

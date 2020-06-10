@@ -26,8 +26,8 @@ Once you've added a module to your server, use `require(<repo>)` to execute the 
 
 In any case, `<repo>` can refer to one of the following:
 
--   A speed-dial keyword from the [official module list](https://github.com/hb432/grakkit/blob/master/modules.json).
--   A GitHub repository, in `@username/repository` format. For example, `@hb432/grakkit`.
+-   A speed-dial keyword from the [official module list](https://github.com/grakkit/core/blob/master/modules.json).
+-   A GitHub repository, in `@username/repository` format. For example, `@grakkit/framework`.
 
 You can also use `/module create <name>` to add local modules to your server. To require them, simply use the `<name>` string used to create it. Local module names take priority over speed-dial keywords when required.
 
@@ -37,7 +37,7 @@ Any files within the `scripts` folder will be executed on plugin load. This incl
 
 ## Modules
 
-To create your own module, you can use [this repository](https://github.com/hb432/grakkit-test/) as a starting point.
+To create your own module, you can use [this repository](https://github.com/grakkit/example/) as a starting point.
 
 You will need a GitHub repository with a `package.json`, which must contain a `main` field pointing to a JS file within the repository.
 
