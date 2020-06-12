@@ -4,8 +4,6 @@ It's the fusion of GraalVM and Bukkit.
 
 [![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
 
-**IMPORTANT: SINGLE-LINE COMMENTS IN JAVASCRIPT FILES ARE NOT SUPPORTED!**
-
 ## Installation
 
 You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `<graalvm>/bin/java` as your java path when launching a server, with `<graalvm>` referring to the directory to which you extracted GraalVM.
@@ -14,76 +12,23 @@ You will need to run your server with GraalVM. Download one of the archives list
 
 ## Command: JS
 
-The `js` command is used to evaluate code in-game. It tab-completes like a DevTools console.
+The `js` command is used to evaluate code in-game. It tab-completes like a DevTools console. You can enable or disable **live evaluation** mode with `/grakkit eval enabled` and `/grakkit eval disabled`.
 
 ## Command: Module
 
-The `module` command is the secret sauce of grakkit.
+The `module` command is the secret sauce of grakkit. Modules are added and updated via the GitHub API. The `/module add <repo>`, `/module update <repo>`, `/module remove <repo>`, and `/module list` commands serve as a "package manager" of sorts.
 
-To add a module to your server, use `/module add <repo>`. To remove a module, use `/module remove <repo>`. And, to update a module, use `/module update <repo>`.
+Generally, when checking for releases, `/module add` and `/module update` only consider standard releases. By setting your `/module channel` however, you can open this consideration up to include pre-releases as well.
 
-Once you've added a module to your server, use `require(<repo>)` to execute the code within.
-
-In any case, `<repo>` can refer to one of the following:
-
--   A speed-dial keyword from the [official module list](https://github.com/grakkit/core/blob/master/modules.json).
--   A GitHub repository, in `@username/repository` format. For example, `@grakkit/framework`.
-
-You can also use `/module create <name>` to add local modules to your server. To require them, simply use the `<name>` string used to create it. Local module names take priority over speed-dial keywords when required.
+Once you've installed a module, you can use `core.import('<repo>')` to access its content within other scripts. In any case, `<repo>` simply refers to a github repository, in `owner/repository` format.
 
 ## Scripts
 
-Any files within the `scripts` folder will be executed on plugin load. This includes sub-directories as well.
+Any files within the `scripts` folder will be executed on plugin load. This does not include sub-directories
 
 ## Modules
 
-To create your own module, you can use [this repository](https://github.com/grakkit/example/) as a starting point.
+To create your own module, you can fork [this repository](https://github.com/grakkit/example) to get a head start. Since `/module add` and `/module update` use releases as download points, you will need to create at least one tag in your repository for use on servers.
 
-You will need a GitHub repository with a `package.json`, which must contain a `main` field pointing to a JS file within the repository.
-
-The `module` command makes use of your latest release for both `add` and `update` functionality, so you will need to publish your repository at least one time to use your module in a public environment.
-
-Module scripts will be execute in the global scope, so, to avoid pollution, you may wrap your code in an anonymous function. From within the global scope, set the value of `moduled.exports` to return that value when the script is required.
-
-## Example
-
-This module will return a random number from 1 to 10. Notice how auxillary files can be required via their relative path from the current file.
-
-**./package.json**
-
-```json
-{
-    "name": "rand",
-    "main": "./main.js"
-}
-```
-
-**./main.js**
-
-```js
-module.exports = (function (global) {
-    'use strict';
-    const rand = require('./lib/rand.js');
-    return rand.range(1, 10);
-})(globalThis);
-```
-
-**./lib/rand.js**
-
-```js
-module.exports = (function (global) {
-    'use strict';
-    const rand = {
-        int: function (limit) {
-            return Math.floor(Math.random() * Math.abs(limit + 1))
-        },
-        range: function (min, max) {
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        },
-        chance: function (chance) {
-            return Math.random() < chance
-        }
-    };
-    return rand;
-})(globalThis);
-```
+# Want To Know More?
+If you're looking to do anything major with Grakkit, this general overview isn't going to help you beyond getting started with the plugin. Head on over to [the wiki](https://github.com/grakkit/grakkit/wiki) for a more in-depth view of everything Grakkit has to offer.
