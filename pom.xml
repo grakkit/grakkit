@@ -1,30 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
-   <groupId>xyz.grakkit</groupId>
+   <groupId>grakkit</groupId>
    <artifactId>grakkit</artifactId>
-   <version>1.15.2</version>
+   <version>universal</version>
+   <properties>
+      <maven.compiler.source>1.8</maven.compiler.source>
+      <maven.compiler.target>1.8</maven.compiler.target>
+      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+   </properties>
    <repositories>
       <repository>
          <id>spigot-repo</id>
          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
       </repository>
    </repositories>
-   <properties>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-   </properties>
    <dependencies>
-      <dependency>
-         <groupId>junit</groupId>
-         <artifactId>junit</artifactId>
-         <version>4.12</version>
-         <scope>test</scope>
-      </dependency>
       <dependency>
          <groupId>org.spigotmc</groupId>
          <artifactId>spigot-api</artifactId>
-         <version>1.15.2-R0.1-SNAPSHOT</version>
+         <version>1.13.2-R0.1-SNAPSHOT</version>
          <scope>provided</scope>
       </dependency>
       <dependency>
@@ -41,7 +35,6 @@
             <version>3.2.0</version>
             <configuration>
                <includes>
-                  <include>*.*</include>
                   <include>**</include>
                </includes>
             </configuration>

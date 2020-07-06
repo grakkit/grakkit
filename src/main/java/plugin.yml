@@ -1,5 +1,3 @@
 name: grakkit
-version: 1.0
-main: xyz.grakkit.core
-api-version: 1.15
-commands: {}
+main: grakkit.main
+version: 1.0.0

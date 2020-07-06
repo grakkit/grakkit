@@ -25,3 +25,8 @@ buildNumber.properties
 .classpath
 .project
 .vscode/
+.classpath
+.project
+.settings
+index.js
+target
