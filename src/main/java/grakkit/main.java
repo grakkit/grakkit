@@ -34,4 +34,8 @@ public final class main extends JavaPlugin {
          this.getServer().getPluginManager().disablePlugin(this);
       }
    }
+
+   @Override
+   public void onDisable() {
+   }
 }
