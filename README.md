@@ -22,9 +22,9 @@ Generally, when checking for releases, `/module add` and `/module update` only c
 
 Once you've installed a module, you can use `core.import('<repo>')` to access its content within other scripts. In any case, `<repo>` simply refers to a github repository, in `owner/repository` format.
 
-## Scripts
+## User Script
 
-Any files within the `scripts` folder will be executed on plugin load. This does not include sub-directories
+The user script, `user.js`, is created when the plugin first initializes. It's executed after everything else, but before the plugin is fully initialized. Use it to register commands, load modules, and for production in general.
 
 ## Modules
 
