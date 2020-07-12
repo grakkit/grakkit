@@ -204,6 +204,26 @@ import { random } from './crypto.js';
 console.log(`A cryptographically-secure random number: ${random()}`);
 ```
 
+JSON can also be imported this way. Just format your JSON file like this:
+```json
+export default {
+   "a": "x",
+   "b": [
+      "y"
+   ],
+   "c": {
+      "z": "?"
+   }
+}
+```
+
+And import like so:
+```javascript
+import test from './example.json';
+
+console.log(`Imported JSON: ${test}`);
+```
+
 # Miscellaneous
 
 ## A note about ScriptCraft
