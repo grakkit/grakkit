@@ -2,7 +2,7 @@
    <modelVersion>4.0.0</modelVersion>
    <groupId>grakkit</groupId>
    <artifactId>grakkit</artifactId>
-   <version>1.1.2</version>
+   <version>1.2.0</version>
    <properties>
       <maven.compiler.source>1.10</maven.compiler.source>
       <maven.compiler.target>1.10</maven.compiler.target>

@@ -23,7 +23,8 @@ public final class main extends JavaPlugin {
             URL remote = new URL("https://raw.githubusercontent.com/grakkit/core/master/index.min.js");
             remote.openStream().transferTo(new FileOutputStream(local));
          }
-         main.context = Context.newBuilder("js").allowAllAccess(true).build();
+         main.context = Context.newBuilder("js").allowAllAccess(true).allowExperimentalOptions(true)
+               .option("js.nashorn-compat", "true").build();
          try {
             main.context.eval(Source.newBuilder("js", local).cached(false).build());
          } catch (Exception error) {
