@@ -5,6 +5,8 @@ It's the fusion of GraalVM and Bukkit.
 
 Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
 
+# Installation
+
 ## Pre-Requisite: GraalVM
 You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `<graalvm>/bin/java` as your java path when launching a server, with `<graalvm>` referring to the directory to which you extracted GraalVM. If you're still confused, ask a developer on our [discord server](https://discord.gg/e682hwR) for help.
 
@@ -20,44 +22,13 @@ Download the latest version of Paper, move the JAR into your server's directory 
 
 **Bukkit/Spigot Downloads:** [https://getbukkit.org](https://getbukkit.org)
 
-## Installation
+## Plugin
 Once you have GraalVM set up with your server, the installation process is just as simple as any other plugin installation. Just download or compile the Grakkit JAR and drop it into your server's plugins directory.
 
-## Basics
+# Basics
+
+## The User Script
 Once you've installed the plugin, a `user.js` file will be created within `plugins/grakkit`. This file is your entry point to the world of JavaScript in Minecraft. You can use ES import/export syntax to bring other files into the mix.
-
-## Modules
-Modules are the secret sauce of Grakkit. To add a module, use `/module add <repo>`. If needs be, you can update a module to the latest version with `/module update <repo>` or update all installed modules with `/module update *`. To remove a module, use `/module remove <repo>`.
-
-Once you've added a module, you can use `core.import('<repo>')` to import it.
-
-## Create Your Own
-Modules are hosted on GitHub. You can fork [this repository](https://github.com/grakkit/example) to get a head start, or follow the example below.
-
-In your `index.js` file, use the `core.export` function to export your module, like so:
-```javascript
-core.export('hello world');
-```
-Given the above code is hosted at the `grakkit/test` repository, the following will be true:
-```javascript
-core.import('grakkit/test') === 'hello world';
-```
-
-Now, the `core.export` function is ONLY used to export your module. In-module file loading is done with ES module syntax. Let's say you have another file in the same folder as `index.js`, for example, `crypto.js`:
-```javascript
-const SecureRandom = Java.type('java.security.SecureRandom');
-const crypto = new SecureRandom();
-
-export const random = () => {
-   return (crypto.nextInt() + 2147483648) / 4294967296;
-}
-```
-Given the above, you can use the following to import and call the `random` function from within the `index.js` file:
-```javascript
-import { random } from './crypto.js';
-
-console.log(`A cryptographically-secure random number: ${random()}`);
-```
 
 ## Custom Commands
 Commands are created and registered with the `core.command` function. Feel free to use the examples below to get started with your own commands.
@@ -198,6 +169,43 @@ $('*playerQuit').do((event) => {
    data.items = player.inventory().serialize();
 });
 ```
+
+# Modules
+
+## Using Modules
+Modules are the secret sauce of Grakkit. To add a module, use `/module add <repo>`. If needs be, you can update a module to the latest version with `/module update <repo>` or update all installed modules with `/module update *`. To remove a module, use `/module remove <repo>`.
+
+Once you've added a module, you can use `core.import('<repo>')` to import it.
+
+## Create Your Own
+Modules are hosted on GitHub. You can fork [this repository](https://github.com/grakkit/example) to get a head start, or follow the example below.
+
+In your `index.js` file, use the `core.export` function to export your module, like so:
+```javascript
+core.export('hello world');
+```
+Given the above code is hosted at the `grakkit/test` repository, the following will be true:
+```javascript
+core.import('grakkit/test') === 'hello world';
+```
+
+Now, the `core.export` function is ONLY used to export your module. In-module file loading is done with ES module syntax. Let's say you have another file in the same folder as `index.js`, for example, `crypto.js`:
+```javascript
+const SecureRandom = Java.type('java.security.SecureRandom');
+const crypto = new SecureRandom();
+
+export const random = () => {
+   return (crypto.nextInt() + 2147483648) / 4294967296;
+}
+```
+Given the above, you can use the following to import and call the `random` function from within the `index.js` file:
+```javascript
+import { random } from './crypto.js';
+
+console.log(`A cryptographically-secure random number: ${random()}`);
+```
+
+# Miscellaneous
 
 ## A note about ScriptCraft
 We have a module just for those who are looking to transition from ScriptCraft. Use `/module add grakkit/scriptcraft` to install it, and add the following at the top of your `user.js` file:
