@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
 
+![logo](./grakkit2.svg)
+
 **It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
 
 # Installation
