@@ -1,11 +1,12 @@
-# Grakkit
+![The Grakkit Logo](./grakkit.svg)
 
 [![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
 
-![logo](./grakkit2.svg)
+# Grakkit
 
 **It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
 
+---
 **This plugin is NOT for beginners!** If you are new to JavaScript, or the Minecraft+JS world as a whole, I highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
 
 # Installation
