@@ -4,6 +4,8 @@
 
 **It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
 
+**This plugin is NOT for beginners!** If you are new to JavaScript, or the Minecraft+JS world as a whole, I highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
+
 # Installation
 
 ## Pre-Requisite: GraalVM
@@ -226,14 +228,19 @@ console.log(`Imported JSON: ${test}`);
 
 # Miscellaneous
 
+## Legacy Support
+Grakkit theoretically supports Minecraft versions going back to beta 1.4, given you have bukkit installed. This legacy support does not extend to modules, and likely never will. If you do intend to use grakkit on a beta or legacy release version, you may run into unexpected problems, however the `index.js` and `user.js` files should work properly in their default state.
+
 ## A note about ScriptCraft
-We have a module just for those who are looking to transition from ScriptCraft. Use `/module add grakkit/scriptcraft` to install it, and add the following at the top of your `user.js` file:
+We have a module just for those who are looking to transition from ScriptCraft. With Grakkit installed, use `/module add grakkit/scriptcraft` to install it, and add the following at the top of your `user.js` file:
 ```javascript
 core.import('grakkit/scriptcraft');
 ```
-Once you've got that, reload the server. The scriptcraft directory should generate itself within your server's folder, and from that point on, things should work just like they did with ScriptCraft.
 
-We fully respect and support ScriptCraft and what it did. For us, at least in part, Grakkit is a continuation of what ScriptCraft aimed to do, with plenty of our own ideas and features thrown in. We don't intend to start a rivalry between supporters of the two plugins.
+If you have a pre-existing ScriptCraft directory, you should temporarily rename or move it so that the modified compat version can be installed.
 
-## Legacy Support
-Grakkit theoretically supports Minecraft versions going back to beta 1.4, given you have bukkit installed. This legacy support does not extend to modules, and likely never will. If you do intend to use grakkit on a beta or legacy release version, you may run into unexpected problems, however the `index.js` and `user.js` files should work properly in their default state.
+Anyways, once you've got that, reload the server. The scriptcraft directory should generate itself within your server's folder, and from that point on, things should work just like they did with ScriptCraft.
+
+You can then copy your plugins and modules back into the folder. You may run into a few small bugs, but once those are fixed, you should be good. 90-95% of ScriptCraft is supported in Grakkit.
+
+We fully respect and support ScriptCraft and what it did. For us, at least in part, Grakkit is a continuation of what ScriptCraft aimed to do, with plenty of our own ideas and features thrown in. **We don't intend to start a rivalry between supporters of the two plugins.**
