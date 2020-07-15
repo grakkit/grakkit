@@ -1,15 +1,16 @@
+![Grakkit Header Logo](./grakkit.png)
+
+**It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
+
 ![The Grakkit Logo](./grakkit.svg)
 
 [![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
 
-# Grakkit
-
-**It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
-
----
-**This plugin is NOT for beginners!** If you are new to JavaScript, or the Minecraft+JS world as a whole, I highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
-
 # Installation
+
+## Pre-Requisite: Prior Experience
+
+**This plugin is NOT for beginners!** If you are new to JavaScript, I highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
 
 ## Pre-Requisite: GraalVM
 You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `<graalvm>/bin/java` as your java path when launching a server, with `<graalvm>` referring to the directory to which you extracted GraalVM. If you're still confused, ask a developer on our [discord server](https://discord.gg/e682hwR) for help.
