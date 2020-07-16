@@ -38,29 +38,30 @@ Commands are created and registered with the `core.command` function. Feel free 
 
 *Note: Commands will only show tab-completions if they are registered synchronously when the plugin loads.*
 ```javascript
-// smite command (essentials)
-// permission node: example.command.smite
 core.command({
    name: 'smite',
+   // permission required
+   permission: 'example.command.smite',
+   // error that displays if you don't have permissions
+   error: '§cWho do you think you are? Thor?',
    execute: (player, target) => {
-      if (player.hasPermission('example.command.smite')) {
+      if (target) {
+         target = server.getPlayer(target);
          if (target) {
-            target = server.getPlayer(target);
-            if (target) {
-               target.getWorld().strikeLightning(target.getLocation());
-               core.send(player, '§6Your target has been smitten.');
-            } else {
-               core.send(player, '§cThat player is offline or does not exist!');
-            }
+            target.getWorld().strikeLightning(target.getLocation());
+            core.send(player, '§6Your target has been smitten.');
          } else {
-            core.send(player, '§cUsage: /smite <target>');
+            core.send(player, '§cThat player is offline or does not exist!');
          }
       } else {
-         core.send(player, '§cInsufficient Permissions!');
+         core.send(player, '§cUsage: /smite <target>');
       }
    },
-   tabComplete: (player, target) => {
-      return core.from(target, [ ...server.getOnlinePlayers() ].map((player) => player.getName()));
+   tabComplete: (player, ...args) => {
+      if (args.length < 2) {
+         const players = [ ...server.getOnlinePlayers() ].map((player) => player.getName());
+         return players.filter((name) => name.includes(args[0]));
+      }
    }
 });
 
@@ -71,23 +72,22 @@ core.command({
    execute: (player, term) => {
       if (term) {
          player.sendMessage('§7Searching...');
-         core.fetch(`https://api.urbandictionary.com/v0/define?term=${term}`, (response, error) => {
-            if (response) {
-               const json = response.json();
-               if (json) {
-                  const entry = json.list[0];
-                  if (entry) {
-                     core.send(player, `§6${entry.definition.split('\r\n')[0].replace(/[\[\]]/g, '')}`);
-                  } else {
-                     core.send(player, '§cThat word does not have a definition!');
-                  }
+         try {
+            const response = core.fetch(`https://api.urbandictionary.com/v0/define?term=${term}`);
+            const json = response.json();
+            if (json) {
+               const entry = json.list[0];
+               if (entry) {
+                  core.send(player, `§6${entry.definition.split('\r\n')[0].replace(/[\[\]]/g, '')}`);
                } else {
-                  core.send(player, '§cAn error occured in the urban dictionary database!');
+                  core.send(player, '§cThat word does not have a definition!');
                }
             } else {
-               core.send(player, `§cAn error (HTTP ${error}) occured!`);
+               core.send(player, '§cAn error occured in the urban dictionary database!');
             }
-         });
+         } catch (error) {
+            core.send(player, `§cAn error (HTTP ${error}) occured!`);
+         }
       } else {
          core.send(player, '§cUsage: /urban <word>');
       }
@@ -145,7 +145,7 @@ const data = core.data('example/data/path');
 ```
 That `data` object is now linked to that path. When you refresh, reload, or restart the server, any data assigned to the object will be saved to a JSON file. If the data includes any circular references, they will be parsed out. If your data contains any value that is not an array, object, string, number, boolean, null, or undefined, it will also be parsed out.
 
-In the following example, the `grakkit/jx` module is used store a player's inventory with JSON while they're offline. When they log in, the stored data is parsed back into their inventory.
+In the following example, **the `grakkit/jx` module is used** to store a player's inventory with JSON while they're offline. When they log in, the stored data is parsed back into their inventory.
 
 ```javascript
 const $ = core.import('grakkit/jx');
