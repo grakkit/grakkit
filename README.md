@@ -148,7 +148,7 @@ That `data` object is now linked to that path. When you refresh, reload, or rest
 In the following example, **the `grakkit/jx` module is used** to store a player's inventory with JSON while they're offline. When they log in, the stored data is parsed back into their inventory.
 
 ```javascript
-const $ = core.import('grakkit/jx');
+const $ = core.import('@grakkit/jx');
 
 // detect player join
 $('*playerJoin').do((event) => {
@@ -178,7 +178,7 @@ $('*playerQuit').do((event) => {
 ## Using Modules
 Modules are the secret sauce of Grakkit. To add a module, use `/module add <repo>`. If needs be, you can update a module to the latest version with `/module update <repo>` or update all installed modules with `/module update *`. To remove a module, use `/module remove <repo>`.
 
-Once you've added a module, you can use `core.import('<repo>')` to import it.
+Once you've added a module, you can use `core.import('@<repo>')` to import it.
 
 ## Create Your Own
 Modules are hosted on GitHub. You can fork [this repository](https://github.com/grakkit/example) to get a head start, or follow the example below.
@@ -189,7 +189,7 @@ core.export('hello world');
 ```
 Given the above code is hosted at the `grakkit/test` repository, the following will be true:
 ```javascript
-core.import('grakkit/test') === 'hello world';
+core.import('@grakkit/test') === 'hello world';
 ```
 
 Now, the `core.export` function is ONLY used to export your module. In-module file loading is done with ES module syntax. Let's say you have another file in the same folder as `index.js`, for example, `crypto.js`:
@@ -236,7 +236,7 @@ Grakkit theoretically supports Minecraft versions going back to beta 1.4, given 
 ## A note about ScriptCraft
 We have a module just for those who are looking to transition from ScriptCraft. With Grakkit installed, use `/module add grakkit/scriptcraft` to install it, and add the following at the top of your `user.js` file:
 ```javascript
-core.import('grakkit/scriptcraft');
+core.import('@grakkit/scriptcraft');
 ```
 
 If you have a pre-existing ScriptCraft directory, you should temporarily rename or move it so that the modified compat version can be installed.
