@@ -1,4 +1,4 @@
-![The Grakkit Pirate](./grakkit.svg)
+![Grakkit Logo](./grakkit.png)
 
 **It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
 
@@ -8,7 +8,7 @@
 
 ## Pre-Requisite: Prior Experience
 
-**This plugin is NOT for beginners!** If you are new to JavaScript, I highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
+**This plugin is NOT for beginners!** If you are new to JavaScript, we highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
 
 ## Pre-Requisite: GraalVM
 You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `<graalvm>/bin/java` as your java path when launching a server, with `<graalvm>` referring to the directory to which you extracted GraalVM. If you're still confused, ask a developer on our [discord server](https://discord.gg/e682hwR) for help.
@@ -31,7 +31,15 @@ Once you have GraalVM set up with your server, the installation process is just 
 # Basics
 
 ## The User Script
-Once you've installed the plugin, a `user.js` file will be created within `plugins/grakkit`. This file is your entry point to the world of JavaScript in Minecraft. You can use ES import/export syntax to bring other files into the mix.
+Once you've installed the plugin, a `user.js` file will be created within `plugins/grakkit`. This file is your entry point to the world of JavaScript in Minecraft. You can use ES import/export syntax to bring other files into the mix. This file is executed during a refresh, reload, or restart.
+
+## IntelliSense Support
+The first time you boot up the server, typescript definition files will be downloaded. These files are used to bring full IntelliSense support, tested with VS code. Using `server`, `core.event`, and `core.type` as your entry points, your code will tab-complete valid methods for bukkit, spigot, and paper classes.
+
+If you're unfamiliar with the server API, experiment around with whatever you can find here, see what does what. A few great places to start are `server.getOnlinePlayers()`, `server.getWorld('world')`, and `server.selectEntities(server.getConsoleSender(), '@e')`.
+
+## The Scripts Folder
+Any files in the top level of this folder will be executed directly after the user script. This makes it easy to import files from elsewhere by just dropping them in this folder.
 
 ## Custom Commands
 Commands are created and registered with the `core.command` function. Feel free to use the examples below to get started with your own commands.
@@ -231,7 +239,7 @@ console.log(`Imported JSON: ${test}`);
 # Miscellaneous
 
 ## Legacy Support
-Grakkit theoretically supports Minecraft versions going back to beta 1.4, given you have bukkit installed. This legacy support does not extend to modules, and likely never will. If you do intend to use grakkit on a beta or legacy release version, you may run into unexpected problems, however the `index.js` and `user.js` files should work properly in their default state.
+Grakkit theoretically supports Minecraft versions going back to beta 1.4, given you have bukkit installed. This legacy support does not extend to modules or typescript definitions, and likely never will. If you do intend to use grakkit on a beta or legacy release version, you may run into unexpected problems, however the `index.js` and `user.js` files should work properly in their default state.
 
 ## A note about ScriptCraft
 We have a module just for those who are looking to transition from ScriptCraft. With Grakkit installed, use `/module add grakkit/scriptcraft` to install it, and add the following at the top of your `user.js` file:
@@ -239,7 +247,7 @@ We have a module just for those who are looking to transition from ScriptCraft. 
 core.import('@grakkit/scriptcraft');
 ```
 
-If you have a pre-existing ScriptCraft directory, you should temporarily rename or move it so that the modified compat version can be installed.
+If you have a pre-existing ScriptCraft directory, you should temporarily rename or move it so that the modified compat version can be installed, then copy in your custom scripts and modules.
 
 Anyways, once you've got that, reload the server. The scriptcraft directory should generate itself within your server's folder, and from that point on, things should work just like they did with ScriptCraft.
 
