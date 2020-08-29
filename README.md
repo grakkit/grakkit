@@ -10,7 +10,7 @@
 
 # Installation
 
-## Windows
+## GraalVM (Windows)
 
 Open a new CMD window and copy/paste the following commands:
 ```bat
@@ -38,11 +38,11 @@ With GraalVM installed, your start script should look like this:
 
 If you're still confused, ask a developer on our [discord server](https://discord.gg/e682hwR) for help.
 
-## Linux
+## GraalVM (Mac/Linux)
 TBA
 
 ## Plugin
-Once you have GraalVM set up with your server, the installation process is just as simple as any other plugin installation. Just download or compile the Grakkit JAR and drop it into your server's plugins directory.
+Once you have GraalVM set up with your server, the installation process is just as simple as any other plugin installation. Head on over to the [releases page](https://github.com/grakkit/grakkit/releases) and download the latest version's JAR file.
 
 # Basics
 
