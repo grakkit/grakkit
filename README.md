@@ -2,30 +2,44 @@
 
 **It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
 
+**This plugin is NOT for beginners!** If you are new to JavaScript, we highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
+
 ![Code Demo](./demo.gif)
 
 [![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
 
 # Installation
 
-## Pre-Requisite: Prior Experience
+## Windows
 
-**This plugin is NOT for beginners!** If you are new to JavaScript, we highly recommend you try [ScriptCraft](https://github.com/walterhiggins/ScriptCraft) as its ecosystem is geared towards newcomers.
+Open a new CMD window and copy/paste the following commands:
+```bat
+@echo off
+cls
+set "target=%temp%\GraalVM-%RANDOM%"
+powershell -command wget "https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-windows-amd64-20.0.0.zip" -OutFile "%target%.zip"
+powershell -command Expand-Archive -Force "%target%.zip" "%target%"
+cd %appdata%
+if exist GraalVM rd /q /s GraalVM
+ren "%target%\graalvm-ce-java11-20.0.0" "%appdata%\GraalVM"
+del "%target%.zip"
+exit
+```
 
-## Pre-Requisite: GraalVM
-You will need to run your server with GraalVM. Download one of the archives listed, extract the contents somewhere, and use `<graalvm>/bin/java` as your java path when launching a server, with `<graalvm>` referring to the directory to which you extracted GraalVM. If you're still confused, ask a developer on our [discord server](https://discord.gg/e682hwR) for help.
+A traditional server start script may look something like this:
+```bat
+java -jar server.jar
+```
 
-**GraalVM Download:** [Windows](https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-windows-amd64-20.0.0.zip) | [Mac](https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-darwin-amd64-20.0.0.tar.gz) | [Linux](https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-20.0.0/graalvm-ce-java11-linux-amd64-20.0.0.tar.gz)
+With GraalVM installed, your start script should look like this:
+```bat
+"%appdata%\GraalVM\bin\java" -jar server.jar
+```
 
-## Pre-Requisite: Paper (or any other system related to bukkit)
+If you're still confused, ask a developer on our [discord server](https://discord.gg/e682hwR) for help.
 
-Download the latest version of Paper, move the JAR into your server's directory and point to it when launching the server. Again, you can join our [discord server](https://discord.gg/e682hwR) if you still need help setting things up.
-
-*Note: While this plugin does work with Bukkit & Spigot, the enhanced performance of Paper in addition to many useful features in the API means that we recommend paper for the smooth operation of a server with Grakkit installed. For a more in-depth analysis, [click here](https://papermc.io).*
-
-**Paper Download:** [https://papermc.io/downloads](https://papermc.io/downloads)
-
-**Bukkit/Spigot Downloads:** [https://getbukkit.org](https://getbukkit.org)
+## Linux
+TBA
 
 ## Plugin
 Once you have GraalVM set up with your server, the installation process is just as simple as any other plugin installation. Just download or compile the Grakkit JAR and drop it into your server's plugins directory.
