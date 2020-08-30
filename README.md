@@ -270,3 +270,7 @@ Anyways, once you've got that, reload the server. The scriptcraft directory shou
 You can then copy your plugins and modules back into the folder. You may run into a few small bugs, but once those are fixed, you should be good. 90-95% of ScriptCraft is supported in Grakkit.
 
 We fully respect and support ScriptCraft and what it did. For us, at least in part, Grakkit is a continuation of what ScriptCraft aimed to do, with plenty of our own ideas and features thrown in. **We don't intend to start a rivalry between supporters of the two plugins.**
+
+---
+
+Grakkit is owned and maintained by RepComm and hb432.
