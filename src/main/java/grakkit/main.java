@@ -20,7 +20,7 @@ public final class main extends JavaPlugin {
          File local = Paths.get("plugins/grakkit/index.js").toFile();
          if (!local.exists()) {
             Files.createFile(local.toPath());
-            URL remote = new URL("https://raw.githubusercontent.com/grakkit/core/master/index.min.js");
+            URL remote = new URL("https://raw.githubusercontent.com/grakkit/core/master/index.js");
             remote.openStream().transferTo(new FileOutputStream(local));
          }
          main.context = Context.newBuilder("js").allowAllAccess(true).allowExperimentalOptions(true)
