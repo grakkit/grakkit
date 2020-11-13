@@ -8,12 +8,13 @@
 
 [![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)](https://travis-ci.org/grakkit/grakkit)
 
-
 If you want to get in touch with the community, join our [discord server](https://discord.gg/e682hwR) and we can assist you with whatever problem you may have.
 
 # Getting Started
 
 ## Installation
+This section will explain how to install grakkit properly.
+<!--
 We've created installers for you to use when installing GraalVM and Grakkit.
 
 **Downloads:** [Windows Installer](https://raw.githubusercontent.com/grakkit/grakkit/master/installer/grakkit.exe) | [Linux Installer](https://raw.githubusercontent.com/grakkit/grakkit/master/installer/grakkit)
@@ -21,6 +22,7 @@ We've created installers for you to use when installing GraalVM and Grakkit.
 If you're new to minecraft server development, just run your platform's installer as-is. If you already have a server running, run the installer with the `--noserver` command line argument.
 
 Users who directly created their server with the installer can use the `--nograal` flag to update their server to the latest minecraft version without re-installing GraalVM.
+-->
 
 ## Grakkit Basics
 This section will contain information about the general grakkit environment.
