@@ -13,16 +13,13 @@ If you want to get in touch with the community, join our [discord server](https:
 # Getting Started
 
 ## Installation
-This section will explain how to install grakkit properly.
-<!--
 We've created installers for you to use when installing GraalVM and Grakkit.
 
-**Downloads:** [Windows Installer](https://raw.githubusercontent.com/grakkit/grakkit/master/installer/grakkit.exe) | [Linux Installer](https://raw.githubusercontent.com/grakkit/grakkit/master/installer/grakkit)
+**Downloads:** [Windows Installer](https://github.com/grakkit/installer/releases/download/v1.0.0/grakkit.exe) | [Linux Installer](https://github.com/grakkit/installer/releases/download/v1.0.0/grakkit)
 
 If you're new to minecraft server development, just run your platform's installer as-is. If you already have a server running, run the installer with the `--noserver` command line argument.
 
 Users who directly created their server with the installer can use the `--nograal` flag to update their server to the latest minecraft version without re-installing GraalVM.
--->
 
 ## Grakkit Basics
 This section will contain information about the general grakkit environment.
