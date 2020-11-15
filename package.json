@@ -1,0 +1,17 @@
+{
+   "dependencies": {
+      "decompress-zip": "^0.2.2"
+   },
+   "devDependencies": {
+      "pkg": "^4.4.9"
+   },
+   "private": true,
+   "scripts": {
+      "win": "pkg grakkit.js -t node14-win-x64",
+      "lnx": "pkg grakkit.js -t node14-linux-x64",
+      "start": "node grakkit.js",
+      "graal": "node grakkit.js --noserver",
+      "server": "node grakkit.js --nograal",
+      "none": "node grakkit.js --nograal --noserver"
+   }
+}
