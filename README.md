@@ -4,12 +4,11 @@
 
 ![Code Demo](./demo.gif)
 
+![Build Status](https://travis-ci.org/grakkit/grakkit.svg?branch=master)
+
 If you want to get in touch with the community, join our [discord server](https://discord.gg/e682hwR) and we can assist you with whatever problem you may have.
 
 # Getting Started
-
-## Installation
-This section will direct users to download the grakkit command-line interface.
 
 ## Grakkit Basics
 This section will contain information about the general grakkit environment.
