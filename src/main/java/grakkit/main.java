@@ -98,9 +98,8 @@ public final class main extends JavaPlugin {
    @Override
    public void onEnable() {
 
-      // create plugin folder & node_modules
+      // create plugin folder
       this.getDataFolder().mkdir();
-      Paths.get(this.getDataFolder().getPath(), "node_modules").toFile().mkdir();
 
       // create context
       main.context = Context.newBuilder("js")
@@ -111,7 +110,7 @@ public final class main extends JavaPlugin {
          .option("js.commonjs-require-cwd", "./plugins/grakkit")
          .build();
 
-      // get index file
+      // create plugin folder
       File index = Paths.get(this.getDataFolder().getPath(), "index.js").toFile();
 
       // check if index exists
