@@ -99,7 +99,12 @@ public final class main extends JavaPlugin {
    public void onEnable() {
 
       // create context
-      main.context = Context.newBuilder("js").allowAllAccess(true).allowExperimentalOptions(true).build();
+      main.context = Context.newBuilder("js")
+         .allowAllAccess(true)
+         .allowExperimentalOptions(true)
+         .option("js.nashorn-compat", "true")
+         .option("js.commonjs-require", "true")
+         .build();
 
       // create plugin folder & get index file
       this.getDataFolder().mkdir();
