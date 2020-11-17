@@ -108,7 +108,7 @@ public final class main extends JavaPlugin {
          .allowExperimentalOptions(true)
          .option("js.nashorn-compat", "true")
          .option("js.commonjs-require", "true")
-         .option("js.commonjs-require-cwd", "./plugins/grakkit/node_modules")
+         .option("js.commonjs-require-cwd", "./plugins/grakkit")
          .build();
 
       // get index file
