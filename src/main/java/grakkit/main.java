@@ -25,8 +25,8 @@ public final class main extends JavaPlugin {
    public static Map<String, CustomCommand> commands = new HashMap<String, CustomCommand>();
 
    public void reload () {
-      this.getServer().getPluginManager().disablePlugin(this);
-      this.getServer().getPluginManager().enablePlugin(this);
+      getServer().getPluginManager().disablePlugin(this);
+      getServer().getPluginManager().enablePlugin(this);
    }
 
    public void register (String key, String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
@@ -84,14 +84,14 @@ public final class main extends JavaPlugin {
          method.invoke(loader, main.locate(main.class));
 
          // expose command map (reflection)
-         Field internal = this.getServer().getClass().getDeclaredField("commandMap");
+         Field internal = getServer().getClass().getDeclaredField("commandMap");
          internal.setAccessible(true);
-         main.registry = (CommandMap) internal.get(this.getServer());
+         main.registry = (CommandMap) internal.get(getServer());
       } catch (Exception error) {
 
          // handle init errors and exit
          error.printStackTrace(System.err);
-         this.getServer().getPluginManager().disablePlugin(this);
+         getServer().getPluginManager().disablePlugin(this);
       }
    }
 
@@ -99,7 +99,13 @@ public final class main extends JavaPlugin {
    public void onEnable() {
 
       // create plugin folder
-      this.getDataFolder().mkdir();
+      getDataFolder().mkdir();
+
+      // copy default config from resources
+      getConfig().options().copyDefaults(true);
+
+      // save config
+      saveDefaultConfig();
 
       // create context
       main.context = Context.newBuilder("js")
@@ -110,8 +116,8 @@ public final class main extends JavaPlugin {
          .option("js.commonjs-require-cwd", "./plugins/grakkit")
          .build();
 
-      // create plugin folder
-      File index = Paths.get(this.getDataFolder().getPath(), "index.js").toFile();
+      // get index file
+      File index = Paths.get(getDataFolder().getPath(), getConfig().getString("main", "index.js")).toFile().mkdir();
 
       // check if index exists
       if (index.exists()) {
@@ -127,8 +133,8 @@ public final class main extends JavaPlugin {
       } else {
             
          // handle missing index and exit
-         this.getServer().getLogger().severe("The file \"plugins/grakkit/index.js\" could not be found. [explain why file does/might not exist] [link to instructions]");
-         this.getServer().getPluginManager().disablePlugin(this);
+         getServer().getLogger().severe("The file \"plugins/grakkit/index.js\" could not be found. [explain why file does/might not exist] [link to instructions]");
+         getServer().getPluginManager().disablePlugin(this);
       }
    }
 
