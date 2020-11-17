@@ -98,16 +98,20 @@ public final class main extends JavaPlugin {
    @Override
    public void onEnable() {
 
+      // create plugin folder & node_modules
+      this.getDataFolder().mkdir();
+      Paths.get(this.getDataFolder().getPath(), "node_modules").toFile().mkdir();
+
       // create context
       main.context = Context.newBuilder("js")
          .allowAllAccess(true)
          .allowExperimentalOptions(true)
          .option("js.nashorn-compat", "true")
          .option("js.commonjs-require", "true")
+         .option("js.commonjs-require-cwd", "./plugins/grakkit/node_modules")
          .build();
 
-      // create plugin folder & get index file
-      this.getDataFolder().mkdir();
+      // get index file
       File index = Paths.get(this.getDataFolder().getPath(), "index.js").toFile();
 
       // check if index exists
