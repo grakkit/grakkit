@@ -15,11 +15,11 @@ public final class CustomCommand extends Command {
 
    public CustomCommand (String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
       super(name, description, usage, aliases);
-      executor = executor;
-      tabCompleter = tabCompleter;
+      this.executor = executor;
+      this.tabCompleter = tabCompleter;
       if (permission.length() > 0) {
-         setPermission(permission);
-         setPermissionMessage(message);
+         this.setPermission(permission);
+         this.setPermissionMessage(message);
       }
    }
 
