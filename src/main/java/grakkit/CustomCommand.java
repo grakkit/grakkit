@@ -26,7 +26,7 @@ public final class CustomCommand extends Command {
    @Override
    public boolean execute (CommandSender sender, String label, String[] args) {
       try {
-         executor.execute(sender, label, args);
+         this.executor.execute(sender, label, args);
       } catch (UnsupportedOperationException error) {
          // if the executor is not executable, do not report the error
       } catch (Exception error) {
@@ -39,7 +39,7 @@ public final class CustomCommand extends Command {
    public List<String> tabComplete (CommandSender sender, String alias, String[] args) {
       List<String> output = new ArrayList<String>();
       try {
-         Value input = tabCompleter.execute(sender, alias, args);
+         Value input = this.tabCompleter.execute(sender, alias, args);
          for (int index = 0; index < input.getArraySize(); index++) output.add(input.getArrayElement(index).asString());
       } catch (UnsupportedOperationException error) {
          // if the tab-completer is not executable, do not report the error

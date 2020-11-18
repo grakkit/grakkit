@@ -32,7 +32,7 @@ public final class main extends JavaPlugin {
    public void register (String key, String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
       
       // check if command already exists
-      if (commands.containsKey(key)) {
+      if (main.commands.containsKey(key)) {
 
          // modify existing command
          CustomCommand command = commands.get(key);
@@ -46,8 +46,8 @@ public final class main extends JavaPlugin {
 
          // create new command
          CustomCommand command = new CustomCommand(name, description, usage, aliases, permission, message, fallback, executor, tabCompleter);
-         registry.register(fallback, command);
-         commands.put(key, command);
+         main.registry.register(fallback, command);
+         main.commands.put(key, command);
       }
    }
 
@@ -91,7 +91,7 @@ public final class main extends JavaPlugin {
 
          // handle init errors and exit
          error.printStackTrace(System.err);
-         getServer().getPluginManager().disablePlugin(this);
+         this.getServer().getPluginManager().disablePlugin(this);
       }
    }
 
@@ -99,13 +99,13 @@ public final class main extends JavaPlugin {
    public void onEnable() {
 
       // create plugin folder
-      getDataFolder().mkdir();
+      this.getDataFolder().mkdir();
 
       // copy default config from resources
-      getConfig().options().copyDefaults(true);
+      this.getConfig().options().copyDefaults(true);
 
       // save config
-      saveDefaultConfig();
+      this.saveDefaultConfig();
 
       // create context
       main.context = Context.newBuilder("js")
@@ -117,7 +117,7 @@ public final class main extends JavaPlugin {
          .build();
 
       // get index file
-      File index = Paths.get(getDataFolder().getPath(), getConfig().getString("main", "index.js")).toFile().mkdir();
+      File index = Paths.get(getDataFolder().getPath(), getConfig().getString("main", "index.js")).toFile();
 
       // check if index exists
       if (index.exists()) {
@@ -133,8 +133,8 @@ public final class main extends JavaPlugin {
       } else {
             
          // handle missing index and exit
-         getServer().getLogger().severe("The file \"plugins/grakkit/index.js\" could not be found. [explain why file does/might not exist] [link to instructions]");
-         getServer().getPluginManager().disablePlugin(this);
+         this.getServer().getLogger().severe("The entry point specified \"" + index.getPath().replace('\\', '/') + "\" could not be found. Create this file and reload the plugin.");
+         this.getServer().getPluginManager().disablePlugin(this);
       }
    }
 
@@ -142,7 +142,7 @@ public final class main extends JavaPlugin {
    public void onDisable() {
 
       // de-reference executors and tab-completers for each command
-      commands.values().forEach(command -> {
+      main.commands.values().forEach(command -> {
          command.executor = Value.asValue(new Object());
          command.tabCompleter = Value.asValue(new Object());
       });
