@@ -54,20 +54,26 @@ public final class main extends JavaPlugin {
    public static URL locate (Class<?> clazz) {
       try {
          URL location = clazz.getProtectionDomain().getCodeSource().getLocation();
-         if (location != null) return location;
+         if (location instanceof URL) return location;
       } catch (SecurityException | NullPointerException error) {
-         // ignore errors, need to try other methods
+         // ignore errors to try other method
       }
       URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
-      if (resource == null) return null;
-      String link = resource.toString();
-      String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
-      if (!link.endsWith(suffix)) return null;
-      String base = link.substring(0, link.length() - suffix.length()), path = base;
-      if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
-      try {
-         return new URL(path);
-      } catch (MalformedURLException error) {
+      if (resource instanceof URL) {
+         String link = resource.toString();
+         String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
+         if (link.endsWith(suffix)) {
+            String base = link.substring(0, link.length() - suffix.length()), path = base;
+            if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
+            try {
+               return new URL(path);
+            } catch (MalformedURLException error) {
+               return null;
+            }
+         } else {
+            return null;
+         }
+      } else {
          return null;
       }
    }
@@ -97,6 +103,15 @@ public final class main extends JavaPlugin {
 
    @Override
    public void onEnable() {
+
+      // de-reference executors and tab-completers for each command
+      main.commands.values().forEach(command -> {
+         command.executor = Value.asValue(new Object());
+         command.tabCompleter = Value.asValue(new Object());
+      });
+      
+      // close context to prepare for new one
+      if (main.context instanceof Context) main.context.close();
 
       // create plugin folder
       this.getDataFolder().mkdir();
@@ -140,14 +155,5 @@ public final class main extends JavaPlugin {
 
    @Override
    public void onDisable() {
-
-      // de-reference executors and tab-completers for each command
-      main.commands.values().forEach(command -> {
-         command.executor = Value.asValue(new Object());
-         command.tabCompleter = Value.asValue(new Object());
-      });
-      
-      // close context to prepare for new one on reload
-      main.context.close();
    }
 }
