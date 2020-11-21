@@ -1,5 +1,7 @@
 package grakkit;
 
+import grakkit.core;
+
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -14,13 +16,10 @@ import java.util.Map;
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import org.graalvm.polyglot.Context;
-import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
 public final class main extends JavaPlugin {
 
-   public static Context context;
    public static CommandMap registry;
    public static Map<String, CustomCommand> commands = new HashMap<String, CustomCommand>();
 
@@ -109,9 +108,6 @@ public final class main extends JavaPlugin {
          command.executor = Value.asValue(new Object());
          command.tabCompleter = Value.asValue(new Object());
       });
-      
-      // close context to prepare for new one
-      if (main.context instanceof Context) main.context.close();
 
       // create plugin folder
       this.getDataFolder().mkdir();
@@ -122,33 +118,19 @@ public final class main extends JavaPlugin {
       // save config
       this.saveDefaultConfig();
 
-      // create context
-      main.context = Context.newBuilder("js")
-         .allowAllAccess(true)
-         .allowExperimentalOptions(true)
-         .option("js.nashorn-compat", "true")
-         .option("js.commonjs-require", "true")
-         .option("js.commonjs-require-cwd", "./plugins/grakkit")
-         .build();
-
       // get index file
       File index = Paths.get(getDataFolder().getPath(), getConfig().getString("main", "index.js")).toFile();
 
-      // check if index exists
-      if (index.exists()) {
+      // load context
+      if (core.init(index)) {
 
-         // evaluate index.js
-         try {
-            main.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").cached(false).build());
-         } catch (Exception error) {
-
-            // handle script errors
-            error.printStackTrace(System.err);
-         }
+         // handle successful init
       } else {
-            
-         // handle missing index and exit
+
+         // handle failed init
          this.getServer().getLogger().severe("The entry point specified \"" + index.getPath().replace('\\', '/') + "\" could not be found. Create this file and reload the plugin.");
+         
+         // disable plugin
          this.getServer().getPluginManager().disablePlugin(this);
       }
    }
