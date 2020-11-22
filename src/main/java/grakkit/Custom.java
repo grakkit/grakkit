@@ -13,8 +13,8 @@ public final class Custom extends Command {
    public Value executor;
    public Value tabCompleter;
 
-   public Custom (String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
-      super(name, description, usage, aliases);
+   public Custom (String name, List<String> aliases, String permission, String message, Value executor, Value tabCompleter) {
+      super(name, "", "", aliases);
       this.executor = executor;
       this.tabCompleter = tabCompleter;
       if (permission.length() > 0) {
@@ -27,8 +27,6 @@ public final class Custom extends Command {
    public boolean execute (CommandSender sender, String label, String[] args) {
       try {
          this.executor.execute(sender, label, args);
-      } catch (UnsupportedOperationException error) {
-         // if the executor is not executable, do not report the error
       } catch (Exception error) {
          error.printStackTrace(System.err);
       }
@@ -41,8 +39,6 @@ public final class Custom extends Command {
       try {
          Value input = this.tabCompleter.execute(sender, alias, args);
          for (int index = 0; index < input.getArraySize(); index++) output.add(input.getArrayElement(index).asString());
-      } catch (UnsupportedOperationException error) {
-         // if the tab-completer is not executable, do not report the error
       } catch (Exception error) {
          error.printStackTrace(System.err);
       }

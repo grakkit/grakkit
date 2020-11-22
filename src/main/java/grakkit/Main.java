@@ -75,7 +75,7 @@ public final class Main extends JavaPlugin {
 
          // create new command
          Custom command = new Custom(name, aliases, permission, message, executor, tabCompleter);
-         Main.registry.register(fallback, command);
+         Main.registry.register(namespace, command);
          Main.commands.put(key, command);
       }
    }
