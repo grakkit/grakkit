@@ -21,7 +21,21 @@ import org.graalvm.polyglot.Value;
 public final class main extends JavaPlugin {
 
    public static CommandMap registry;
-   public static Map<String, CustomCommand> commands = new HashMap<String, CustomCommand>();
+   public static Map<String, CustomCommand> commands = new HashMap<>();
+
+   static {
+      try {
+         URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
+         Class<URLClassLoader> clazz = URLClassLoader.class;
+         Method method = clazz.getDeclaredMethod("addURL", URL.class);
+         method.setAccessible(true);
+         method.invoke(loader, main.locate(main.class));
+      } catch (Exception error) {
+
+         // TODO add description for error
+         throw new RuntimeException("How the fuck did you run into this one!?", error);
+      }
+   }
 
    public void reload () {
       getServer().getPluginManager().disablePlugin(this);
@@ -50,7 +64,7 @@ public final class main extends JavaPlugin {
       }
    }
 
-   public static URL locate (Class<?> clazz) {
+   private static URL locate (Class<?> clazz) {
       try {
          URL location = clazz.getProtectionDomain().getCodeSource().getLocation();
          if (location instanceof URL) return location;
@@ -80,13 +94,6 @@ public final class main extends JavaPlugin {
    @Override
    public void onLoad() {
       try {
-
-         // add grakkit to classpath
-         URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-         Class<URLClassLoader> clazz = URLClassLoader.class;
-         Method method = clazz.getDeclaredMethod("addURL", URL.class);
-         method.setAccessible(true);
-         method.invoke(loader, main.locate(main.class));
 
          // expose command map (reflection)
          Field internal = getServer().getClass().getDeclaredField("commandMap");
@@ -122,9 +129,10 @@ public final class main extends JavaPlugin {
       File index = Paths.get(getDataFolder().getPath(), getConfig().getString("main", "index.js")).toFile();
 
       // load context
-      if (core.init(index)) {
-
-         // handle successful init
+      if (core.load(index)) {
+      
+         // begin thread tick loop
+         this.getServer().getScheduler().runTaskTimer(this, core::tick, 0, 1);
       } else {
 
          // handle failed init
