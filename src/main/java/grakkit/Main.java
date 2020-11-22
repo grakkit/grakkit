@@ -18,47 +18,9 @@ public final class Main extends JavaPlugin {
    public static CommandMap registry;
    public static Map<String, Custom> commands = new HashMap<>();
 
-   static {
-      try {
-         Class.forName("org.graalvm.polyglot.Value");
-      } catch (Exception error1) {
-         try {
-            URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-            Class<URLClassLoader> clazz = URLClassLoader.class;
-            Method method = clazz.getDeclaredMethod("addURL", URL.class);
-            method.setAccessible(true);
-            method.invoke(loader, Main.locate(Main.class));
-         } catch (Exception error2) {
-            throw new RuntimeException("Failed to add plugin to class path!", error2);
-         }
-      }
-   }
-
-   private static URL locate (Class<?> clazz) {
-      try {
-         URL location = clazz.getProtectionDomain().getCodeSource().getLocation();
-         if (location instanceof URL) return location;
-      } catch (SecurityException | NullPointerException error) {
-         // try other method instead of throwing error
-      }
-      URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
-      if (resource instanceof URL) {
-         String link = resource.toString();
-         String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
-         if (link.endsWith(suffix)) {
-            String base = link.substring(0, link.length() - suffix.length()), path = base;
-            if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
-            try {
-               return new URL(path);
-            } catch (Exception error) {
-               return null;
-            }
-         } else {
-            return null;
-         }
-      } else {
-         return null;
-      }
+   public void reload () {
+      getServer().getPluginManager().disablePlugin(this);
+      getServer().getPluginManager().enablePlugin(this);
    }
 
    public void register (String namespace, String name, List<String> aliases, String permission, String message, Value executor, Value tabCompleter) {
@@ -82,11 +44,6 @@ public final class Main extends JavaPlugin {
          Main.registry.register(namespace, command);
          Main.commands.put(key, command);
       }
-   }
-
-   public void reload () {
-      getServer().getPluginManager().disablePlugin(this);
-      getServer().getPluginManager().enablePlugin(this);
    }
 
    @Override
@@ -136,5 +93,48 @@ public final class Main extends JavaPlugin {
 
    @Override
    public void onDisable() {
+   }
+
+   private static URL locate (Class<?> clazz) {
+      try {
+         URL location = clazz.getProtectionDomain().getCodeSource().getLocation();
+         if (location instanceof URL) return location;
+      } catch (SecurityException | NullPointerException error) {
+         // try other method instead of throwing error
+      }
+      URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
+      if (resource instanceof URL) {
+         String link = resource.toString();
+         String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
+         if (link.endsWith(suffix)) {
+            String base = link.substring(0, link.length() - suffix.length()), path = base;
+            if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
+            try {
+               return new URL(path);
+            } catch (Exception error) {
+               return null;
+            }
+         } else {
+            return null;
+         }
+      } else {
+         return null;
+      }
+   }
+
+   static {
+      try {
+         Class.forName("org.graalvm.polyglot.Value");
+      } catch (Exception error1) {
+         try {
+            URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
+            Class<URLClassLoader> clazz = URLClassLoader.class;
+            Method method = clazz.getDeclaredMethod("addURL", URL.class);
+            method.setAccessible(true);
+            method.invoke(loader, Main.locate(Main.class));
+         } catch (Exception error2) {
+            throw new RuntimeException("Failed to add plugin to class path!", error2);
+         }
+      }
    }
 }

@@ -11,19 +11,21 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
+class Loop extends TimerTask {
+
+   @Override
+   public void run() {
+      new LinkedList<Value>(Core.queue).forEach(value -> {
+         value.execute();
+         Core.queue.remove(value);
+      });
+   }
+}
+
 public final class Core {
 
    public static Context context;
    public static List<Value> queue = new LinkedList<>();
-
-   static {
-      new Timer().schedule((TimerTask) (Runnable) () -> {
-         new LinkedList<Value>(queue).forEach(value -> {
-            value.execute();
-            queue.remove(value);
-         });
-      }, 0, 1);
-   }
 
    public static void load (String path, String... more) throws Exception {
       
@@ -59,6 +61,10 @@ public final class Core {
          // handle failed init
          throw new Exception("The entry point \"" + index.getPath().replace('\\', '/') + "\" could not be found!");
       }
+   }
+
+   static {
+      new Timer().schedule(new Loop(), 0, 1);
    }
 
    public void queue (Value script) {
