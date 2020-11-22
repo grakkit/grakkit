@@ -1,6 +1,6 @@
-![Grakkit Logo](./grakkit.png)
+![Project Logo](./logo.png)
 
-**It's the fusion of GraalVM and Bukkit.** Grakkit is designed to allow the use of JavaScript within Minecraft -- a simple concept with infinite potential.
+**It's the fusion of GraalVM, JavaScript, and Minecraft.**
 
 ![Code Demo](./demo.gif)
 
@@ -10,23 +10,24 @@ If you want to get in touch with the community, join our [discord server](https:
 
 # Getting Started
 
-## Grakkit Basics
-This section will contain information about the general grakkit environment.
+## Installation
+Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would to install any other plugin, mod, or addon.
 
-## Your First Code
-This section will detail an in-depth explanatory example to demonstrate what your first code may look like.
+## Your First Project
+Before creating a project, load your client or server. A **grakkit** folder should appear in your respective platform's config directory -- this folder will be the home of your new project.
 
-## The Next Step
-This section will expand on the above example to show off grakkit's potential, and guide users to the wiki for more information.
+The most basic project will consist of a single **index.js** file within the **grakkit** folder. You will need to create this file yourself. Once created, any code you type there will be executed on the next reload.
 
-# Miscellaneous
+A project like that works, but it's just not the same as having the full suite of tooling available via NPM. If you don't already have NodeJS installed on your machine, do so now. Once installed, use `npm install @grakkit/server` or `npm install @grakkit/client` -- whatever best fits your current platform.
 
-## Legacy Support
-Grakkit theoretically supports Minecraft versions going back to beta 1.4, given you have bukkit installed. This legacy support does not extend to modules, and likely never will. If you do intend to use grakkit on a beta or legacy release version, you may run into unexpected problems, however the `index.js` file should work properly in its default state.
+With that in play, add one of the following lines to your `index.js` file:
+```js
+const standard = require('@grakkit/server'); /* for servers */
+const standard = require('@grakkit/client'); /* for clients */
+```
 
-## A note about ScriptCraft
-We fully respect and support ScriptCraft and what it did. For us, at least in part, Grakkit is a continuation of what ScriptCraft aimed to do, with plenty of our own ideas and features thrown in. **We don't intend to start a rivalry between supporters of the two frameworks.**
+...and reload the server. You now have full access to the standard library. For more info about installing and using modules, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up.
 
 ---
 
-Grakkit is owned and maintained by [RepComm](https://github.com/RepComm) and [hb432](https://github.com/hb432). Special thanks to [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.
+*Owned and maintained by [RepComm](https://github.com/RepComm) and [hb432](https://github.com/hb432). Special thanks to [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
