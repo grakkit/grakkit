@@ -47,7 +47,7 @@ public final class Core {
          // evaluate index
          try {
             Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
-            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").cached(false).build());
+            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
          } catch (Exception error) {
 
             // handle script errors
@@ -61,10 +61,10 @@ public final class Core {
    }
 
    public void queue (Value script) {
-      queue.add(script);
+      if (script.canExecute()) queue.add(script);
    }
 
    public void execute (Value script) {
-      queue.add(Value.asValue((Runnable) () -> new Thread(() -> script.execute()).run()));
+      if (script.canExecute()) queue.add(Value.asValue((Runnable) () -> new Thread(() -> script.execute()).run()));
    }
 }
