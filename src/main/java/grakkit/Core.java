@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -17,32 +20,32 @@ public final class Core {
    public static List<Value> queue = new LinkedList<>();
    public static Map<String, Value> methods = new HashMap<>();
 
-   public static void tick () {
+   public static ScheduledFuture<?> future = Executors.newScheduledThreadPool(1).scheduleAtFixedRate((Runnable) () -> {
       new LinkedList<Value>(queue).forEach(value -> {
          value.execute();
          queue.remove(value);
       });
-   }
+   }, 0, 1, TimeUnit.MICROSECONDS);
 
    public static void load (String path, String... more) throws Exception {
       
       // close context to prepare for new one
       if (Core.context instanceof Context) Core.context.close();
 
-      // create context
-      Core.context = Context.newBuilder("js")
-         .allowAllAccess(true)
-         .allowExperimentalOptions(true)
-         .option("js.nashorn-compat", "true")
-         .option("js.commonjs-require", "true")
-         .option("js.commonjs-require-cwd", "./plugins/grakkit")
-         .build();
-
-      // get index file
+      // get index file from config
       File index = Paths.get(path, more).toFile();
 
       // check if index exists
       if (index.exists()) {
+   
+         // create context
+         Core.context = Context.newBuilder("js")
+            .allowAllAccess(true)
+            .allowExperimentalOptions(true)
+            .option("js.nashorn-compat", "true")
+            .option("js.commonjs-require", "true")
+            .option("js.commonjs-require-cwd", "./plugins/grakkit")
+            .build();
 
          // evaluate index
          try {
@@ -56,7 +59,7 @@ public final class Core {
       } else {
 
          // handle failed init
-         throw new Exception("The entry point specified \"" + index.getPath().replace('\\', '/') + "\" could not be found. Create this file and reload the plugin.");
+         throw new Exception("The entry point \"" + index.getPath().replace('\\', '/') + "\" could not be found!");
       }
    }
 

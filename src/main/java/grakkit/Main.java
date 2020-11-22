@@ -7,9 +7,6 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-import java.util.concurrent.TimeUnit;
 
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -18,7 +15,6 @@ import org.graalvm.polyglot.Value;
 
 public final class Main extends JavaPlugin {
 
-   public static Executor future;
    public static CommandMap registry;
    public static Map<String, Custom> commands = new HashMap<>();
 
@@ -65,13 +61,6 @@ public final class Main extends JavaPlugin {
       }
    }
 
-   private static void loop () {
-      Main.future.execute((Runnable) () -> {
-         Core.tick();
-         Main.loop();
-      });
-   }
-
    public void register (String namespace, String name, List<String> aliases, String permission, String message, Value executor, Value tabCompleter) {
 
       // define key
@@ -101,15 +90,24 @@ public final class Main extends JavaPlugin {
    }
 
    @Override
+   public void onLoad() {
+
+      // reflect the registry
+      try {
+         Field internal = getServer().getClass().getDeclaredField("commandMap");
+         internal.setAccessible(true);
+         Main.registry = (CommandMap) internal.get(getServer());
+      } catch (Exception error) {
+
+         // handle errors and exit
+         error.printStackTrace(System.err);
+         this.getServer().getPluginManager().disablePlugin(this);
+      }
+   }
+
+   @Override
    public void onEnable() {
       try {
-      
-         // expose command map (reflection)
-         if (Main.registry == null) {
-            Field internal = getServer().getClass().getDeclaredField("commandMap");
-            internal.setAccessible(true);
-            Main.registry = (CommandMap) internal.get(getServer());
-         }
 
          // de-reference executors and tab-completers for each command (doesnt work)
          Main.commands.values().forEach(command -> {
@@ -128,15 +126,9 @@ public final class Main extends JavaPlugin {
 
          // load context
          Core.load(getDataFolder().getPath(), getConfig().getString("main", "index.js"));
-         
-         // begin tick loop
-         if (Main.future == null) {
-            Main.future = CompletableFuture.delayedExecutor(1, TimeUnit.MICROSECONDS);
-            Main.loop();
-         }
       } catch (Exception error) {
 
-         // handle init errors and exit
+         // handle errors and exit
          error.printStackTrace(System.err);
          this.getServer().getPluginManager().disablePlugin(this);
       }
