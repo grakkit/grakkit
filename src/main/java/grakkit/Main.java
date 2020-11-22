@@ -57,8 +57,11 @@ public final class Main extends JavaPlugin {
       }
    }
 
-   public void register (String key, String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
-      
+   public void register (String namespace, String name, List<String> aliases, String permission, String message, Value executor, Value tabCompleter) {
+
+      // define key
+      String key = namespace + ":" + name;
+
       // check if command already exists
       if (Main.commands.containsKey(key)) {
 
@@ -71,7 +74,7 @@ public final class Main extends JavaPlugin {
       } else {
 
          // create new command
-         Custom command = new Custom(name, description, usage, aliases, permission, message, fallback, executor, tabCompleter);
+         Custom command = new Custom(name, aliases, permission, message, executor, tabCompleter);
          Main.registry.register(fallback, command);
          Main.commands.put(key, command);
       }
@@ -93,10 +96,10 @@ public final class Main extends JavaPlugin {
             Main.registry = (CommandMap) internal.get(getServer());
          }
 
-         // de-reference executors and tab-completers for each command
+         // de-reference executors and tab-completers for each command (doesnt work)
          Main.commands.values().forEach(command -> {
-            command.executor = Value.asValue(new Object());
-            command.tabCompleter = Value.asValue(new Object());
+            command.executor = null;
+            command.tabCompleter = null;
          });
 
          // create plugin folder
