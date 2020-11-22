@@ -2,13 +2,8 @@ package grakkit;
 
 import java.io.File;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -18,14 +13,17 @@ public final class Core {
 
    public static Context context;
    public static List<Value> queue = new LinkedList<>();
-   public static Map<String, Value> methods = new HashMap<>();
 
-   public static ScheduledFuture<?> future = Executors.newScheduledThreadPool(1).scheduleAtFixedRate((Runnable) () -> {
-      new LinkedList<Value>(queue).forEach(value -> {
-         value.execute();
-         queue.remove(value);
-      });
-   }, 0, 1, TimeUnit.MICROSECONDS);
+   static {
+      new Thread((Runnable) () -> {
+         while (true) {
+            new LinkedList<Value>(queue).forEach(value -> {
+               value.execute();
+               queue.remove(value);
+            });
+         }
+      }).run();
+   }
 
    public static void load (String path, String... more) throws Exception {
       
