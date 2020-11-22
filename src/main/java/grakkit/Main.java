@@ -83,6 +83,9 @@ public final class Main extends JavaPlugin {
 
          // load context
          Core.load(getDataFolder().getPath(), getConfig().getString("main", "index.js"));
+
+         // begin tick loop
+         this.getServer().getScheduler().runTaskTimer(this, Core::loop, 0, 1);
       } catch (Exception error) {
 
          // handle errors and exit

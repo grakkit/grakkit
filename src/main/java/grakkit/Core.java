@@ -4,28 +4,22 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
-class Loop extends TimerTask {
+public final class Core {
 
-   @Override
-   public void run() {
+   public static Context context;
+   public static List<Value> queue = new LinkedList<>();
+
+   public static void loop () {
       new LinkedList<Value>(Core.queue).forEach(value -> {
          value.execute();
          Core.queue.remove(value);
       });
    }
-}
-
-public final class Core {
-
-   public static Context context;
-   public static List<Value> queue = new LinkedList<>();
 
    public static void load (String path, String... more) throws Exception {
       
@@ -61,10 +55,6 @@ public final class Core {
          // handle failed init
          throw new Exception("The entry point \"" + index.getPath().replace('\\', '/') + "\" could not be found!");
       }
-   }
-
-   static {
-      new Timer().schedule(new Loop(), 0, 1);
    }
 
    public void queue (Value script) {
