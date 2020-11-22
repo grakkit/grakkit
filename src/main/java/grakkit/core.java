@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
-public final class core {
+public final class Core {
 
    public static Context context;
 
@@ -29,10 +28,10 @@ public final class core {
    public static boolean load (File index) {
       
       // close context to prepare for new one
-      if (core.context instanceof Context) core.context.close();
+      if (Core.context instanceof Context) Core.context.close();
 
       // create context
-      core.context = Context.newBuilder("js")
+      Core.context = Context.newBuilder("js")
          .allowAllAccess(true)
          .allowExperimentalOptions(true)
          .option("js.nashorn-compat", "true")
@@ -45,8 +44,8 @@ public final class core {
 
          // evaluate index.js
          try {
-            core.context.getBindings("js").putMember("Core", Value.asValue(new core()));
-            core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").cached(false).build());
+            Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
+            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").cached(false).build());
          } catch (Exception error) {
 
             // handle script errors

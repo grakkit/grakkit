@@ -1,7 +1,5 @@
 package grakkit;
 
-import grakkit.core;
-
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -18,10 +16,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import org.graalvm.polyglot.Value;
 
-public final class main extends JavaPlugin {
+public final class Main extends JavaPlugin {
 
    public static CommandMap registry;
-   public static Map<String, CustomCommand> commands = new HashMap<>();
+   public static Map<String, Custom> commands = new HashMap<>();
 
    static {
       try {
@@ -29,11 +27,9 @@ public final class main extends JavaPlugin {
          Class<URLClassLoader> clazz = URLClassLoader.class;
          Method method = clazz.getDeclaredMethod("addURL", URL.class);
          method.setAccessible(true);
-         method.invoke(loader, main.locate(main.class));
+         method.invoke(loader, Main.locate(Main.class));
       } catch (Exception error) {
-
-         // TODO add description for error
-         throw new RuntimeException("How the fuck did you run into this one!?", error);
+         throw new RuntimeException("Failed to add plugin to class path!", error);
       }
    }
 
@@ -45,10 +41,10 @@ public final class main extends JavaPlugin {
    public void register (String key, String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
       
       // check if command already exists
-      if (main.commands.containsKey(key)) {
+      if (Main.commands.containsKey(key)) {
 
          // modify existing command
-         CustomCommand command = commands.get(key);
+         Custom command = commands.get(key);
          command.setUsage(usage);
          command.setDescription(description);
          command.setPermission(permission);
@@ -58,9 +54,9 @@ public final class main extends JavaPlugin {
       } else {
 
          // create new command
-         CustomCommand command = new CustomCommand(name, description, usage, aliases, permission, message, fallback, executor, tabCompleter);
-         main.registry.register(fallback, command);
-         main.commands.put(key, command);
+         Custom command = new Custom(name, description, usage, aliases, permission, message, fallback, executor, tabCompleter);
+         Main.registry.register(fallback, command);
+         Main.commands.put(key, command);
       }
    }
 
@@ -98,7 +94,7 @@ public final class main extends JavaPlugin {
          // expose command map (reflection)
          Field internal = getServer().getClass().getDeclaredField("commandMap");
          internal.setAccessible(true);
-         main.registry = (CommandMap) internal.get(getServer());
+         Main.registry = (CommandMap) internal.get(getServer());
       } catch (Exception error) {
 
          // handle init errors and exit
@@ -111,7 +107,7 @@ public final class main extends JavaPlugin {
    public void onEnable() {
 
       // de-reference executors and tab-completers for each command
-      main.commands.values().forEach(command -> {
+      Main.commands.values().forEach(command -> {
          command.executor = Value.asValue(new Object());
          command.tabCompleter = Value.asValue(new Object());
       });
@@ -129,10 +125,10 @@ public final class main extends JavaPlugin {
       File index = Paths.get(getDataFolder().getPath(), getConfig().getString("main", "index.js")).toFile();
 
       // load context
-      if (core.load(index)) {
+      if (Core.load(index)) {
       
          // begin thread tick loop
-         this.getServer().getScheduler().runTaskTimer(this, core::tick, 0, 1);
+         this.getServer().getScheduler().runTaskTimer(this, Core::tick, 0, 1);
       } else {
 
          // handle failed init

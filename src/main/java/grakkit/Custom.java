@@ -8,12 +8,12 @@ import org.bukkit.command.CommandSender;
 
 import org.graalvm.polyglot.Value;
 
-public final class CustomCommand extends Command {
+public final class Custom extends Command {
    
    public Value executor;
    public Value tabCompleter;
 
-   public CustomCommand (String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
+   public Custom (String name, String description, String usage, List<String> aliases, String permission, String message, String fallback, Value executor, Value tabCompleter) {
       super(name, description, usage, aliases);
       this.executor = executor;
       this.tabCompleter = tabCompleter;
