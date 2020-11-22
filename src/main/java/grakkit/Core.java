@@ -19,7 +19,7 @@ public class Core {
       // handle errors
       try {
 
-         // check if graal is installed
+         // check if graalvm is installed
          Class.forName("org.graalvm.polyglot.Value");
       } catch (Exception $) {
 
@@ -73,8 +73,22 @@ public class Core {
    public static List<Value> queue = new LinkedList<>();
 
    public static void loop () {
+
+      // iterate over current values
       new LinkedList<Value>(Core.queue).forEach(value -> {
-         value.execute();
+
+         // handle errors
+         try {
+
+            // execute script
+            value.execute();
+         } catch (Exception error) {
+
+            // log error
+            error.printStackTrace(System.err);
+         }
+
+         // remove script
          Core.queue.remove(value);
       });
    }
@@ -117,9 +131,21 @@ public class Core {
 
    public static void close () {
    
-      // trigger unload hooks
+      // iterate over current values
       new LinkedList<Value>(Core.hooks).forEach(value -> {
-         value.execute();
+
+         // handle errors
+         try {
+
+            // execute script
+            value.execute();
+         } catch (Exception error) {
+
+            // log error
+            error.printStackTrace(System.err);
+         }
+
+         // remove script
          Core.hooks.remove(value);
       });
       
