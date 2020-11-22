@@ -7,6 +7,9 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.command.CommandMap;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -15,18 +18,23 @@ import org.graalvm.polyglot.Value;
 
 public final class Main extends JavaPlugin {
 
+   public static Executor future;
    public static CommandMap registry;
    public static Map<String, Custom> commands = new HashMap<>();
 
    static {
       try {
-         URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-         Class<URLClassLoader> clazz = URLClassLoader.class;
-         Method method = clazz.getDeclaredMethod("addURL", URL.class);
-         method.setAccessible(true);
-         method.invoke(loader, Main.locate(Main.class));
-      } catch (Exception error) {
-         throw new RuntimeException("Failed to add plugin to class path!", error);
+         Class.forName("org.graalvm.polyglot.Value");
+      } catch (Exception error1) {
+         try {
+            URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
+            Class<URLClassLoader> clazz = URLClassLoader.class;
+            Method method = clazz.getDeclaredMethod("addURL", URL.class);
+            method.setAccessible(true);
+            method.invoke(loader, Main.locate(Main.class));
+         } catch (Exception error2) {
+            throw new RuntimeException("Failed to add plugin to class path!", error2);
+         }
       }
    }
 
@@ -55,6 +63,13 @@ public final class Main extends JavaPlugin {
       } else {
          return null;
       }
+   }
+
+   private static void loop () {
+      Main.future.execute((Runnable) () -> {
+         Core.tick();
+         Main.loop();
+      });
    }
 
    public void register (String namespace, String name, List<String> aliases, String permission, String message, Value executor, Value tabCompleter) {
@@ -114,8 +129,11 @@ public final class Main extends JavaPlugin {
          // load context
          Core.load(getDataFolder().getPath(), getConfig().getString("main", "index.js"));
          
-         // begin thread tick loop
-         this.getServer().getScheduler().runTaskTimer(this, Core::tick, 0, 1);
+         // begin tick loop
+         if (Main.future == null) {
+            Main.future = CompletableFuture.delayedExecutor(1, TimeUnit.MICROSECONDS);
+            Main.loop();
+         }
       } catch (Exception error) {
 
          // handle init errors and exit
