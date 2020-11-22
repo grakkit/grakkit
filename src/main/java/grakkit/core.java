@@ -1,6 +1,7 @@
 package grakkit;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,19 +14,17 @@ import org.graalvm.polyglot.Value;
 public final class Core {
 
    public static Context context;
-
    public static List<Value> queue = new LinkedList<>();
-
    public static Map<String, Value> methods = new HashMap<>();
 
    public static void tick () {
-      new LinkedList<Value> (queue).forEach(value -> {
+      new LinkedList<Value>(queue).forEach(value -> {
          value.execute();
          queue.remove(value);
       });
    }
 
-   public static boolean load (File index) {
+   public static void load (String path, String... more) throws Exception {
       
       // close context to prepare for new one
       if (Core.context instanceof Context) Core.context.close();
@@ -39,10 +38,13 @@ public final class Core {
          .option("js.commonjs-require-cwd", "./plugins/grakkit")
          .build();
 
+      // get index file
+      File index = Paths.get(path, more).toFile();
+
       // check if index exists
       if (index.exists()) {
 
-         // evaluate index.js
+         // evaluate index
          try {
             Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
             Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").cached(false).build());
@@ -51,13 +53,10 @@ public final class Core {
             // handle script errors
             error.printStackTrace(System.err);
          }
-
-         // return status
-         return true;
       } else {
-            
-         // return status
-         return false;
+
+         // handle failed init
+         throw new Exception("The entry point specified \"" + index.getPath().replace('\\', '/') + "\" could not be found. Create this file and reload the plugin.");
       }
    }
 
