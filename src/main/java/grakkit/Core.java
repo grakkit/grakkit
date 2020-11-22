@@ -4,8 +4,8 @@ import java.io.File;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -17,12 +17,12 @@ public final class Core {
    public static List<Value> queue = new LinkedList<>();
 
    static {
-      Executors.newScheduledThreadPool(1).scheduleAtFixedRate((Runnable) () -> {
+      new Timer().schedule((TimerTask) (Runnable) () -> {
          new LinkedList<Value>(queue).forEach(value -> {
             value.execute();
             queue.remove(value);
          });
-      }, 0, 1, TimeUnit.MILLISECONDS);
+      }, 0, 1);
    }
 
    public static void load (String path, String... more) throws Exception {
