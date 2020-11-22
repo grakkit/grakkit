@@ -1,6 +1,7 @@
 package grakkit;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -54,7 +55,7 @@ class CustomCommand extends Command {
    public List<String> tabComplete (CommandSender sender, String alias, String[] args) {
 
       // create list
-      List<String> output = Arrays.asList();
+      List<String> output = new ArrayList<String>();
 
       // handle errors
       try {
@@ -83,7 +84,7 @@ public class Main extends JavaPlugin {
       getServer().getPluginManager().enablePlugin(this);
    }
 
-   public static void register (String namespace, String name, String[] aliases, String permission, String message, Value executor, Value tabCompleter) {
+   public void register (String namespace, String name, String[] aliases, String permission, String message, Value executor, Value tabCompleter) {
 
       // define key
       String key = namespace + ":" + name;
