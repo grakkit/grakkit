@@ -16,22 +16,22 @@ public class Core {
 
    static {
 
-      // handle errors
+      // check if graalvm is installed
       try {
 
-         // check if graalvm is installed
+         // test for polyglot
          Class.forName("org.graalvm.polyglot.Value");
       } catch (Exception $) {
 
          // handle errors
          try {
 
-            // load classes from plugin
-            URLClassLoader loader = (URLClassLoader) Thread.currentThread().getContextClassLoader();
-            Class<URLClassLoader> clazz = URLClassLoader.class;
-            Method method = clazz.getDeclaredMethod("addURL", URL.class);
+            // expose class loader (reflection)
+            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
-            method.invoke(loader, Core.locate(Core.class));
+
+            // load classes
+            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(Core.class));
          } catch (Exception error) {
 
             // throw error
@@ -41,28 +41,62 @@ public class Core {
    }
 
    private static URL locate (Class<?> clazz) {
+
+      // handle errors
       try {
-         URL location = clazz.getProtectionDomain().getCodeSource().getLocation();
-         if (location instanceof URL) return location;
+
+         // search via protection domain
+         URL resource = clazz.getProtectionDomain().getCodeSource().getLocation();
+         
+         // check for valid resource
+         if (resource instanceof URL) {
+
+            // return class location
+            return resource;
+         }
       } catch (SecurityException | NullPointerException error) {
          // try other method instead of throwing error
       }
+
+      // search via class name
       URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
+
+      // check for valid resouce
       if (resource instanceof URL) {
+
+         // get stringified link
          String link = resource.toString();
+
+         // get valid suffix
          String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
+
+         // check link for valid suffix
          if (link.endsWith(suffix)) {
-            String base = link.substring(0, link.length() - suffix.length()), path = base;
+
+            // remove suffix
+            String path = link.substring(0, link.length() - suffix.length());
+
+            // handle jar protocol
             if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
+
+            // handle errors
             try {
+
+               // return class location
                return new URL(path);
             } catch (Exception error) {
+
+               // failed to find class location
                return null;
             }
          } else {
+
+            // failed to find class location
             return null;
          }
       } else {
+
+         // failed to find class location
          return null;
       }
    }
@@ -74,7 +108,7 @@ public class Core {
 
    public static void loop () {
 
-      // iterate over current values
+      // execute all scripts in queue
       new LinkedList<Value>(Core.queue).forEach(value -> {
 
          // handle errors
@@ -130,14 +164,17 @@ public class Core {
    }
 
    public static void close () {
+
+      // remove all scripts in queue
+      Core.queue.clear();
    
-      // iterate over current values
+      // trigger all closure hooks
       new LinkedList<Value>(Core.hooks).forEach(value -> {
 
          // handle errors
          try {
 
-            // execute script
+            // trigger hook
             value.execute();
          } catch (Exception error) {
 
@@ -145,7 +182,7 @@ public class Core {
             error.printStackTrace(System.err);
          }
 
-         // remove script
+         // remove hook
          Core.hooks.remove(value);
       });
       

@@ -116,7 +116,7 @@ public class Main extends JavaPlugin {
       // handle errors
       try {
 
-         // reflect command map
+         // expose command registry (reflection)
          Field internal = getServer().getClass().getDeclaredField("commandMap");
          internal.setAccessible(true);
          CustomCommand.registry = (CommandMap) internal.get(getServer());
