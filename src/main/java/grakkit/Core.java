@@ -64,7 +64,7 @@ public class Core {
       // check for valid resouce
       if (resource instanceof URL) {
 
-         // get stringified link
+         // convert resource to string
          String link = resource.toString();
 
          // get valid suffix
