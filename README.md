@@ -10,6 +10,10 @@ If you want to get in touch with the community, join our [discord server](https:
 
 # Getting Started
 
+## Important
+
+**Headless use of the GraalJS engine is currently under construction. Until this is ready, the client or server must be ran with the GraalVM JVM.**
+
 ## Installation
 Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would to install any other plugin, mod, or addon.
 
@@ -22,11 +26,11 @@ A project like that works, but it's just not the same as having the full suite o
 
 With that in play, add one of the following lines to your `index.js` file:
 ```js
-const standard = require('@grakkit/server'); /* for servers */
-const standard = require('@grakkit/client'); /* for clients */
+const { core } = require('@grakkit/server'); /* for servers */
+const { core } = require('@grakkit/client'); /* for clients */
 ```
 
-...and reload the server. You now have full access to the standard library. For more info about installing and using modules, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up.
+...and reload the server. You now have full access to the core library. For more info about installing and using modules, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up.
 
 ---
 
