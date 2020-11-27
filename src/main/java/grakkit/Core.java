@@ -12,25 +12,25 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
-class Superset {
-   
-   /* the internal list */
-   public List<Value> list = new LinkedList<>();
-
-   /** execute and remove all scripts */
-   public void release () {
-      new LinkedList<Value>(this.list).forEach(value -> {
-         try {
-            if (value.canExecute()) value.execute();
-         } catch (Throwable error) {
-            // do nothing
-         }
-         this.list.remove(value);
-      });
-   }
-}
-
 public class Core {
+
+   static class Superset {
+      
+      /* the internal list */
+      public List<Value> list = new LinkedList<>();
+   
+      /** execute and remove all scripts */
+      public void release () {
+         new LinkedList<Value>(this.list).forEach(value -> {
+            try {
+               if (value.canExecute()) value.execute();
+            } catch (Throwable error) {
+               // do nothing
+            }
+            this.list.remove(value);
+         });
+      }
+   }
 
    /** the base path of the environment */
    private static String base;
