@@ -6,23 +6,20 @@ import org.graalvm.polyglot.Value;
 
 public class Main extends JavaPlugin {
 
-   static {
-      Core.patch(Main.class); // patch core on class load (core stage 1)
-   }
-
    public void onLoad() {
+      Core.patch(Main.class);
       Wrapper.init(this.getServer());
    }
 
    public void onEnable() {
       this.getConfig().options().copyDefaults(true);
       this.saveDefaultConfig();
-      this.getServer().getScheduler().runTaskTimer(this, Core::loop, 0, 1); // begin task loop (core stage 2)
-      Core.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js")); // open core on load (core stage 3)
+      this.getServer().getScheduler().runTaskTimer(this, Core::loop, 0, 1);
+      Core.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js"));
    }
 
    public void onDisable() {
-      Core.close(); // close core on unload (core stage 4)
+      Core.close();
       Wrapper.close();
    }
 

@@ -5,7 +5,6 @@ import java.io.File;
 import java.lang.reflect.Method;
 
 import java.net.URL;
-import java.net.URLClassLoader;
 
 import java.nio.file.Paths;
 
@@ -29,22 +28,23 @@ public class Core {
 
    /** a list of currently scheduled tasks */
    private static Superset tasks = new Superset();
-   
+
    /** inject polyglot into the classpath if not available at runtime */
    static void patch (Class<?> clazz) {
       try {
          Value.asValue(new Object());
       } catch (Throwable none) {
          try {
-            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+            Class<?> URLClassLoader = Class.forName("java.net.URLClassLoader");
+            Method method = URLClassLoader.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
-            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(clazz));
+            method.invoke(URLClassLoader.cast(Thread.currentThread().getContextClassLoader()), Core.locate(clazz));
          } catch (Throwable error) {
             throw new RuntimeException("Failed to add plugin to class path!", error);
          }
       }
    }
-   
+
    /** locate classes for injection */ 
    private static URL locate (Class<?> clazz) {
       try {
@@ -116,7 +116,7 @@ public class Core {
    public void push (Value script) {
       Core.tasks.list.add(script);
    }
-   
+
    /** schedule a task in a new thread */
    public void sync (Value script) {
       Core.tasks.list.add(Value.asValue(new Thread(script::execute)));
@@ -125,5 +125,10 @@ public class Core {
    /** close and re-open the environment */
    public void swap () {
       Core.close(); Core.open();
+   }
+
+   /** return the current base path */
+   public String getRoot () {
+      return Core.base;
    }
 }

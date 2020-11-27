@@ -6,7 +6,7 @@ import java.util.List;
 import org.graalvm.polyglot.Value;
 
 public class Superset {
-      
+
    /* the internal list */
    public List<Value> list = new LinkedList<>();
 
