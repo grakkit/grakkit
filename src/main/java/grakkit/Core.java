@@ -38,7 +38,7 @@ public class Core {
          try {
             Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
-            method.invoke((URLClassLoader) ClassLoader.getSystemClassLoader(), Core.locate(Core.class));
+            method.invoke((URLClassLoader) Value.class.getClassLoader(), Core.locate(Core.class));
          } catch (Throwable error) {
             throw new RuntimeException("Failed to add plugin to class path!", error);
          }
@@ -88,7 +88,7 @@ public class Core {
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", Core.base)
             .build();
-         Core.context.getBindings("js").putMember("Core", Core.context.asValue(new Core()));
+         Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
          Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
       } catch (Throwable error) {
          error.printStackTrace(System.err);
@@ -119,7 +119,7 @@ public class Core {
    
    /** schedule a task in a new thread */
    public void sync (Value script) {
-      Core.tasks.list.add(Core.context.asValue(new Thread(script::execute)));
+      Core.tasks.list.add(Value.asValue(new Thread(script::execute)));
    }
 
    /** close and re-open the environment */
