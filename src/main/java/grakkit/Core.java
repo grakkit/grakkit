@@ -31,14 +31,14 @@ public class Core {
    private static Superset tasks = new Superset();
    
    /** inject polyglot into the classpath if not available at runtime */
-   static void patch () {
+   static void patch (Class<?> clazz) {
       try {
          Value.asValue(new Object());
       } catch (Throwable none) {
          try {
             Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
-            method.invoke((URLClassLoader) ClassLoader.getSystemClassLoader(), Core.locate(Core.class));
+            method.invoke((URLClassLoader) ClassLoader.getSystemClassLoader(), Core.locate(clazz));
          } catch (Throwable error) {
             throw new RuntimeException("Failed to add plugin to class path!", error);
          }

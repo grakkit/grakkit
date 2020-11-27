@@ -7,7 +7,7 @@ import org.graalvm.polyglot.Value;
 public class Main extends JavaPlugin {
 
    static {
-      Core.patch(); // patch core on class load (core stage 1)
+      Core.patch(Main.class); // patch core on class load (core stage 1)
    }
 
    public void onLoad() {
