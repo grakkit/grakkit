@@ -55,7 +55,7 @@ public class Core {
          try {
             Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
             method.setAccessible(true);
-            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(Core.class));
+            method.invoke((URLClassLoader) Value.class.getClassLoader(), Core.locate(Core.class));
          } catch (Throwable error) {
             throw new RuntimeException("Failed to add plugin to class path!", error);
          }
