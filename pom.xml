@@ -40,6 +40,16 @@
          <artifactId>truffle-api</artifactId>
          <version>20.2.0</version>
       </dependency>
+      <dependency>
+         <groupId>org.graalvm.regex</groupId>
+         <artifactId>regex</artifactId>
+         <version>20.2.0</version>
+      </dependency>
+      <dependency>
+         <groupId>com.ibm.icu</groupId>
+         <artifactId>icu4j</artifactId>
+         <version>67.1</version>
+      </dependency>
    </dependencies>
    <build>
       <plugins>
