@@ -50,7 +50,7 @@ public class Core {
    /** inject polyglot into the classpath if not available at runtime */
    static void patch () {
       try {
-         Class.forName("org.graalvm.polyglot.Value");
+         Value.asValue(new Object());
       } catch (Throwable none) {
          try {
             Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
