@@ -12,211 +12,135 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
-public class Core {
+class Superset {
+   
+   // initial list
+   public List<Value> list = new LinkedList<>();
 
-   static {
-
-      // check if graalvm is installed
-      try {
-
-         // test for polyglot
-         Class.forName("org.graalvm.polyglot.Value");
-      } catch (Exception $) {
-
-         // handle errors
+   // execute and remove all scripts
+   public void release () {
+      new LinkedList<Value>(this.list).forEach(value -> {
          try {
-
-            // expose class loader (reflection)
-            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-            method.setAccessible(true);
-
-            // load classes
-            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(Core.class));
-         } catch (Exception error) {
-
-            // throw error
-            throw new RuntimeException("Failed to add plugin to class path!", error);
+            if (value.canExecute()) value.execute();
+         } catch (Throwable error) {
+            // do nothing
          }
-      }
-   }
-
-   private static URL locate (Class<?> clazz) {
-
-      // handle errors
-      try {
-
-         // search via protection domain
-         URL resource = clazz.getProtectionDomain().getCodeSource().getLocation();
-         
-         // check for valid resource
-         if (resource instanceof URL) {
-
-            // return class location
-            return resource;
-         }
-      } catch (SecurityException | NullPointerException error) {
-         // try other method instead of throwing error
-      }
-
-      // search via class name
-      URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
-
-      // check for valid resouce
-      if (resource instanceof URL) {
-
-         // convert resource to string
-         String link = resource.toString();
-
-         // get valid suffix
-         String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
-
-         // check link for valid suffix
-         if (link.endsWith(suffix)) {
-
-            // remove suffix
-            String path = link.substring(0, link.length() - suffix.length());
-
-            // handle jar protocol
-            if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
-
-            // handle errors
-            try {
-
-               // return class location
-               return new URL(path);
-            } catch (Exception error) {
-
-               // failed to find class location
-               return null;
-            }
-         } else {
-
-            // failed to find class location
-            return null;
-         }
-      } else {
-
-         // failed to find class location
-         return null;
-      }
-   }
-
-   public static String root;
-   public static Context context;
-   public static List<Value> hooks = new LinkedList<>();
-   public static List<Value> queue = new LinkedList<>();
-
-   public static void loop () {
-
-      // execute all scripts in queue
-      new LinkedList<Value>(Core.queue).forEach(value -> {
-
-         // handle errors
-         try {
-
-            // execute script
-            value.execute();
-         } catch (Exception error) {
-
-            // log error
-            error.printStackTrace(System.err);
-         }
-
-         // remove script
-         Core.queue.remove(value);
+         this.list.remove(value);
       });
    }
+}
 
-   public static void open (String path, String main) throws Exception {
+public class Core {
 
-      // declare root path
-      Core.root = path;
+   // the base path of the environment
+   private static String base;
 
-      // get index file from config
-      File index = Paths.get(path, main).toFile();
+   // the entry point path, relative to the base
+   private static String main;
 
-      // check if index exists
-      if (index.exists()) {
+   // the polyglot context
+   private static Context context;
+
+   // a list of unload hooks
+   private static Superset hooks = new Superset();
+
+   // a list of currently scheduled tasks
+   private static Superset tasks = new Superset();
    
-         // create context
+   // locate classes for injection
+   private static URL locate (Class<?> clazz) {
+      try {
+         URL resource = clazz.getProtectionDomain().getCodeSource().getLocation();
+         if (resource instanceof URL) return resource;
+      } catch (SecurityException | NullPointerException error) {
+         // do nothing
+      }
+      URL resource = clazz.getResource(clazz.getSimpleName() + ".class");
+      if (resource instanceof URL) {
+         String link = resource.toString();
+         String suffix = clazz.getCanonicalName().replace('.', '/') + ".class";
+         if (link.endsWith(suffix)) {
+            String path = link.substring(0, link.length() - suffix.length());
+            if (path.startsWith("jar:")) path = path.substring(4, path.length() - 2);
+            try {
+               return new URL(path);
+            } catch (Throwable error) {
+               // do nothing
+            }
+         }
+      }
+      return null;
+   }
+
+   // initialize base and entry point paths, then open core
+   public static void init (String base, String main) {
+      Core.base = base;
+      Core.main = main;
+      Core.open();
+   }
+
+   // locate the entry point and run it in a new context
+   public static void open ()  {
+      File index = Paths.get(Core.base, Core.main).toFile();
+      try {
          Core.context = Context.newBuilder("js")
             .allowAllAccess(true)
             .allowExperimentalOptions(true)
             .option("js.nashorn-compat", "true")
             .option("js.commonjs-require", "true")
-            .option("js.commonjs-require-cwd", path)
+            .option("js.commonjs-require-cwd", Core.base)
             .build();
-
-         // evaluate index
-         try {
-            Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
-            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
-         } catch (Exception error) {
-
-            // handle script errors
-            error.printStackTrace(System.err);
-         }
-      } else {
-
-         // handle failed init
-         throw new Exception("The entry point \"" + index.getPath().replace('\\', '/') + "\" could not be found!");
+         Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
+         Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
+      } catch (Throwable error) {
+         error.printStackTrace(System.err);
       }
    }
 
+   /** release all scheduled tasks */ 
+   public static void loop () {
+      Core.tasks.release();
+   }
+
+   /** release all unload hooks, clear all tasks, and close the context */ 
    public static void close () {
-
-      // remove all scripts in queue
-      Core.queue.clear();
-   
-      // trigger all closure hooks
-      new LinkedList<Value>(Core.hooks).forEach(value -> {
-
-         // handle errors
-         try {
-
-            // trigger hook
-            value.execute();
-         } catch (Exception error) {
-
-            // log error
-            error.printStackTrace(System.err);
-         }
-
-         // remove hook
-         Core.hooks.remove(value);
-      });
-      
-      // close context
+      Core.hooks.release();
+      Core.tasks.list.clear();
       Core.context.close();
    }
 
+   /** add an unload hook */
    public void hook (Value script) {
-
-      // add script to hooks
-      if (script.canExecute()) hooks.add(script);
+      Core.hooks.list.add(script);
    }
 
+   /** schedule a task in this thread */
    public void push (Value script) {
-
-      // add script to queue
-      if (script.canExecute()) queue.add(script);
+      Core.tasks.list.add(script);
    }
-
+   
+   /** schedule a task in a new thread */
    public void sync (Value script) {
-
-      // add thread to queue
-      if (script.canExecute()) queue.add(Value.asValue(new Thread(script::execute)));
+      Core.tasks.list.add(Value.asValue(new Thread(script::execute)));
    }
 
-   public String getRoot () {
-
-      // provide root path
-      return Core.root;
+   /** close and re-open the environment */
+   public void swap () {
+      Core.close(); Core.open();
    }
-
-   public void setRoot (String path) {
-
-      // declare root path
-      Core.root = path;
+   
+   /** inject polyglot into the classpath if not available at runtime */
+   static {
+      try {
+         Class.forName("org.graalvm.polyglot.Value");
+      } catch (Throwable none) {
+         try {
+            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+            method.setAccessible(true);
+            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(Core.class));
+         } catch (Throwable error) {
+            throw new RuntimeException("Failed to add plugin to class path!", error);
+         }
+      }
    }
 }
