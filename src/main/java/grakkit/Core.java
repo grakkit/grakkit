@@ -14,10 +14,10 @@ import org.graalvm.polyglot.Value;
 
 class Superset {
    
-   // initial list
+   /* the internal list */
    public List<Value> list = new LinkedList<>();
 
-   // execute and remove all scripts
+   /** execute and remove all scripts */
    public void release () {
       new LinkedList<Value>(this.list).forEach(value -> {
          try {
@@ -32,22 +32,37 @@ class Superset {
 
 public class Core {
 
-   // the base path of the environment
+   /** the base path of the environment */
    private static String base;
 
-   // the entry point path, relative to the base
+   /** the entry point path, relative to the base */
    private static String main;
 
-   // the polyglot context
+   /** the polyglot context */
    private static Context context;
 
-   // a list of unload hooks
+   /** a list of unload hooks */
    private static Superset hooks = new Superset();
 
-   // a list of currently scheduled tasks
+   /** a list of currently scheduled tasks */
    private static Superset tasks = new Superset();
    
-   // locate classes for injection
+   /** inject polyglot into the classpath if not available at runtime */
+   static void patch () {
+      try {
+         Class.forName("org.graalvm.polyglot.Value");
+      } catch (Throwable none) {
+         try {
+            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
+            method.setAccessible(true);
+            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(Core.class));
+         } catch (Throwable error) {
+            throw new RuntimeException("Failed to add plugin to class path!", error);
+         }
+      }
+   }
+   
+   /** locate classes for injection */ 
    private static URL locate (Class<?> clazz) {
       try {
          URL resource = clazz.getProtectionDomain().getCodeSource().getLocation();
@@ -72,14 +87,14 @@ public class Core {
       return null;
    }
 
-   // initialize base and entry point paths, then open core
+   /**initialize base and entry point paths, then open core */ 
    public static void init (String base, String main) {
       Core.base = base;
       Core.main = main;
       Core.open();
    }
 
-   // locate the entry point and run it in a new context
+   /** locate the entry point and run it in a new context */ 
    public static void open ()  {
       File index = Paths.get(Core.base, Core.main).toFile();
       try {
@@ -127,20 +142,5 @@ public class Core {
    /** close and re-open the environment */
    public void swap () {
       Core.close(); Core.open();
-   }
-   
-   /** inject polyglot into the classpath if not available at runtime */
-   static {
-      try {
-         Class.forName("org.graalvm.polyglot.Value");
-      } catch (Throwable none) {
-         try {
-            Method method = URLClassLoader.class.getDeclaredMethod("addURL", URL.class);
-            method.setAccessible(true);
-            method.invoke((URLClassLoader) Thread.currentThread().getContextClassLoader(), Core.locate(Core.class));
-         } catch (Throwable error) {
-            throw new RuntimeException("Failed to add plugin to class path!", error);
-         }
-      }
    }
 }
