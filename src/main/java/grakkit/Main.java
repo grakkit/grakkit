@@ -6,11 +6,8 @@ import org.graalvm.polyglot.Value;
 
 public class Main extends JavaPlugin {
 
-   static {
-      Core.patch(new Loader());
-   }
-
    public void onLoad() {
+      Core.patch(new Loader(this.getClassLoader()));
       Wrapper.init(this.getServer());
    }
 

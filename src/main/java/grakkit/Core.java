@@ -30,8 +30,8 @@ public class Core {
    /** inject polyglot into the classpath if not available at runtime */
    static void patch (Loader loader) {
       try {
+         loader.addURL(Core.locate(Core.class));
          Thread.currentThread().setContextClassLoader((ClassLoader) loader);
-         loader.addURL(Core.locate(clazz));
       } catch (Throwable error) {
          throw new RuntimeException("Failed to load classes!", error);
       }
@@ -80,7 +80,7 @@ public class Core {
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", Core.base)
             .build();
-         Core.context.getBindings("js").putMember("Core", Main.transform(new Core()));
+         Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
          Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
       } catch (Throwable error) {
          error.printStackTrace(System.err);

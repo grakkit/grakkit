@@ -1,5 +1,8 @@
 package grakkit;
 
+import java.net.URL;
+import java.net.URLClassLoader;
+
 public class Loader extends URLClassLoader {
    
    public Loader(ClassLoader parent) {
