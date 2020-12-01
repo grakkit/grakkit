@@ -6,12 +6,11 @@ import org.graalvm.polyglot.Value;
 
 public class Main extends JavaPlugin {
 
-   public static Value transform (Object object) {
-      return Value.asValue(object);
+   static {
+      Core.patch(new Loader());
    }
 
    public void onLoad() {
-      Core.patch(Main.class);
       Wrapper.init(this.getServer());
    }
 

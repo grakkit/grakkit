@@ -2,8 +2,6 @@ package grakkit;
 
 import java.io.File;
 
-import java.lang.reflect.Method;
-
 import java.net.URL;
 
 import java.nio.file.Paths;
@@ -30,18 +28,12 @@ public class Core {
    private static Superset tasks = new Superset();
 
    /** inject polyglot into the classpath if not available at runtime */
-   static void patch (Class<?> clazz) {
+   static void patch (Loader loader) {
       try {
-         Value.asValue(new Object());
-      } catch (Throwable none) {
-         try {
-            Class<?> URLClassLoader = Class.forName("java.net.URLClassLoader");
-            Method method = URLClassLoader.getDeclaredMethod("addURL", URL.class);
-            method.setAccessible(true);
-            method.invoke(URLClassLoader.cast(Thread.currentThread().getContextClassLoader()), Core.locate(clazz));
-         } catch (Throwable error) {
-            throw new RuntimeException("Failed to add plugin to class path!", error);
-         }
+         Thread.currentThread().setContextClassLoader((ClassLoader) loader);
+         loader.addURL(Core.locate(clazz));
+      } catch (Throwable error) {
+         throw new RuntimeException("Failed to load classes!", error);
       }
    }
 
