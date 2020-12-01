@@ -7,19 +7,19 @@ import org.graalvm.polyglot.Value;
 public class Main extends JavaPlugin {
 
    public void onLoad() {
-      Core.patch(new Loader(this.getClassLoader()));
+      Core.patch(new Loader(this.getClassLoader())); // CORE - patch class loader with GraalJS
       Wrapper.init(this.getServer());
    }
 
    public void onEnable() {
       this.getConfig().options().copyDefaults(true);
       this.saveDefaultConfig();
-      this.getServer().getScheduler().runTaskTimer(this, Core::loop, 0, 1);
-      Core.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js"));
+      this.getServer().getScheduler().runTaskTimer(this, Core::loop, 0, 1); // CORE - run task loop
+      Core.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js")); // CORE - initialize
    }
 
    public void onDisable() {
-      Core.close();
+      Core.close(); // CORE - close before exit
       Wrapper.close();
    }
 
