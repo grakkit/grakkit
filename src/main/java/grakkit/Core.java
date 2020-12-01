@@ -88,7 +88,7 @@ public class Core {
             .option("js.commonjs-require", "true")
             .option("js.commonjs-require-cwd", Core.base)
             .build();
-         Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
+         Core.context.getBindings("js").putMember("Core", Main.transform(new Core()));
          Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
       } catch (Throwable error) {
          error.printStackTrace(System.err);
