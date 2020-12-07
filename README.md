@@ -1,6 +1,6 @@
 ![Project Logo](./logo.png)
 
-**It's the fusion of GraalVM, JavaScript, and Minecraft.**
+**Graal Development Kit** - It's the fusion of GraalVM, JavaScript, and Minecraft.
 
 ![Code Demo](./demo.gif)
 
@@ -9,10 +9,6 @@
 If you want to get in touch with the community, join our [discord server](https://discord.gg/e682hwR) and we can assist you with whatever problem you may have.
 
 # Getting Started
-
-## Important
-
-**Headless use of the GraalJS engine is currently under construction. Until this is ready, the client or server must be ran with the GraalVM JVM.**
 
 ## Installation
 Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would to install any other plugin, mod, or addon.
