@@ -26,7 +26,7 @@ const { core } = require('@grakkit/server'); /* for servers */
 const { core } = require('@grakkit/client'); /* for clients */
 ```
 
-...and reload the server. You now have full access to the core library. For more info about installing and using modules, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up.
+...and reload. You now have full access to the core library. With the above code in place, you can reload the JS environment with `/js core.reload()`. For more info about installing and using modules, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up.
 
 ---
 
