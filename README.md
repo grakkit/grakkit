@@ -13,20 +13,23 @@ If you want to get in touch with the community, join our [discord server](https:
 ## Installation
 Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would to install any other plugin, mod, or addon.
 
-## Your First Project
-Before creating a project, load your client or server. A **grakkit** folder should appear in your respective platform's config directory -- this folder will be the home of your new project.
+## Your First Project (Servers)
+First, install the Grakkit plugin to your server. Upon starting or reloading the server, a **grakkit** folder will appear in your server's **plugins** directory, along with a **config.yml** file within. This config file contains the relative path of the entry point, which by default is **index.js**. If there is not already an **index.js** file within the **plugins/grakkit** directory, create it now.
 
-The most basic project will consist of a single **index.js** file within the **grakkit** folder. You will need to create this file yourself. Once created, any code you type there will be executed on the next reload.
+With that in place, you can start installing some NPM modules. Most (if not all) servers will want to install the **@grakkit/server** package, which provides a standard library and environment for JS development in Minecraft. To install this package, use `npm install @grakkit/server`.
 
-A project like that works, but it's just not the same as having the full suite of tooling available via NPM. If you don't already have NodeJS installed on your machine, do so now. Once installed, use `npm install @grakkit/server` or `npm install @grakkit/client` -- whatever best fits your current platform.
-
-With that in play, add one of the following lines to your `index.js` file:
+Once you've installed that, you can require it from within your index file like so:
 ```js
-const { core } = require('@grakkit/server'); /* for servers */
-const { core } = require('@grakkit/client'); /* for clients */
+const { core } = require('@grakkit/server');
 ```
 
-...and reload. You now have full access to the core library. With the above code in place, you can reload the JS environment with `/js core.reload()`. For more info about installing and using modules, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up.
+...and you will have full access to the **core** library after the next reload of the server. This library also includes the in-game **/js** command, which can be used to test and execute code from within the game -- for example, you can use `/js core.reload()` to reload the JS environment without having to reload the entire server, and `/js self` represents the player or console sending the command.
+
+## Your First Project (Clients)
+Grakkit for clients is still in development. In the meantime, we recommend [KubeJS](https://www.curseforge.com/minecraft/mc-mods/kubejs) as its infrastructure is already well-established.
+
+## Further Reading
+For more info about Grakkit, modules, the JS command, and more, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up. **Note:** This wiki is currently outdated (we're working on updating it) and really only applies to servers. Many of the code samples in here may still work, but some may not. Use this at your own risk!
 
 ---
 
