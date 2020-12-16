@@ -26,7 +26,7 @@ const { core } = require('@grakkit/server');
 ...and you will have full access to the **core** library after the next reload of the server. This library also includes the in-game **/js** command, which can be used to test and execute code from within the game -- for example, you can use `/js core.reload()` to reload the JS environment without having to reload the entire server, and `/js self` represents the player or console sending the command.
 
 ## Your First Project (Clients)
-Grakkit for clients is still in development. In the meantime, we recommend [KubeJS](https://www.curseforge.com/minecraft/mc-mods/kubejs) as its infrastructure is already well-established.
+Grakkit for clients is still in development. In the meantime, we recommend [KubeJS](https://kubejs.latvian.dev) as its infrastructure is already well-established.
 
 ## Further Reading
 For more info about Grakkit, modules, the JS command, and more, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up. **Note:** This wiki is currently outdated (we're working on updating it) and really only applies to servers. Many of the code samples in here may still work, but some may not. Use this at your own risk!
