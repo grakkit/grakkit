@@ -62,7 +62,7 @@ public class Core {
       return null;
    }
 
-   /**initialize base and entry point paths, then open core */ 
+   /** initialize base and entry point paths, then open core */ 
    public static void init (String base, String main) {
       Core.base = base;
       Core.main = main;
@@ -72,6 +72,7 @@ public class Core {
    /** locate the entry point and run it in a new context */ 
    public static void open ()  {
       File index = Paths.get(Core.base, Core.main).toFile();
+      if (!index.exists()) index.createNewFile();
       try {
          Core.context = Context.newBuilder("js")
             .allowAllAccess(true)
