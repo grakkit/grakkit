@@ -14,7 +14,9 @@ If you want to get in touch with the community, join our [discord server](https:
 Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would install any other plugin, mod, or addon.
 
 ## Your First Project (Bukkit/Spigot/Paper)
-Upon starting or reloading the server with the plugin installed, the `plugins/grakkit` folder will be created in the server's root directory. Consider this folder your home when working within the scope of grakkit. Unless you know EXACTLY what you're doing (mad respect if you do) you should install the `@grakkit/server` package, a standard library and environment for JavaScript development. Make sure you have NodeJS installed on your system, then navigate to the `grakkit` folder in a terminal or command prompt and use `npm install @grakkit/server` to install it.
+Upon starting or reloading the server with the plugin installed, the `plugins/grakkit` folder will be created in the server's root directory. Consider this folder your home when working within the scope of grakkit.
+
+Unless you know EXACTLY what you're doing (mad respect if you do) you should install the `@grakkit/server` package, a standard library and environment for JavaScript development. Make sure you have NodeJS installed on your system, then navigate to the `grakkit` folder in a terminal or command prompt and use `npm install @grakkit/server` to install it.
 
 Once that's done, you can import it from within your main file (default `plugins/grakkit/index.js`) as shown below...
 ```js
