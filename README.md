@@ -11,25 +11,25 @@ If you want to get in touch with the community, join our [discord server](https:
 # Getting Started
 
 ## Installation
-Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would to install any other plugin, mod, or addon.
+Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **addons** folder you would install any other plugin, mod, or addon.
 
-## Your First Project (Servers)
-First, install the Grakkit plugin to your server. Upon starting or reloading the server, a `grakkit` folder will appear in your server's `plugins` directory, along with a `config.yml` file within. This config file contains the relative path of the entry point, which by default is `index.js`. If there is not already an `index.js` file within the `plugins/grakkit` directory, create it now.
+## Your First Project (Bukkit/Spigot/Paper)
+Upon starting or reloading the server with the plugin installed, the `plugins/grakkit` folder will be created on your server. This is where most if not all development will take place, and serves as your home when working within the scope of grakkit.
 
-With that in place, you can start installing some NPM modules. Most servers will want to have the `@grakkit/server` package installed, which provides a standard library and environment for JS development in Minecraft. Navigate to your server's `plugins/grakkit` directory in a terminal or command prompt and use `npm install @grakkit/server` to install it.
+Now, unless you know EXACTLY what you're doing (mad respect if you do) you should install the `@grakkit/server` package, a standard library and environment for JavaScript development. Make sure you have NodeJS installed on your system, then navigate to `plugins/grakkit` in a terminal or command prompt and use `npm install @grakkit/server` to install it.
 
-Once you've installed that, you can require it from within your index file like so:
+Once that's done, you can import it from within your main file (default `index.js`) as shown below...
 ```js
 const { core } = require('@grakkit/server');
 ```
 
-...and you will have full access to the core library after the next reload of the server. This library also includes the in-game `/js` command, which can be used to test and execute code from within the game -- for example, you can use `/js core.reload()` to reload the JS environment without having to reload the entire server, and `/js self` represents the player or console sending the command.
+...and upon the next reload you will have full access to the core library. This package also adds the in-game `/js` command, which can be used to test and execute code from within the game -- for example, `/js self` represents the player or console sending the command, and you can use `/js core.reload()` to reload the JS environment without having to reload the entire server.
 
-## Your First Project (Clients)
-Grakkit for clients is still in development. In the meantime, we recommend [KubeJS](https://kubejs.latvian.dev) as a substitute.
+## Your First Project (Fabric)
+Grakkit for fabric is still in development. In the meantime, we recommend [KubeJS](https://kubejs.latvian.dev) as an alternative.
 
 ## Further Reading
-For more info about Grakkit, modules, the JS command, and more, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up. ***Note:** This wiki is currently outdated and really only applies to servers. Many of the code samples in here may still work, but some may not. Use at your own risk!*
+For more info about Grakkit, modules, the JS command, and more, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up. ***Attention:** This wiki is currently outdated and really only applies to servers. Many of the code samples in here may still work, but some may not. Use at your own risk!*
 
 ---
 
