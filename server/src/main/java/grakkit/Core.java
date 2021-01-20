@@ -72,7 +72,6 @@ public class Core {
    /** locate the entry point and run it in a new context */ 
    public static void open ()  {
       File index = Paths.get(Core.base, Core.main).toFile();
-      if (!index.exists()) index.createNewFile();
       try {
          Core.context = Context.newBuilder("js")
             .allowAllAccess(true)
@@ -82,7 +81,11 @@ public class Core {
             .option("js.commonjs-require-cwd", Core.base)
             .build();
          Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
-         Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
+         if (index.exists()) {
+            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
+         } else {
+            index.createNewFile();
+         }
       } catch (Throwable error) {
          error.printStackTrace(System.err);
       }
