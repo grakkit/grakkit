@@ -20,7 +20,7 @@ Now, unless you know EXACTLY what you're doing (mad respect if you do) you shoul
 
 Once that's done, you can import it from within your main file (default `index.js`) as shown below...
 ```js
-const { core } = require('@grakkit/server');
+const core = require('@grakkit/server');
 ```
 
 ...and upon the next reload you will have full access to the core library. This package also adds the in-game `/js` command, which can be used to test and execute code from within the game -- for example, `/js self` represents the player or console sending the command, and you can use `/js core.reload()` to reload the JS environment without having to reload the entire server.
