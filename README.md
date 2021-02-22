@@ -16,14 +16,16 @@ Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page
 ## Your First Project (Bukkit/Spigot/Paper)
 Upon starting or reloading the server with the plugin installed, the `plugins/grakkit` folder will be created on your server. This is where most if not all development will take place, and serves as your home when working within the scope of grakkit.
 
-Now, unless you know EXACTLY what you're doing (mad respect if you do) you should install the `@grakkit/server` package, a standard library and environment for JavaScript development. Make sure you have NodeJS installed on your system, then navigate to `plugins/grakkit` in a terminal or command prompt and use `npm install @grakkit/server` to install it.
+Now, unless you know EXACTLY what you're doing (mad respect if you do) you should install the `@grakkit/server` package, a standard library for JavaScript development. Make sure you have NodeJS installed on your system, then navigate to `plugins/grakkit` in a terminal or command prompt and use `npm install @grakkit/server` to install it.
+
+For those working on a remote server, you can simply install the `@grakkit/server` package to a local directory, then copy that directory's contents to the remote server's `plugins/grakkit` folder. This works because grakkit itself doesn't need NodeJS installed, it's merely the system we use for package management.
 
 Once that's done, you can import it from within your main file (default `index.js`) as shown below...
 ```js
-const core = require('@grakkit/server');
+const stdlib = require('@grakkit/server');
 ```
 
-...and upon the next reload you will have full access to the core library. This package also adds the in-game `/js` command, which can be used to test and execute code from within the game -- for example, `/js self` represents the player or console sending the command, and you can use `/js core.reload()` to reload the JS environment without having to reload the entire server.
+...and upon the next server reload, the above code will be executed. This package also adds the in-game `/js` command, which can be used to test and execute code from within the game -- for example, `/js self` represents the player or console sending the command, and you can use `/js core.reload()` to reload the JS environment without having to reload the entire server.
 
 ## Your First Project (Fabric)
 Grakkit for fabric is still in development. In the meantime, we recommend [KubeJS](https://kubejs.latvian.dev) as an alternative.
