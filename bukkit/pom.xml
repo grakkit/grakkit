@@ -9,6 +9,14 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
    <repositories>
+   <repository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>id-center</id>
+                    <name>bintray</name>
+                    <url>https://jcenter.bintray.com</url>
+                </repository>
       <repository>
          <id>central</id>
          <url>https://repo1.maven.org/maven2/</url>
@@ -18,6 +26,16 @@
          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
       </repository>
    </repositories>
+   <pluginRepositories>
+                <pluginRepository>
+                    <snapshots>
+                        <enabled>false</enabled>
+                    </snapshots>
+                    <id>central</id>
+                    <name>bintray-plugins</name>
+                    <url>https://jcenter.bintray.com</url>
+                </pluginRepository>
+    </pluginRepositories>
    <dependencies>
       <dependency>
          <groupId>org.spigotmc</groupId>
@@ -39,6 +57,11 @@
          <groupId>org.graalvm.truffle</groupId>
          <artifactId>truffle-api</artifactId>
          <version>20.2.0</version>
+      </dependency>
+      <dependency>
+         <groupId>io.vacco.java-express</groupId>
+         <artifactId>java-express</artifactId>
+         <version>0.2.1</version>
       </dependency>
    </dependencies>
    <build>
