@@ -9,14 +9,14 @@
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
    <repositories>
-   <repository>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                    <id>id-center</id>
-                    <name>bintray</name>
-                    <url>https://jcenter.bintray.com</url>
-                </repository>
+      <repository>
+           <snapshots>
+                 <enabled>false</enabled>
+           </snapshots>
+           <id>id-center</id>
+           <name>bintray</name>
+           <url>https://jcenter.bintray.com</url>
+      </repository>
       <repository>
          <id>central</id>
          <url>https://repo1.maven.org/maven2/</url>
@@ -24,6 +24,10 @@
       <repository>
          <id>spigot</id>
          <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+      </repository>
+      <repository>
+         <id>husk</id>
+         <url>https://maven.husk.pro/snapshots/</url>
       </repository>
    </repositories>
    <pluginRepositories>
@@ -62,6 +66,11 @@
          <groupId>io.vacco.java-express</groupId>
          <artifactId>java-express</artifactId>
          <version>0.2.1</version>
+      </dependency>
+      <dependency>
+          <groupId>pro.husk</groupId>
+          <artifactId>mysql</artifactId>
+          <version>1.4.1-SNAPSHOT</version>
       </dependency>
    </dependencies>
    <build>
