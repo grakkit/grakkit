@@ -5,6 +5,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
@@ -26,6 +27,9 @@ public class Core {
 
    /** a list of currently scheduled tasks */
    private static Superset tasks = new Superset();
+
+   /** a cached map of path names to classloaders */
+   private static HashMap<String, URLClassLoader> loaders = new HashMap<String, URLClassLoader>();
 
    /** inject polyglot into the classpath if not available at runtime */
    static void patch (Loader loader) {
@@ -130,11 +134,13 @@ public class Core {
 
    /** load classes from external files */
    public Class<?> load (File source, String name) throws ClassNotFoundException, MalformedURLException {
-      return Class.forName(name, true,
-         new URLClassLoader(
+      String path = source.toPath().normalize().toString();
+      if (!Core.loaders.containsKey(path)) {
+         Core.loaders.put(path, new URLClassLoader(
             new URL[] { source.toURI().toURL() },
             this.getClass().getClassLoader()
-         )
-      );
+         ));
+      }
+      return Class.forName(name, true, Core.loaders.get(path));
    }
 }
