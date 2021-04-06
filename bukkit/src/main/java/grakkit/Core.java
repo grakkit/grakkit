@@ -1,9 +1,9 @@
 package grakkit;
 
 import java.io.File;
-
+import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 
 import org.graalvm.polyglot.Context;
@@ -126,5 +126,15 @@ public class Core {
    /** return the current base path */
    public String getRoot () {
       return Core.base;
+   }
+
+   /** load classes from external files */
+   public Class<?> load (File source, String name) throws ClassNotFoundException, MalformedURLException {
+      return Class.forName(name, true,
+         new URLClassLoader(
+            new URL[] { source.toURI().toURL() },
+            this.getClass().getClassLoader()
+         )
+      );
    }
 }

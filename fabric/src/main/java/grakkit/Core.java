@@ -1,9 +1,9 @@
 package grakkit;
 
 import java.io.File;
-
+import java.net.MalformedURLException;
 import java.net.URL;
-
+import java.net.URLClassLoader;
 import java.nio.file.Paths;
 
 import org.graalvm.polyglot.Context;
@@ -62,7 +62,7 @@ public class Core {
       return null;
    }
 
-   /**initialize base and entry point paths, then open core */ 
+   /** initialize base and entry point paths, then open core */ 
    public static void init (String base, String main) {
       Core.base = base;
       Core.main = main;
@@ -81,7 +81,11 @@ public class Core {
             .option("js.commonjs-require-cwd", Core.base)
             .build();
          Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
-         Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
+         if (index.exists()) {
+            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
+         } else {
+            index.createNewFile();
+         }
       } catch (Throwable error) {
          error.printStackTrace(System.err);
       }
@@ -122,5 +126,15 @@ public class Core {
    /** return the current base path */
    public String getRoot () {
       return Core.base;
+   }
+
+   /** load classes from external files */
+   public Class<?> load (File source, String name) throws ClassNotFoundException, MalformedURLException {
+      return Class.forName(name, true,
+         new URLClassLoader(
+            new URL[] { source.toURI().toURL() },
+            this.getClass().getClassLoader()
+         )
+      );
    }
 }
