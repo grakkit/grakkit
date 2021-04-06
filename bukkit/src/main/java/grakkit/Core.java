@@ -134,13 +134,14 @@ public class Core {
 
    /** load classes from external files */
    public Class<?> load (File source, String name) throws ClassNotFoundException, MalformedURLException {
+      URL link = source.toURI().toURL();
       String path = source.toPath().normalize().toString();
-      if (!Core.loaders.containsKey(path)) {
-         Core.loaders.put(path, new URLClassLoader(
-            new URL[] { source.toURI().toURL() },
-            this.getClass().getClassLoader()
-         ));
-      }
+      Core.loaders.computeIfAbsent(path, (key) -> {
+         return new URLClassLoader(
+            new URL[] { link },
+            Core.class.getClassLoader()
+         );
+      });
       return Class.forName(name, true, Core.loaders.get(path));
    }
 }
