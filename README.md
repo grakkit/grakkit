@@ -36,4 +36,4 @@ For more info about Grakkit, modules, the JS command, and more, head on over to 
 For another useful guide to getting started, check out [Start Your Environment](https://github.com/grakkit/grakkit/wiki/HowTo-Start-Environment).
 ---
 
-*Owned and maintained by [RepComm](https://github.com/RepComm) and [hb432](https://github.com/hb432). Special thanks to [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
+*Owned and maintained by [RepComm](https://github.com/RepComm) and [hb432](https://github.com/hb432). Special thanks to [brayjamin](https://github.com/brayjamin) [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
