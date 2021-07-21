@@ -11,7 +11,7 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
-public class Core {
+public class Grakkit {
 
    /** the base path of the environment */
    private static String base;
@@ -23,18 +23,18 @@ public class Core {
    private static Context context;
 
    /** a list of unload hooks */
-   private static Superset hooks = new Superset();
+   private static final Superset hooks = new Superset();
 
    /** a list of currently scheduled tasks */
-   private static Superset tasks = new Superset();
+   private static final Superset tasks = new Superset();
 
    /** a cached map of path names to classloaders */
-   private static HashMap<String, URLClassLoader> loaders = new HashMap<String, URLClassLoader>();
+   private static final HashMap<String, URLClassLoader> loaders = new HashMap<String, URLClassLoader>();
 
    /** inject polyglot into the classpath if not available at runtime */
    static void patch (Loader loader) {
       try {
-         loader.addURL(Core.locate(Core.class));
+         loader.addURL(Grakkit.locate(Grakkit.class));
          Thread.currentThread().setContextClassLoader((ClassLoader) loader);
       } catch (Throwable error) {
          throw new RuntimeException("Failed to load classes!", error);
@@ -68,25 +68,25 @@ public class Core {
 
    /** initialize base and entry point paths, then open core */ 
    public static void init (String base, String main) {
-      Core.base = base;
-      Core.main = main;
-      Core.open();
+      Grakkit.base = base;
+      Grakkit.main = main;
+      Grakkit.open();
    }
 
    /** locate the entry point and run it in a new context */ 
    public static void open ()  {
-      File index = Paths.get(Core.base, Core.main).toFile();
+      File index = Paths.get(Grakkit.base, Grakkit.main).toFile();
       try {
-         Core.context = Context.newBuilder("js")
+         Grakkit.context = Context.newBuilder("js")
             .allowAllAccess(true)
             .allowExperimentalOptions(true)
             .option("js.nashorn-compat", "true")
             .option("js.commonjs-require", "true")
-            .option("js.commonjs-require-cwd", Core.base)
+            .option("js.commonjs-require-cwd", Grakkit.base)
             .build();
-         Core.context.getBindings("js").putMember("Core", Value.asValue(new Core()));
+         Grakkit.context.getBindings("js").putMember("Grakkit", Value.asValue(new Grakkit()));
          if (index.exists()) {
-            Core.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
+            Grakkit.context.eval(Source.newBuilder("js", index).mimeType("application/javascript+module").build());
          } else {
             index.createNewFile();
          }
@@ -97,51 +97,50 @@ public class Core {
 
    /** release all scheduled tasks */ 
    public static void loop () {
-      Core.tasks.release();
+      Grakkit.tasks.release();
    }
 
    /** release all unload hooks, clear all tasks, and close the context */ 
    public static void close () {
-      Core.hooks.release();
-      Core.tasks.list.clear();
-      Core.context.close();
+      Grakkit.hooks.release();
+      Grakkit.tasks.list.clear();
+      Grakkit.context.close();
    }
 
    /** add an unload hook */
    public void hook (Value script) {
-      Core.hooks.list.add(script);
+      Grakkit.hooks.list.add(script);
    }
 
    /** schedule a task in this thread */
    public void push (Value script) {
-      Core.tasks.list.add(script);
+      Grakkit.tasks.list.add(script);
    }
 
    /** schedule a task in a new thread */
    public void sync (Value script) {
-      Core.tasks.list.add(Value.asValue(new Thread(script::execute)));
+      Grakkit.tasks.list.add(Value.asValue(new Thread(script::execute)));
    }
 
    /** close and re-open the environment */
    public void swap () {
-      Core.close(); Core.open();
+      Grakkit.close(); Grakkit.open();
    }
 
    /** return the current base path */
    public String getRoot () {
-      return Core.base;
+      return Grakkit.base;
    }
 
    /** load classes from external files */
    public Class<?> load (File source, String name) throws ClassNotFoundException, MalformedURLException {
       URL link = source.toURI().toURL();
       String path = source.toPath().normalize().toString();
-      Core.loaders.computeIfAbsent(path, (key) -> {
+      return Class.forName(name, true, Grakkit.loaders.computeIfAbsent(path, (key) -> {
          return new URLClassLoader(
             new URL[] { link },
-            Core.class.getClassLoader()
+            Grakkit.class.getClassLoader()
          );
-      });
-      return Class.forName(name, true, Core.loaders.get(path));
+      }));
    }
 }

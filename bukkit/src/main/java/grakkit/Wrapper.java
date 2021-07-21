@@ -74,6 +74,7 @@ public class Wrapper extends Command {
    }
 
    /** runs the current executor script */
+   @Override
    public boolean execute (CommandSender sender, String label, String[] args) {
       try {
          this.executor.execute(sender, label, args);
@@ -84,8 +85,9 @@ public class Wrapper extends Command {
    }
 
    /** runs and returns the results from the current tab-completer script */
+   @Override
    public List<String> tabComplete (CommandSender sender, String alias, String[] args) {
-      List<String> output = new ArrayList<String>();
+      List<String> output = new ArrayList<>();
       try {
          Value input = this.tabCompleter.execute(sender, alias, args);
          for (long index = 0; index < input.getArraySize(); index++) output.add(input.getArrayElement(index).toString());
