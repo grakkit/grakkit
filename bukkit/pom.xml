@@ -28,17 +28,17 @@
       <dependency>
          <groupId>org.graalvm.js</groupId>
          <artifactId>js</artifactId>
-         <version>21.2.0</version>
+         <version>20.3.3</version>
       </dependency>
       <dependency>
          <groupId>org.graalvm.sdk</groupId>
          <artifactId>graal-sdk</artifactId>
-         <version>20.2.0</version>
+         <version>20.3.3</version>
       </dependency>
       <dependency>
          <groupId>org.graalvm.truffle</groupId>
          <artifactId>truffle-api</artifactId>
-         <version>20.2.0</version>
+         <version>20.3.3</version>
       </dependency>
       <!--
       <dependency>
