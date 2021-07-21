@@ -1,6 +1,4 @@
-![Project Logo](./logo.png)
-
-**Graal Development Kit** - It's the fusion of GraalVM, JavaScript, and Minecraft.
+**Grakkit** - It's the fusion of GraalVM, JavaScript, and Minecraft.
 
 ![Code Demo](./demo.gif)
 

@@ -1,5 +1,0 @@
-language: java
-jdk: openjdk10
-after_success:
-- mvn coveralls:report
-dist: trusty

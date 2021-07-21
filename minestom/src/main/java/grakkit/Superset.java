@@ -12,7 +12,7 @@ public class Superset {
 
    /** execute and remove all scripts */
    public void release () {
-      new LinkedList<Value>(this.list).forEach(value -> {
+      new LinkedList<>(this.list).forEach(value -> {
          try {
             if (value.canExecute()) value.execute();
          } catch (Throwable error) {

@@ -5,21 +5,22 @@ import net.minestom.server.extensions.Extension;
 import net.minestom.server.utils.time.TimeUnit;
 
 public class Main extends Extension {
+
    @Override
    public void initialize() {
-      Core.patch(new Loader(this.getClass().getClassLoader()));
+      Grakkit.patch(new Loader(this.getClass().getClassLoader())); // CORE - patch class loader with GraalJS
    }
+
    @Override
    public void postInitialize() {
       MinecraftServer.getSchedulerManager().buildTask(() -> {
-         Core.loop();
-      }).repeat(1, TimeUnit.TICK).schedule();
-      Core.init(this.getDataDirectory().toString(), "index.js");
+         Grakkit.loop();
+      }).repeat(1, TimeUnit.TICK).schedule(); // CORE - run task loop
+      Grakkit.init(this.getDataDirectory().toString(), "index.js"); // CORE - initialize
    }
 
    @Override
    public void terminate() {
-      Core.close();
-      Wrapper.close();
+      Grakkit.close(); // CORE - close before exit
    }
 }

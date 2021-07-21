@@ -9,6 +9,7 @@ public class Loader extends URLClassLoader {
       super(new URL[0], parent);
    }
 
+   @Override
    public void addURL(URL location) {
       super.addURL(location);
    }
