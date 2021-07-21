@@ -5,6 +5,8 @@ import com.caoccao.javet.interop.V8Host;
 import com.caoccao.javet.interop.V8Runtime;
 */
 
+import java.nio.file.Paths;
+
 import org.bukkit.plugin.java.JavaPlugin;
 
 import org.graalvm.polyglot.Value;
@@ -29,10 +31,22 @@ public class Main extends JavaPlugin {
 
    @Override
    public void onEnable() {
-      this.getConfig().options().copyDefaults(true);
-      this.saveDefaultConfig();
-      this.getServer().getScheduler().runTaskTimer(this, Grakkit::loop, 0, 1); // CORE - run task loop
-      Grakkit.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js")); // CORE - initialize
+      try {
+         this.getConfig().options().copyDefaults(true);
+         this.saveDefaultConfig();
+      } catch (Throwable error) {
+         Paths.get("plugins/grakkit").normalize().toFile().mkdir();
+      }
+      try {
+         this.getServer().getScheduler().runTaskTimer(this, Grakkit::loop, 0, 1); // CORE - run task loop
+      } catch (Throwable error) {
+         // none
+      }
+      try {
+         Grakkit.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js")); // CORE - initialize
+      } catch (Throwable error) {
+         Grakkit.init("plugins/grakkit", "index.js"); // CORE - initialize
+      }
    }
 
    @Override
