@@ -64,6 +64,11 @@
          <artifactId>truffle-api</artifactId>
          <version>20.3.3</version>
       </dependency>
+      <dependency>
+         <groupId>com.eclipsesource.minimal-json</groupId>
+         <artifactId>minimal-json</artifactId>
+         <version>0.9.5</version>
+      </dependency>
    </dependencies>
    <build>
       <plugins>

@@ -1,7 +1,9 @@
 package grakkit;
 
 import net.minestom.server.MinecraftServer;
+
 import net.minestom.server.extensions.Extension;
+
 import net.minestom.server.utils.time.TimeUnit;
 
 public class Main extends Extension {
@@ -14,9 +16,9 @@ public class Main extends Extension {
    @Override
    public void postInitialize() {
       MinecraftServer.getSchedulerManager().buildTask(() -> {
-         Grakkit.loop();
+         Grakkit.tick();
       }).repeat(1, TimeUnit.TICK).schedule(); // CORE - run task loop
-      Grakkit.init(this.getDataDirectory().toString(), "index.js"); // CORE - initialize
+      Grakkit.init(this.getDataDirectory().toString()); // CORE - initialize
    }
 
    @Override
