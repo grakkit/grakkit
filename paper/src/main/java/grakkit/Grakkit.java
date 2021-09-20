@@ -58,7 +58,7 @@ public class Grakkit {
       try {
          Grakkit.driver.open();
       } catch (Throwable error) {
-         error.printStackTrace(System.err);
+         error.printStackTrace();
       }
    }
 

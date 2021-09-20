@@ -26,7 +26,7 @@ public class Main extends JavaPlugin {
          internal.setAccessible(true);
          Main.registry = (CommandMap) internal.get(this.getServer());
       } catch (Throwable error) {
-         error.printStackTrace(System.err);
+         error.printStackTrace();
       }
    }
 
@@ -35,7 +35,7 @@ public class Main extends JavaPlugin {
       try {
          this.getServer().getScheduler().runTaskTimer(this, Grakkit::tick, 0, 1); // CORE - run task loop
       } catch (Throwable error) {
-         // none
+         error.printStackTrace();
       }
       Grakkit.init(this.getDataFolder().getPath()); // CORE - initialize
    }
