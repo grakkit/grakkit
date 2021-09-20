@@ -1,11 +1,10 @@
 package grakkit;
 
-/*
-import com.caoccao.javet.interop.V8Host;
-import com.caoccao.javet.interop.V8Runtime;
-*/
+import java.lang.reflect.Field;
 
-import java.nio.file.Paths;
+import java.util.HashMap;
+
+import org.bukkit.command.CommandMap;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,49 +12,54 @@ import org.graalvm.polyglot.Value;
 
 public class Main extends JavaPlugin {
 
+   /** A list of all registered commands. */
+   public static final HashMap<String, Wrapper> commands = new HashMap<>();
+
+   /** The internal command map used to register commands. */
+   public static CommandMap registry;
+
    @Override
    public void onLoad() {
-
-      /*
-      try {
-         V8Runtime v8Runtime = V8Host.getNodeInstance().createV8Runtime();
-         System.out.println(v8Runtime.getExecutor("'test'").executeString());
-      } catch (Exception error) {
-         // do nothing
-      }
-      */
-
       Grakkit.patch(new Loader(this.getClassLoader())); // CORE - patch class loader with GraalJS
-      Wrapper.init(this.getServer());
+      try {
+         Field internal = this.getServer().getClass().getDeclaredField("commandMap");
+         internal.setAccessible(true);
+         Main.registry = (CommandMap) internal.get(this.getServer());
+      } catch (Throwable error) {
+         error.printStackTrace(System.err);
+      }
    }
 
    @Override
    public void onEnable() {
       try {
-         this.getConfig().options().copyDefaults(true);
-         this.saveDefaultConfig();
-      } catch (Throwable error) {
-         Paths.get("plugins/grakkit").normalize().toFile().mkdir();
-      }
-      try {
-         this.getServer().getScheduler().runTaskTimer(this, Grakkit::loop, 0, 1); // CORE - run task loop
+         this.getServer().getScheduler().runTaskTimer(this, Grakkit::tick, 0, 1); // CORE - run task loop
       } catch (Throwable error) {
          // none
       }
-      try {
-         Grakkit.init(this.getDataFolder().getPath(), this.getConfig().getString("main", "index.js")); // CORE - initialize
-      } catch (Throwable error) {
-         Grakkit.init("plugins/grakkit", "index.js"); // CORE - initialize
-      }
+      Grakkit.init(this.getDataFolder().getPath()); // CORE - initialize
    }
 
    @Override
    public void onDisable() {
       Grakkit.close(); // CORE - close before exit
-      Wrapper.close();
    }
 
+   /** Registers a custom command to the server with the given options. */
    public void register (String namespace, String name, String[] aliases, String permission, String message, Value executor, Value tabCompleter) {
-      Wrapper.register(namespace, name, aliases, permission, message, executor, tabCompleter);
+      String key = namespace + ":" + name;
+      Wrapper command;
+      if (Main.commands.containsKey(key)) {
+         command = Main.commands.get(key);
+         command.setPermission(permission);
+         command.setPermissionMessage(message);
+         command.executor = executor;
+         command.tabCompleter = tabCompleter;
+      } else {
+         command = new Wrapper(name, aliases);
+         Main.registry.register(namespace, command);
+         Main.commands.put(key, command);
+      }
+      command.options(permission, message, executor, tabCompleter);
    }
 }
