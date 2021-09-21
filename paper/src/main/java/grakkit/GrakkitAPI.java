@@ -6,6 +6,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -108,10 +109,16 @@ public class GrakkitAPI {
       this.hook(Value.asValue((Runnable) () -> this.instance.open()));
       this.instance.close();
    }
-   
-   /** An alias for the push method, deprecated. */
-   @Deprecated
-   public void sync (Value script) {
-      this.push(script);
+
+   /** Closes all open instances, resets everything, and swaps the main instance. */
+   public void reload () throws Exception {
+      if (this.instance == Grakkit.driver) {
+         new ArrayList<>(Grakkit.instances).forEach(value -> value.destroy());
+         Grakkit.channels.clear();
+         Grakkit.loaders.clear();
+         this.swap();
+      } else {
+         throw new Exception("This method may only be called from the main context!");
+      }
    }
 }
