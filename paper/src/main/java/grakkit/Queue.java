@@ -17,7 +17,7 @@ public class Queue {
          try {
             value.executeVoid();
          } catch (Throwable error) {
-            error.printStackTrace();
+            // do nothing
          }
       });
    }

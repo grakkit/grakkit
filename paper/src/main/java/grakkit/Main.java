@@ -35,7 +35,7 @@ public class Main extends JavaPlugin {
       try {
          this.getServer().getScheduler().runTaskTimer(this, Grakkit::tick, 0, 1); // CORE - run task loop
       } catch (Throwable error) {
-         error.printStackTrace();
+         // none
       }
       Grakkit.init(this.getDataFolder().getPath()); // CORE - initialize
    }

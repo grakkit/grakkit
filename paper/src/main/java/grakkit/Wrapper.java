@@ -26,7 +26,7 @@ public class Wrapper extends Command {
       try {
          this.executor.executeVoid(sender, label, args);
       } catch (Throwable error) {
-         error.printStackTrace();
+         // do nothing
       }
       return true;
    }
@@ -46,7 +46,7 @@ public class Wrapper extends Command {
          Value input = this.tabCompleter.execute(sender, alias, args);
          for (long index = 0; index < input.getArraySize(); index++) output.add(input.getArrayElement(index).toString());
       } catch (Throwable error) {
-         error.printStackTrace();
+         // do nothing
       }
       return output;
    }

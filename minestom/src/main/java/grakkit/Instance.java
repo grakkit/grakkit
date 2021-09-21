@@ -83,7 +83,7 @@ public class Instance {
                try {
                   listener.executeVoid(message.content);
                } catch (Throwable error) {
-                  error.printStackTrace();
+                  // do nothing
                }
             });
          }

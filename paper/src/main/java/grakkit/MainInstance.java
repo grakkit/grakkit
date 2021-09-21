@@ -11,10 +11,10 @@ public class MainInstance extends FileInstance {
 
    @Override
    public void close () {
-      super.close();
       Main.commands.values().forEach(command -> {
          command.executor = Value.asValue((Runnable) () -> {});
          command.tabCompleter = Value.asValue((Runnable) () -> {});
       });
+      super.close();
    }
 }
