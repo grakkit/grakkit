@@ -6,11 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
-
-import java.util.function.Consumer;
 
 import org.graalvm.polyglot.Value;
 
@@ -82,18 +79,6 @@ public class GrakkitAPI {
       } else {
          return false;
       }
-   }
-
-   /** Registers a one-time event promise to the channel registry. */
-   public Thenable on (String channel) {
-      return resolve -> {
-         ArrayList<Value> storage = new ArrayList<>();
-         storage.add(Value.asValue((Consumer<String>) data -> {
-            this.off(channel, storage.get(0));
-            resolve.executeVoid(data);
-         }));
-         this.on(channel, storage.get(0));
-      };
    }
    
    /** Registers an event listener to the channel registry. */
