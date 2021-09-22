@@ -38,6 +38,7 @@ public class Grakkit {
 
    /** Initializes the Grakkit Environment. */
    public static void init (String root) {
+      Paths.get(root).toFile().mkdir();
       Path info = Paths.get(root, "package.json");
       String main = "index.js";
       if (info.toFile().exists()) {
