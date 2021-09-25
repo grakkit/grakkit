@@ -13,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.function.BiFunction;
 
 import org.graalvm.polyglot.Value;
 
@@ -22,7 +23,7 @@ public class Grakkit {
    public static final HashMap<String, LinkedList<Value>> channels = new HashMap<>();
 
    /** The instance running on the main thread. */
-   public static MainInstance driver;
+   public static FileInstance driver;
 
    /** All instances created with the instance management system. */
    public static final LinkedList<Instance> instances = new LinkedList<>();
@@ -37,7 +38,7 @@ public class Grakkit {
    }
 
    /** Initializes the Grakkit Environment. */
-   public static void init (String root) {
+   public static void init (String root, BiFunction<String, String, FileInstance> driver) {
       Paths.get(root).toFile().mkdir();
       Path info = Paths.get(root, "package.json");
       String main = "index.js";
@@ -55,7 +56,7 @@ public class Grakkit {
             error.printStackTrace();
          }
       }
-      Grakkit.driver = new MainInstance(root, main);
+      Grakkit.driver = driver.apply(root, main);
       try {
          Grakkit.driver.open();
       } catch (Throwable error) {

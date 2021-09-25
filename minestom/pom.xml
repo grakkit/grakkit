@@ -1,13 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
-   <groupId>grakkit</groupId>
-   <artifactId>grakkit</artifactId>
-   <version>5.0.2</version>
+
+
+   <parent>
+      <groupId>grakkit</groupId>
+      <artifactId>grakkit</artifactId>
+      <version>5.0.2</version>
+   </parent>
+
+   <artifactId>grakkit-minestom</artifactId>
+
    <properties>
       <maven.compiler.source>1.8</maven.compiler.source>
       <maven.compiler.target>1.8</maven.compiler.target>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
+
    <repositories>
       <repository>
          <id>central</id>
@@ -26,7 +34,13 @@
          <url>https://repo.spongepowered.org/maven</url>
       </repository>
    </repositories>
+
    <dependencies>
+      <dependency>
+         <groupId>grakkit</groupId>
+         <artifactId>grakkit-common</artifactId>
+         <version>${project.version}</version>
+      </dependency>
       <dependency>
          <groupId>com.mojang</groupId>
          <artifactId>authlib</artifactId>
@@ -49,27 +63,8 @@
             </exclusion>
          </exclusions>
       </dependency>
-      <dependency>
-         <groupId>org.graalvm.js</groupId>
-         <artifactId>js</artifactId>
-         <version>20.3.3</version>
-      </dependency>
-      <dependency>
-         <groupId>org.graalvm.sdk</groupId>
-         <artifactId>graal-sdk</artifactId>
-         <version>20.3.3</version>
-      </dependency>
-      <dependency>
-         <groupId>org.graalvm.truffle</groupId>
-         <artifactId>truffle-api</artifactId>
-         <version>20.3.3</version>
-      </dependency>
-      <dependency>
-         <groupId>com.eclipsesource.minimal-json</groupId>
-         <artifactId>minimal-json</artifactId>
-         <version>0.9.5</version>
-      </dependency>
    </dependencies>
+
    <build>
       <plugins>
          <plugin>
