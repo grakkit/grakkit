@@ -37,12 +37,16 @@ public class Main extends JavaPlugin {
       } catch (Throwable error) {
          // none
       }
-      Grakkit.init(this.getDataFolder().getPath(), MainInstance::new); // CORE - initialize
+      Grakkit.init(this.getDataFolder().getPath()); // CORE - initialize
    }
 
    @Override
    public void onDisable() {
       Grakkit.close(); // CORE - close before exit
+      Main.commands.values().forEach(command -> {
+         command.executor = Value.asValue((Runnable) () -> {});
+         command.tabCompleter = Value.asValue((Runnable) () -> {});
+      });
    }
 
    /** Registers a custom command to the server with the given options. */
@@ -51,10 +55,6 @@ public class Main extends JavaPlugin {
       Wrapper command;
       if (Main.commands.containsKey(key)) {
          command = Main.commands.get(key);
-         command.setPermission(permission);
-         command.setPermissionMessage(message);
-         command.executor = executor;
-         command.tabCompleter = tabCompleter;
       } else {
          command = new Wrapper(name, aliases);
          Main.registry.register(namespace, command);

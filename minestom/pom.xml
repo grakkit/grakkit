@@ -1,21 +1,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+   <artifactId>minestom</artifactId>
+   <dependencies>
+      <dependency>
+         <artifactId>authlib</artifactId>
+         <groupId>com.mojang</groupId>
+         <version>1.5.21</version>
+      </dependency>
+      <dependency>
+         <artifactId>common</artifactId>
+         <groupId>grakkit</groupId>
+         <version>5.0.3</version>
+      </dependency>
+      <dependency>
+         <artifactId>sponge-api</artifactId>
+         <groupId>org.openksavi.sponge</groupId>
+         <version>1.16.3</version>
+      </dependency>
+      <dependency>
+         <artifactId>Minestom</artifactId>
+         <exclusions>
+            <exclusion>
+               <artifactId>shrinkwrap-resolver-depchain</artifactId>
+               <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            </exclusion>
+         </exclusions>
+         <groupId>com.github.Minestom</groupId>
+         <scope>provided</scope>
+         <version>d8abdef1da</version>
+      </dependency>
+   </dependencies>
    <modelVersion>4.0.0</modelVersion>
-
-
    <parent>
-      <groupId>grakkit</groupId>
       <artifactId>grakkit</artifactId>
-      <version>5.0.2</version>
+      <groupId>grakkit</groupId>
+      <version>5.0.3</version>
    </parent>
-
-   <artifactId>grakkit-minestom</artifactId>
-
-   <properties>
-      <maven.compiler.source>1.8</maven.compiler.source>
-      <maven.compiler.target>1.8</maven.compiler.target>
-      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-   </properties>
-
    <repositories>
       <repository>
          <id>central</id>
@@ -34,68 +53,5 @@
          <url>https://repo.spongepowered.org/maven</url>
       </repository>
    </repositories>
-
-   <dependencies>
-      <dependency>
-         <groupId>grakkit</groupId>
-         <artifactId>grakkit-common</artifactId>
-         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-         <groupId>com.mojang</groupId>
-         <artifactId>authlib</artifactId>
-         <version>1.5.21</version>
-      </dependency>
-      <dependency>
-         <groupId>org.openksavi.sponge</groupId>
-         <artifactId>sponge-api</artifactId>
-         <version>1.16.3</version>
-      </dependency>
-      <dependency>
-         <groupId>com.github.Minestom</groupId>
-         <artifactId>Minestom</artifactId>
-         <version>d8abdef1da</version>
-         <scope>provided</scope>
-         <exclusions>
-            <exclusion>
-               <groupId>org.jboss.shrinkwrap.resolver</groupId>
-               <artifactId>shrinkwrap-resolver-depchain</artifactId>
-            </exclusion>
-         </exclusions>
-      </dependency>
-   </dependencies>
-
-   <build>
-      <plugins>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-shade-plugin</artifactId>
-            <version>3.2.4</version>
-            <executions>
-               <execution>
-                  <phase>package</phase>
-                  <goals>
-                     <goal>shade</goal>
-                  </goals>
-                  <configuration>
-                     <createDependencyReducedPom>false</createDependencyReducedPom>
-                     <transformers>
-                        <transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
-                     </transformers>
-                  </configuration>
-               </execution>
-            </executions>
-         </plugin>
-         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.2.0</version>
-            <configuration>
-               <includes>
-                  <include>**</include>
-               </includes>
-            </configuration>
-         </plugin>
-      </plugins>
-   </build>
+   <version>5.0.3</version>
 </project>
