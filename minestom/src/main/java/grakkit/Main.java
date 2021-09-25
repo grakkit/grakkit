@@ -18,7 +18,7 @@ public class Main extends Extension {
       MinecraftServer.getSchedulerManager().buildTask(() -> {
          Grakkit.tick();
       }).repeat(1, TimeUnit.TICK).schedule(); // CORE - run task loop
-      Grakkit.init(this.getDataDirectory().toString()); // CORE - initialize
+      Grakkit.init(this.getDataDirectory().toString(), MainInstance::new); // CORE - initialize
    }
 
    @Override

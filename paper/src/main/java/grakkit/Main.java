@@ -37,7 +37,7 @@ public class Main extends JavaPlugin {
       } catch (Throwable error) {
          // none
       }
-      Grakkit.init(this.getDataFolder().getPath()); // CORE - initialize
+      Grakkit.init(this.getDataFolder().getPath(), MainInstance::new); // CORE - initialize
    }
 
    @Override
