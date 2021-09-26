@@ -63,9 +63,12 @@ public class Instance {
          .allowExperimentalOptions(true)
          .option("js.nashorn-compat", "true")
          .option("js.commonjs-require", "true")
+         .option("js.ecmascript-version", "2022")
          .option("js.commonjs-require-cwd", this.root)
          .build();
-      this.context.getBindings("js").putMember("Grakkit", Value.asValue(new GrakkitAPI(this)));
+      Value bindings = this.context.getBindings("js");
+      bindings.putMember("globalThis", bindings);
+      bindings.putMember("Grakkit", Value.asValue(new GrakkitAPI(this)));
       try {
          this.execute();
       } catch (Throwable error) {

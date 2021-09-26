@@ -33,28 +33,6 @@
          </plugin>
       </plugins>
    </build>
-   <dependencies>
-      <dependency>
-         <artifactId>graal-sdk</artifactId>
-         <groupId>org.graalvm.sdk</groupId>
-         <version>20.3.3</version>
-      </dependency>
-      <dependency>
-         <artifactId>js</artifactId>
-         <groupId>org.graalvm.js</groupId>
-         <version>20.3.3</version>
-      </dependency>
-      <dependency>
-         <artifactId>minimal-json</artifactId>
-         <groupId>com.eclipsesource.minimal-json</groupId>
-         <version>0.9.5</version>
-      </dependency>
-      <dependency>
-         <artifactId>truffle-api</artifactId>
-         <groupId>org.graalvm.truffle</groupId>
-         <version>20.3.3</version>
-      </dependency>
-   </dependencies>
    <groupId>grakkit</groupId>
    <modelVersion>4.0.0</modelVersion>
    <modules>
@@ -68,11 +46,5 @@
       <maven.compiler.target>1.8</maven.compiler.target>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
    </properties>
-   <repositories>
-      <repository>
-         <id>central</id>
-         <url>https://repo1.maven.org/maven2/</url>
-      </repository>
-   </repositories>
    <version>5.0.3</version>
 </project>
