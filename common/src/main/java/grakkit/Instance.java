@@ -14,7 +14,7 @@ public class Instance {
    public Context context;
 
    /** The engine used for all instance contexts. */
-   public static final Engine engine = Engine.newBuilder().build();
+   public static final Engine engine = Engine.newBuilder().option("engine.WarnInterpreterOnly", "false").build();
 
    /** All registered unload hooks tied to this instance. */
    public final Queue hooks = new Queue();
