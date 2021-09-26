@@ -66,9 +66,7 @@ public class Instance {
          .option("js.ecmascript-version", "2022")
          .option("js.commonjs-require-cwd", this.root)
          .build();
-      Value bindings = this.context.getBindings("js");
-      bindings.putMember("globalThis", bindings);
-      bindings.putMember("Grakkit", Value.asValue(new GrakkitAPI(this)));
+      this.context.getBindings("js").putMember("Grakkit", Value.asValue(new GrakkitAPI(this)));
       try {
          this.execute();
       } catch (Throwable error) {
