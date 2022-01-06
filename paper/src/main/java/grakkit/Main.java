@@ -1,6 +1,7 @@
 package grakkit;
 
 import java.lang.reflect.Field;
+import java.sql.DriverManager;
 
 import java.util.HashMap;
 
@@ -20,6 +21,9 @@ public class Main extends JavaPlugin {
 
    @Override
    public void onLoad() {
+      // Black magic. This fixes a bug, as something is breaking SQL Integration for other plugins. 
+      // See https://github.com/grakkit/grakkit/issues/14.
+	   DriverManager.getDrivers();
       Grakkit.patch(new Loader(this.getClassLoader())); // CORE - patch class loader with GraalJS
       try {
          Field internal = this.getServer().getClass().getDeclaredField("commandMap");
