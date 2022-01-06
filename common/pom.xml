@@ -4,12 +4,12 @@
       <dependency>
          <artifactId>graal-sdk</artifactId>
          <groupId>org.graalvm.sdk</groupId>
-         <version>21.2.0</version>
+         <version>21.3.0</version>
       </dependency>
       <dependency>
          <artifactId>js</artifactId>
          <groupId>org.graalvm.js</groupId>
-         <version>21.2.0</version>
+         <version>21.3.0</version>
       </dependency>
       <dependency>
          <artifactId>minimal-json</artifactId>
@@ -19,7 +19,7 @@
       <dependency>
          <artifactId>truffle-api</artifactId>
          <groupId>org.graalvm.truffle</groupId>
-         <version>21.2.0</version>
+         <version>21.3.0</version>
       </dependency>
    </dependencies>
    <modelVersion>4.0.0</modelVersion>
