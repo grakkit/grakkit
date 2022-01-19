@@ -6,6 +6,9 @@ If you want to get in touch with the community, join our [discord server](https:
 
 # Getting Started
 
+## IMPORTANT
+Grakkit was designed to run on standard JDK, which means it comes pre-packaged with the GraalJS engine! This pre-packaged engine WILL conflict with the GraalVM JVM, so please use standard JDK to run servers running Grakkit!
+
 ## Installation
 Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page and grab the latest version for your platform. After that, just drop the JAR in whatever **plugins**, **mods**, or **extensions** folder you would install any other plugin, mod, or extension.
 
