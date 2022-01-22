@@ -8,7 +8,7 @@ import net.minestom.server.timer.SchedulerManager;
 import net.minestom.server.utils.time.TimeUnit;
 
 public class Main extends Extension {
-   public SchedulerManager schedulerManager = MinecraftServer.getSchedulerManager();
+   private SchedulerManager schedulerManager = MinecraftServer.getSchedulerManager();
    @Override
 
    public LoadStatus initialize() {
