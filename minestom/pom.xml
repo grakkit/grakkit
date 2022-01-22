@@ -9,7 +9,7 @@
       <dependency>
          <artifactId>common</artifactId>
          <groupId>grakkit</groupId>
-         <version>5.0.3</version>
+         <version>5.0.5</version>
       </dependency>
       <dependency>
          <artifactId>sponge-api</artifactId>
@@ -26,14 +26,14 @@
          </exclusions>
          <groupId>com.github.Minestom</groupId>
          <scope>provided</scope>
-         <version>d8abdef1da</version>
+         <version>4a976a3333</version>
       </dependency>
    </dependencies>
    <modelVersion>4.0.0</modelVersion>
    <parent>
       <artifactId>grakkit</artifactId>
       <groupId>grakkit</groupId>
-      <version>5.0.3</version>
+      <version>5.0.5</version>
    </parent>
    <repositories>
       <repository>

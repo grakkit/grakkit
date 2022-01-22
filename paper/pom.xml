@@ -4,7 +4,7 @@
       <dependency>
          <artifactId>common</artifactId>
          <groupId>grakkit</groupId>
-         <version>5.0.3</version>
+         <version>5.0.5</version>
       </dependency>
       <dependency>
          <artifactId>spigot-api</artifactId>
@@ -17,7 +17,7 @@
    <parent>
       <artifactId>grakkit</artifactId>
       <groupId>grakkit</groupId>
-      <version>5.0.3</version>
+      <version>5.0.5</version>
    </parent>
    <repositories>
       <repository>
