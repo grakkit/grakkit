@@ -1,5 +1,5 @@
 {
   "entrypoint": "grakkit.Main",
   "name": "grakkit",
-  "version": "5.0.5"
+  "version": "${version}"
 }

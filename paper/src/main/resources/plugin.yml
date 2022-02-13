@@ -1,3 +1,5 @@
 name: grakkit
 main: grakkit.Main
-version: 5.0.5
+prefix: Grakkit
+website: https://github.com/grakkit/grakkit
+version: '${version}'
