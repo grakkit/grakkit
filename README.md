@@ -39,7 +39,34 @@ Grakkit is currently only available for servers implementing the Bukkit or Mines
 For more info about Grakkit, modules, the JS command, and more, head on over to the [wiki](https://github.com/grakkit/grakkit/wiki) and read up. ***Attention:** This wiki is slightly outdated and only applies to servers. Many of the code samples in here may still work, but some may not. Use at your own risk!*
 
 For another useful guide to getting started, check out [Start Your Environment](https://github.com/grakkit/grakkit/wiki/HowTo-Start-Environment).
+
+## Checkout these cool resources using Grakkit
+For more cool resources, check out the `#resources` or `#showcase` channel in our [discord](https://discord.gg/e682hwR). 
+
+###### Boilerplates
+
+* [grakkit-boilerplate](https://github.com/MercerK/grakkit-boilerplate)
+
+###### Libraries
+* [grakkit-sound-browser](https://github.com/MercerK/grakkit-sound-browser)
+
+###### Related Plugins
+* [wscb-spigot (websocket)](https://github.com/RepComm/wscb-spigot)
+
+###### Projects
+* [crystalforest](https://github.com/RepComm/crystalforest)
+
+###### Showcases
+* [LibsDisguises Integration](https://gist.github.com/MercerK/9f793db326d03dddf6c7d09dc4e7be5d)
+* [PlaceholderApi Integration](https://gist.github.com/MercerK/116d3be78ca43be1f71f4f4614597f5e)
+* [Open Villager Inventory](https://gist.github.com/MercerK/473319ba8b47b4dcc10c5fea6a994442)
+* [Persisting block data in a chunk](https://gist.github.com/MercerK/ed0b5721ddbb00ba0e38a0eb86363ef5)
+
+###### Useful Gists
+* [AnvilGUI Wrapper](https://gist.github.com/GodBleak/aea0d032c01e4f1cc3aef1a0e8d5c92b)
+
+
 ---
 
-*Owned and maintained by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Special thanks to [brayjamin](https://github.com/brayjamin), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
+*Owned and maintained by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Special thanks to [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [Mythical-Forest-Collective](https://github.com/Mythical-Forest-Collective), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
  
