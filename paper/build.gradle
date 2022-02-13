@@ -1,44 +1,39 @@
 plugins {
-  // The shadow plugin for including dependencies in the jar
-  id 'com.github.johnrengelman.shadow' version '7.1.2'
-  id 'java'
-}
-
-repositories {
-  mavenCentral()
-
-  // Repos needed for spigot
-  maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
-  maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
-  maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+   id 'java'
+   id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 dependencies {
-  // Add Graal dependencies
-  implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
-  implementation "org.graalvm.js:js:${graalVersion}"
-  implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
+   // common lib deps
+   implementation project(':common')
+   implementation "com.eclipsesource.minimal-json:minimal-json:0.9.1"
 
-  // Internal dependencies
-  implementation project(':common')
+   // graal deps
+   implementation "org.graalvm.js:js:${graalVersion}"
+   implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
+   implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
 
-  // Other dependencies
-  compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
-
-  implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.1'
+   // platform-specific deps
+   compileOnly "org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT"
 }
 
-// Autofill the version in plugin.yml to be the same as the properties version
-processResources {
-  filesMatching('**/plugin.yml') {
-    expand project.properties
-  }
-}
-
-// Jar task to set the output file, this is inherited by shadowJar
 jar {
-  archiveBaseName.set('grakkit')
-  archiveClassifier.set('paper')
-  archiveVersion.set(project.property('version'))
+   archiveBaseName.set('grakkit')
+   archiveClassifier.set('paper')
+   archiveVersion.set(project.property('version'))
+}
+
+processResources {
+   // populate version
+   filesMatching('**/plugin.yml') {
+      expand project.properties
+   }
+}
+
+repositories {
+   mavenCentral()
+   maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+   maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+   maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
 }
 
