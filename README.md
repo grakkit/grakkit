@@ -68,5 +68,5 @@ For more cool resources, check out the `#resources` or `#showcase` channel in ou
 
 ---
 
-*Owned and maintained by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Special thanks to [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
+*Owned and maintained by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Special thanks to [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [Mythical-Forest-Collective](https://github.com/Mythical-Forest-Collective), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
  
