@@ -1,0 +1,29 @@
+plugins {
+  id "com.github.johnrengelman.shadow" version "7.1.0"
+  id 'java'
+}
+
+repositories {
+  mavenCentral()
+
+  maven { url 'https://repo.spongepowered.org/maven' }
+  maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+  implementation project(':common')
+
+  implementation 'com.github.Minestom:Minestom:4a976a3333'
+}
+
+processResources {
+  filesMatching('**/extension.json') {
+    expand project.properties
+  }
+}
+
+jar {
+  archiveBaseName.set('grakkit')
+  archiveClassifier.set('minestom')
+  archiveVersion.set(project.property('version'))
+}
