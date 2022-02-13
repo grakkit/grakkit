@@ -17,7 +17,7 @@ dependencies {
 }
 
 processResources {
-  filesMatching('**/plugin.yml') {
+  filesMatching('**/extension.json') {
     expand project.properties
   }
 }
