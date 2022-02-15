@@ -16,7 +16,7 @@ dependencies {
 jar {
    archiveBaseName.set('grakkit')
    archiveClassifier.set('common')
-   archiveVersion.set(project.property('version'))
+   archiveVersion.set(project.property('grakkitVersion'))
 }
 
 repositories {
