@@ -41,5 +41,5 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          grakkit-minestom.jar
-          grakkit-paper.jar
+          ~/grakkit-minestom.jar
+          ~/grakkit-paper.jar
