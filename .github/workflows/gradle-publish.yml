@@ -8,9 +8,11 @@
 name: Publish packages
 
 on:
-  workflow_dispatch:
-      tags:
-          - "v*.*.*"
+    release:
+        types: [published]
+    workflow_dispatch:
+        tags:
+            - "v*.*.*"
 
 jobs:
   build:
