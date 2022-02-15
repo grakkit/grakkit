@@ -5,21 +5,13 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
 
-name: Publish packages
-
+name: Build Artifacts
 on:
-    release:
-        types: [published]
-    workflow_dispatch:
-        tags:
-            - "v*.*.*"
-
+  release:
+    types: [published]
 jobs:
   build:
-
     runs-on: ubuntu-latest
-    permissions:
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 17
@@ -27,7 +19,6 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-
     - name: Build projects
       run: |
         export MAIN_DIR=$(pwd)
@@ -37,7 +28,6 @@ jobs:
         cd ${MAIN_DIR}
         cp ${GITHUB_WORKSPACE}/minestom/build/libs/minestom-all.jar ./grakkit-minestom.jar
         cp ${GITHUB_WORKSPACE}/paper/build/libs/paper-all.jar ./paper-minestom.jar
-
     - name: Publish to GitHub Packages
       uses: softprops/action-gh-release@v1
       with:
