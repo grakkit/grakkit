@@ -20,7 +20,7 @@ dependencies {
 jar {
    archiveBaseName.set('grakkit')
    archiveClassifier.set('paper')
-   archiveVersion.set(project.property('version'))
+   archiveVersion.set(project.property('grakkitVersion'))
 }
 
 processResources {
