@@ -31,7 +31,7 @@ jobs:
         ./gradlew shadowJar
         cd ${MAIN_DIR}
         cp ${GITHUB_WORKSPACE}/minestom/build/libs/minestom-all.jar ./grakkit-minestom.jar
-        cp ${GITHUB_WORKSPACE}/paper/build/libs/paper-all.jar ./paper-minestom.jar
+        cp ${GITHUB_WORKSPACE}/paper/build/libs/paper-all.jar ./grakkit-paper.jar
     - name: Publish to GitHub Packages
       uses: softprops/action-gh-release@v1
       with:
