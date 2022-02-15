@@ -32,10 +32,11 @@ jobs:
 
     - name: Build projects
       run: |
+        export MAIN_DIR=$(pwd)
         cd ${GITHUB_WORKSPACE}
         chmod +x ./gradlew
         ./gradlew shadowJar
-        cd ~
+        cd ${MAIN_DIR}
         cp ${GITHUB_WORKSPACE}/minestom/build/libs/minestom-all.jar ./grakkit-minestom.jar
         cp ${GITHUB_WORKSPACE}/paper/build/libs/paper-all.jar ./paper-minestom.jar
 
