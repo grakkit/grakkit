@@ -1,29 +1,37 @@
 plugins {
-  id "com.github.johnrengelman.shadow" version "7.1.0"
-  id 'java'
-}
-
-repositories {
-  mavenCentral()
-
-  maven { url 'https://repo.spongepowered.org/maven' }
-  maven { url 'https://jitpack.io' }
+   id 'java'
+   id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 dependencies {
-  implementation project(':common')
+   // common lib deps
+   implementation project(':common')
+   implementation "com.eclipsesource.minimal-json:minimal-json:0.9.1"
 
-  implementation 'com.github.Minestom:Minestom:4a976a3333'
-}
+   // graal deps
+   implementation "org.graalvm.js:js:${graalVersion}"
+   implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
+   implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
 
-processResources {
-  filesMatching('**/extension.json') {
-    expand project.properties
-  }
+   // platform-specific deps
+   compileOnly 'com.github.Minestom:Minestom:4a976a3333'
 }
 
 jar {
-  archiveBaseName.set('grakkit')
-  archiveClassifier.set('minestom')
-  archiveVersion.set(project.property('version'))
+   archiveBaseName.set('grakkit')
+   archiveClassifier.set('paper')
+   archiveVersion.set(project.property('version'))
+}
+
+processResources {
+   // populate version
+   filesMatching('**/extension.json') {
+      expand project.properties
+   }
+}
+
+repositories {
+   mavenCentral()
+   maven { url = 'https://jitpack.io' }
+   maven { url = 'https://repo.spongepowered.org/maven' }
 }

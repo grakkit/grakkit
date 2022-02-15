@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/gradle,maven,visualstudiocode,intellij+all,eclipse
-# Edit at https://www.toptal.com/developers/gitignore?templates=gradle,maven,visualstudiocode,intellij+all,eclipse
+# Created by https://www.toptal.com/developers/gitignore/api/eclipse,gradle,intellij+all,maven,visualstudiocode
+# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,gradle,intellij+all,maven,visualstudiocode
 
 ### Eclipse ###
 .metadata
@@ -220,4 +220,4 @@ gradle-app.setting
 # Eclipse Core
 # JDT-specific (Eclipse Java Development Tools)
 
-# End of https://www.toptal.com/developers/gitignore/api/gradle,maven,visualstudiocode,intellij+all,eclipse
+# End of https://www.toptal.com/developers/gitignore/api/eclipse,gradle,intellij+all,maven,visualstudiocode

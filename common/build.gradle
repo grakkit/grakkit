@@ -1,26 +1,24 @@
 plugins {
-  // The shadow plugin for including dependencies in the jar
-  id 'com.github.johnrengelman.shadow' version '7.1.2'
-  id 'java'
-}
-
-repositories {
-  mavenCentral()
+   id 'java'
+   id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 dependencies {
-  // Add graal dependencies
-  implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
-  implementation "org.graalvm.js:js:${graalVersion}"
-  implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
-
-  // Other dependencies
-  implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
+   // common lib deps
+   implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
+   
+   // Add graal dependencies
+   implementation "org.graalvm.js:js:${graalVersion}"
+   implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
+   implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
 }
 
-// Jar task to set the output file, this is inherited by shadowJar
 jar {
-  archiveBaseName.set('grakkit')
-  archiveClassifier.set('common')
-  archiveVersion.set(project.property('version'))
+   archiveBaseName.set('grakkit')
+   archiveClassifier.set('common')
+   archiveVersion.set(project.property('version'))
+}
+
+repositories {
+   mavenCentral()
 }
