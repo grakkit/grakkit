@@ -9,9 +9,13 @@ name: Build Artifacts
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    tags:
+      - "v*.*.*"
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 17
