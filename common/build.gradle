@@ -6,7 +6,7 @@ plugins {
 dependencies {
    // common lib deps
    implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
-   
+
    // Add graal dependencies
    implementation "org.graalvm.js:js:${graalVersion}"
    implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
@@ -17,6 +17,10 @@ jar {
    archiveBaseName.set('grakkit')
    archiveClassifier.set('common')
    archiveVersion.set(project.property('grakkitVersion'))
+}
+
+shadowJar {
+   mergeServiceFiles()
 }
 
 repositories {
