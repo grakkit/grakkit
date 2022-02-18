@@ -23,6 +23,10 @@ jar {
    archiveVersion.set(project.property('grakkitVersion'))
 }
 
+shadowJar {
+   mergeServiceFiles()
+}
+
 processResources {
    // populate version
    filesMatching('**/plugin.yml') {
