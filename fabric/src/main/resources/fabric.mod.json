@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "grakkit",
+  "version": "${grakkitVersion}",
+
+  "name": "Grakkit Fabric",
+  "description": "Grakkit - It's the fusion of GraalVM, JavaScript, and Minecraft.",
+  "contact": {
+    "homepage": "https://github.com/grakkit/grakkit/wiki",
+    "sources": "https://github.com/grakkit/grakkit"
+  },
+
+  "license": "Unlicense",
+  "icon": "assets/grakkit/icon.jpg",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "grakkit.Main"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.12.12",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  }
+}
