@@ -10,7 +10,7 @@
     "sources": "https://github.com/grakkit/grakkit"
   },
 
-  "license": "Unlicense",
+  "license": "MIT",
   "icon": "assets/grakkit/icon.jpg",
 
   "environment": "*",
