@@ -51,22 +51,30 @@ For even more goodies, check out the `#resources` or `#showcase` channel in our 
 * [grakkit-boilerplate](https://github.com/MercerK/grakkit-boilerplate)
 
 ###### Libraries
+
 * [grakkit-sound-browser](https://github.com/MercerK/grakkit-sound-browser)
 
 ###### Related Plugins
+
 * [wscb-spigot (websocket)](https://github.com/RepComm/wscb-spigot)
 
 ###### Projects
+
 * [crystalforest](https://github.com/RepComm/crystalforest)
 
 ###### Showcases
+
+* [AnvilGUI Wrapper](https://gist.github.com/GodBleak/aea0d032c01e4f1cc3aef1a0e8d5c92b)
 * [LibsDisguises Integration](https://gist.github.com/MercerK/9f793db326d03dddf6c7d09dc4e7be5d)
+* [Persisting block data in a chunk](https://gist.github.com/MercerK/ed0b5721ddbb00ba0e38a0eb86363ef5)
 * [PlaceholderApi Integration](https://gist.github.com/MercerK/116d3be78ca43be1f71f4f4614597f5e)
 * [Open Villager Inventory](https://gist.github.com/MercerK/473319ba8b47b4dcc10c5fea6a994442)
-* [Persisting block data in a chunk](https://gist.github.com/MercerK/ed0b5721ddbb00ba0e38a0eb86363ef5)
 
-###### Useful Gists
-* [AnvilGUI Wrapper](https://gist.github.com/GodBleak/aea0d032c01e4f1cc3aef1a0e8d5c92b)
+###### Misc
+
+* [babel-plugin-transform-graal-imports](https://github.com/MercerK/babel-plugin-transform-graal-imports)
+* [java-ts-bind](https://github.com/bensku/java-ts-bind)
+
 
 ---
 
