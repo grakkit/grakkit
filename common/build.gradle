@@ -11,6 +11,7 @@ dependencies {
    implementation "org.graalvm.js:js:${graalVersion}"
    implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
    implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
+   implementation "org.graalvm.tools:chromeinspector:${graalVersion}"
 }
 
 jar {
