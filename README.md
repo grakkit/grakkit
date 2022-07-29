@@ -1,3 +1,5 @@
+![Project Logo](./logo.png)
+
 **Grakkit** - It's the fusion of GraalVM, JavaScript, and Minecraft.
 
 ![Code Demo](./demo.gif)
@@ -15,16 +17,16 @@ Head on over to the [releases](https://github.com/grakkit/grakkit/releases) page
 ## Your First Project (Bukkit/Spigot/Paper)
 Upon starting or reloading the server with the plugin installed, the `plugins/grakkit` folder will be created on your server. This is where most if not all development will take place, and serves as your home when working within the scope of grakkit.
 
-Now, unless you know EXACTLY what you're doing (mad respect if you do) you should install the `@grakkit/stdlib-paper` package, a standard library for JavaScript development. Make sure you have NodeJS installed on your system, then navigate to `plugins/grakkit` in a terminal or command prompt and use `npm install @grakkit/stdlib-paper` to install it.
+Given that Grakkit is community-driven, there are tons of NPM modules you can install to add rich support and typings for the game. For now, the most widely-used package is `@grakkit/stdlib-paper`, a standard library for JavaScript development with PaperMC servers. To install it, make sure you have NodeJS installed, then navigate to `plugins/grakkit` in a terminal or command prompt and use `npm install @grakkit/stdlib-paper`.
 
-For those working on a remote server, you can simply install the `@grakkit/stdlib-paper` package to a local directory, then copy that directory's contents to the remote server's `plugins/grakkit` folder. This works because grakkit itself doesn't need NodeJS installed, it's merely the system we use for package management.
+For those working on a remote server, you can simply install the package to a local directory, then copy that directory's contents to the remote server's `plugins/grakkit` folder. This works because grakkit itself doesn't need NodeJS installed, it's merely the template used for package management.
 
 Once that's done, you can import it from within your main file (default `index.js`) as shown below...
 ```js
 const stdlib = require('@grakkit/stdlib-paper');
 ```
 
-...and upon the next server reload, the above code will be executed. This package also adds the in-game `/js` command, which can be used to test and execute code from within the game -- for example, `/js self` represents the player or console sending the command, and you can use `/js core.reload()` to reload the JS environment without having to reload the entire server.k
+Upon the next server reload, the above code will be executed. Requiring this package also adds the in-game `/js` command, which can be used to test and execute code from within the game -- for example, running `/js self` will show a representation of the player or console sending the command, and you can use `/js core.reload()` to reload the JS environment without having to reload the entire server.
 
 ## Your First Project (Minestom)
 Grakkit for [Minestom](https://github.com/Minestom/Minestom) is available as a standalone "extension." Download it from our [latest release]() page. Make sure to download the correct platform, labeled `grakkit-x.y.z.minestom.jar`.
@@ -40,11 +42,10 @@ For more info about Grakkit, modules, the JS command, and more, head on over to 
 
 For another useful guide to getting started, check out [Start Your Environment](https://github.com/grakkit/grakkit/wiki/HowTo-Start-Environment).
 
-## Checkout these cool resources using Grakkit
-For more cool resources, check out the `#resources` or `#showcase` channel in our [discord](https://discord.gg/e682hwR). 
+## Check out these cool resources using Grakkit!
+For even more goodies, check out the `#resources` or `#showcase` channel in our [Discord Server](https://discord.gg/e682hwR). 
 
 ###### Boilerplates
-
 * [grakkit-boilerplate](https://github.com/MercerK/grakkit-boilerplate)
 
 ###### Libraries
@@ -65,8 +66,7 @@ For more cool resources, check out the `#resources` or `#showcase` channel in ou
 ###### Useful Gists
 * [AnvilGUI Wrapper](https://gist.github.com/GodBleak/aea0d032c01e4f1cc3aef1a0e8d5c92b)
 
-
 ---
 
-*Owned and maintained by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Special thanks to [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [Mythical-Forest-Collective](https://github.com/Mythical-Forest-Collective), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks) for their contributions to the project.*
+*Created by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Maintained by [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [Mythical-Forest-Collective](https://github.com/Mythical-Forest-Collective), [spacefluff432](https://github.com/spacefluff432), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks).*
  
