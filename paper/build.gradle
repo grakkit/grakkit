@@ -6,7 +6,8 @@ plugins {
 dependencies {
    // common lib deps
    implementation project(':common')
-   implementation "com.eclipsesource.minimal-json:minimal-json:0.9.1"
+   implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
+   implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8'
 
    // graal deps
    implementation "org.graalvm.js:js:${graalVersion}"
@@ -36,6 +37,7 @@ processResources {
 
 repositories {
    mavenCentral()
+   maven { url = 'https://jitpack.io' }
    maven { url = 'https://oss.sonatype.org/content/repositories/central' }
    maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }

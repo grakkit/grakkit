@@ -6,6 +6,7 @@ plugins {
 dependencies {
    // common lib deps
    implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
+   implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8'
 
    // Add graal dependencies
    implementation "org.graalvm.js:js:${graalVersion}"
@@ -25,4 +26,5 @@ shadowJar {
 
 repositories {
    mavenCentral()
+   maven { url = 'https://jitpack.io' }
 }

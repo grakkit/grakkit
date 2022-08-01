@@ -1,13 +1,8 @@
 package grakkit;
 
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
-
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
@@ -39,20 +34,17 @@ public class Grakkit {
    /** Initializes the Grakkit Environment. */
    public static void init (String root) {
       Paths.get(root).toFile().mkdir();
-      Path info = Paths.get(root, "package.json");
       String main = "index.js";
-      if (info.toFile().exists()) {
-         try {
-            StringBuilder content = new StringBuilder();
-            Files.lines(info).forEach(line -> content.append(line).append("\n"));
-            JsonObject object = Json.parse(content.toString()).asObject();
-            try {
-               main = object.getString("main", main);
-            } catch (Throwable error) {
-               // do nothing
-            }
-         } catch (Throwable error) {
-            error.printStackTrace();
+      Config[] configs = {
+         new Config(Config.Format.JSON, root, ".grakkitrc", false),
+         new Config(Config.Format.YAML, root, "config.yml", false),
+         new Config(Config.Format.JSON, root, "grakkit.json", false),
+         new Config(Config.Format.JSON, root, "package.json", true)
+      };
+      for (Config config : configs) {
+         if (config.main != null) {
+            main = config.main;
+            break;
          }
       }
       Grakkit.driver = new FileInstance(root, main, "grakkit");
