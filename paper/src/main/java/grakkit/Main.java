@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.sql.DriverManager;
 
 import java.util.HashMap;
+import java.util.function.Consumer;
 
 import org.bukkit.command.CommandMap;
 
@@ -18,6 +19,8 @@ public class Main extends JavaPlugin {
 
    /** The internal command map used to register commands. */
    public static CommandMap registry;
+
+   public static Consumer<Void> onDisableCallback; 
 
    @Override
    public void onLoad() {
@@ -46,6 +49,14 @@ public class Main extends JavaPlugin {
 
    @Override
    public void onDisable() {
+      try {
+         if (Main.onDisableCallback != null) {
+            Main.onDisableCallback.accept(null);
+         }
+      } catch (Throwable error) {
+         // none
+      }
+
       Grakkit.close(); // CORE - close before exit
       Main.commands.values().forEach(command -> {
          command.executor = Value.asValue((Runnable) () -> {});
@@ -65,5 +76,9 @@ public class Main extends JavaPlugin {
          Main.commands.put(key, command);
       }
       command.options(permission, message, executor, tabCompleter);
+   }
+
+   public void registerOnDisable(Consumer<Void> fn) {
+      Main.onDisableCallback = fn;
    }
 }
