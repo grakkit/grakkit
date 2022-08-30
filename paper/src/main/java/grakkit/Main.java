@@ -55,7 +55,7 @@ public class Main extends JavaPlugin {
             Main.onDisableCallback.accept(null);
          }
       } catch (Throwable error) {
-         // none
+         error.printStackTrace();
       }
 
       Grakkit.close(); // CORE - close before exit
