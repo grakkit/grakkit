@@ -20,6 +20,7 @@ public class Main extends JavaPlugin {
    /** The internal command map used to register commands. */
    public static CommandMap registry;
 
+   /** Internal consumer for onDisable */
    public static Consumer<Void> onDisableCallback; 
 
    @Override
@@ -78,6 +79,10 @@ public class Main extends JavaPlugin {
       command.options(permission, message, executor, tabCompleter);
    }
 
+   /**
+    * Allow developers to pass in a callback to the `onDisable` function.
+    * @param fn
+    */
    public void registerOnDisable(Consumer<Void> fn) {
       Main.onDisableCallback = fn;
    }
