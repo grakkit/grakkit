@@ -42,6 +42,8 @@ For more info about Grakkit, modules, the JS command, and more, head on over to 
 
 For another useful guide to getting started, check out [Start Your Environment](https://github.com/grakkit/grakkit/wiki/HowTo-Start-Environment).
 
+Additional documentation can be found at [API](/docs/api.md).
+
 ## Check out these cool resources using Grakkit!
 For even more goodies, check out the `#resources` or `#showcase` channel in our [Discord Server](https://discord.gg/e682hwR). 
 
