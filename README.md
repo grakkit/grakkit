@@ -48,10 +48,13 @@ Additional documentation can be found at [API](/docs/api.md).
 For even more goodies, check out the `#resources` or `#showcase` channel in our [Discord Server](https://discord.gg/e682hwR). 
 
 ###### Boilerplates
+
 * [grakkit-boilerplate](https://github.com/MercerK/grakkit-boilerplate)
 
 ###### Libraries
 
+* [graal-minecraft-fetch-client](https://github.com/MercerK/graal-minecraft-fetch-client): A slightly-more functional fetch client.
+* [graal-types](https://github.com/graal-types/graal-types): Imagine DefinitelyTyped, but for GraalVM. 
 * [grakkit-sound-browser](https://github.com/MercerK/grakkit-sound-browser)
 
 ###### Related Plugins
