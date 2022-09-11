@@ -14,7 +14,7 @@ dependencies {
    implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
 
    // platform-specific deps
-   compileOnly 'com.github.Minestom:Minestom:89a09f326e'
+   compileOnly 'com.github.Minestom:Minestom:fc90fe8'
 }
 
 jar {
