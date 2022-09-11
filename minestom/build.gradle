@@ -19,7 +19,7 @@ dependencies {
 
 jar {
    archiveBaseName.set('grakkit')
-   archiveClassifier.set('paper')
+   archiveClassifier.set('minestom')
    archiveVersion.set(project.property('grakkitVersion'))
 }
 
