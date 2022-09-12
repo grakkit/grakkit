@@ -5,8 +5,6 @@ import net.minestom.server.MinecraftServer;
 import net.minestom.server.extensions.Extension;
 
 import net.minestom.server.timer.SchedulerManager;
-import net.minestom.server.timer.Scheduler;
-import net.minestom.server.utils.time.TimeUnit;
 import net.minestom.server.timer.TaskSchedule;
 
 public class Main extends Extension {
@@ -14,11 +12,9 @@ public class Main extends Extension {
    @Override
 
    public void initialize() {
-      Scheduler scheduler = MinecraftServer.getSchedulerManager();
-
       Grakkit.patch(new Loader(this.getClass().getClassLoader())); // CORE - patch class loader with GraalJS
       Grakkit.init(this.getDataDirectory().toString());
-      scheduler.submitTask(() -> {
+      schedulerManager.submitTask(() -> {
           Grakkit.tick();
           return TaskSchedule.seconds(1);
       });
