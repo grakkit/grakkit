@@ -1,0 +1,6 @@
+name: Grakkit
+main: io.github.grakkit.bootstrapper.spigot.SpigotBootstrap
+version: '${grakkitVersion}'
+description: Grakkit is an extension that allows you to use JavaScript code to write your own Java extensions!
+load: STARTUP
+website: https://grakkit.github.io/

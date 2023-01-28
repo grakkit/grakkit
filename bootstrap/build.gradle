@@ -1,0 +1,51 @@
+import static groovy.io.FileType.FILES
+
+plugins {
+   id 'java'
+   id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+dependencies {
+   // Graal dependencies
+   implementation "org.graalvm.js:js:${graalVersion}"
+   implementation "org.graalvm.sdk:graal-sdk:${graalVersion}"
+   implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
+
+   // Core dependencies
+   implementation 'com.eclipsesource.minimal-json:minimal-json:0.9.5'
+   implementation 'me.carleslc.Simple-YAML:Simple-Yaml:1.8'
+
+   // Spigot API
+   compileOnly 'org.spigotmc:spigot-api:1.19.3-R0.1-SNAPSHOT'
+}
+
+repositories {
+   mavenCentral()
+   maven { url = 'https://jitpack.io' }
+   maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+   maven { url = 'https://oss.sonatype.org/content/repositories/snapshots' }
+   maven { url = 'https://oss.sonatype.org/content/repositories/central' }
+}
+
+processResources {
+   // populate version
+   filesMatching('**/plugin.yml') {
+      expand project.properties
+   }
+}
+
+sourceSets {
+   main.resources{
+      srcDir project(":").file("core")
+   }
+}
+
+jar {
+   archiveBaseName.set('grakkit')
+   archiveClassifier.set('bootstrap')
+   archiveVersion.set(project.property('grakkitVersion'))
+}
+
+shadowJar {
+   mergeServiceFiles()
+}
