@@ -81,5 +81,5 @@ For even more goodies, check out the `#resources` or `#showcase` channel in our 
 
 ---
 
-*Created by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Maintained by [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [Mythical-Forest-Collective](https://github.com/Mythical-Forest-Collective), [spacefluff432](https://github.com/spacefluff432), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks).*
+*Created by [RepComm](https://github.com/RepComm) and [spacefluff432](https://github.com/spacefluff432). Maintained by [brayjamin](https://github.com/brayjamin), [MercerK](https://github.com/MercerK),  [Mythical-Forest-Collective](https://github.com/Mythical-Forest-Collective), [TonyGravagno](https://github.com/TonyGravagno), [dustinlacewell](https://github.com/dustinlacewell), [wagyourtail](https://github.com/wagyourtail), and [waterquarks](https://github.com/waterquarks).*
  
