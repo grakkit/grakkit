@@ -1,2 +1,2 @@
 rootProject.name = 'grakkit'
-include 'common', 'paper', 'minestom'
+include 'common', 'paper'

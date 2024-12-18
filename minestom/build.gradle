@@ -14,12 +14,12 @@ dependencies {
    implementation "org.graalvm.truffle:truffle-api:${graalVersion}"
 
    // platform-specific deps
-   compileOnly 'com.github.Minestom:Minestom:fc90fe8'
+   compileOnly 'com.github.Minestom:Minestom:89a09f326e'
 }
 
 jar {
    archiveBaseName.set('grakkit')
-   archiveClassifier.set('minestom')
+   archiveClassifier.set('paper')
    archiveVersion.set(project.property('grakkitVersion'))
 }
 
